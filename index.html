@@ -128,20 +128,20 @@
     <div id="login-section" class="login-page">
         <div class="login-card">
             <h3 class="text-info fw-bold mb-4" style="text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);">🔐SILAHKAN LOGIN</h3>
-            <input type="text" id="user" class="form-control mb-3" placeholder="Username" list="user-list" onkeypress="checkEnter(event)">
+            <input type="text" id="user" class="form-control mb-3" placeholder="👤Username" list="user-list" onkeypress="checkEnter(event)">
             <datalist id="user-list"></datalist>
-            <input type="password" id="pass" class="form-control mb-3" placeholder="Password" onkeypress="checkEnter(event)">
+            <input type="password" id="pass" class="form-control mb-3" placeholder="🗝️Password" onkeypress="checkEnter(event)">
             <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold text-white">ENTER SYSTEM</button>
         </div>
     </div>
 
     <div class="sidebar" id="sidebar-menu">
         <div class="sidebar-header">MY FINANCE</div>
-        <div class="nav-link active" onclick="showSection('dashboard', this)"><i class="fa fa-chart-line me-2"></i> Dashboard</div>
-        <div class="nav-link" onclick="showSection('masuk', this)"><i class="fa fa-plus-circle me-2 text-success"></i> Pemasukan</div>
-        <div class="nav-link" onclick="showSection('keluar', this)"><i class="fa fa-minus-circle me-2 text-danger"></i> Pengeluaran</div>
-        <div class="nav-link" onclick="showSection('rekapan', this)"><i class="fa fa-list-alt me-2 text-info"></i> Rekapan</div>
-        <div class="nav-link text-danger mt-5" onclick="location.reload()"><i class="fa fa-sign-out-alt me-2"></i> Logout</div>
+        <div class="nav-link active" onclick="showSection('dashboard', this)"><i class="fa fa-chart-line me-2"></i> 🏠Dashboard</div>
+        <div class="nav-link" onclick="showSection('masuk', this)"><i class="fa fa-plus-circle me-2 text-success"></i> 💰Pemasukan</div>
+        <div class="nav-link" onclick="showSection('keluar', this)"><i class="fa fa-minus-circle me-2 text-danger"></i> 💸Pengeluaran</div>
+        <div class="nav-link" onclick="showSection('rekapan', this)"><i class="fa fa-list-alt me-2 text-info"></i> 📋Rekapan</div>
+        <div class="nav-link text-danger mt-5" onclick="location.reload()"><i class="fa fa-sign-out-alt me-2"></i> ↪️Logout</div>
     </div>
 
     <div class="main-content" id="main-content-area">
