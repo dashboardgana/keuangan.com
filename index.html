@@ -263,7 +263,8 @@
     </div>
 
     <script>
-        let dataTransaksi = [];
+       // Mengambil data dari memori browser, kalau kosong baru jadi array []
+let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
         let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
         let myChartB = null;
         let myChartP = null;
@@ -330,7 +331,7 @@
                 keterangan: ket,
                 bukti: fileData
             });
-
+         localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
             updateUI();
             alert("Transaksi Berhasil Dicatat!");
             document.getElementById(`tgl-${tipe}`).value = '';
@@ -340,11 +341,13 @@
         }
 
         function hapusData(id) {
-            if(confirm("Hapus catatan ini?")) {
-                dataTransaksi = dataTransaksi.filter(t => t.id !== id);
-                updateUI();
-            }
-        }
+    if(confirm("Hapus catatan ini?")) {
+        dataTransaksi = dataTransaksi.filter(t => t.id !== id);
+        // Tambahkan baris ini biar memori browser juga update
+        localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+        updateUI();
+    }
+}
 
         function updateUI() {
     const tbody = document.getElementById('table-body'); // Sesuaikan ID tabel abang
