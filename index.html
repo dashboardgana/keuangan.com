@@ -199,6 +199,23 @@
 
         <div id="sec-rekapan" class="section-content" style="display:none;">
             <h3 class="mb-4 text-info fw-bold">LAPORAN TAHUN 2026</h3>
+            <div class="mb-4" style="max-width: 250px;">
+    <label class="text-secondary small fw-bold">FILTER TAHUN:</label>
+    <select id="pilih-tahun" class="form-control bg-dark text-white border-secondary">
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026" selected>2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+        <option value="2031">2031</option>
+        <option value="2032">2032</option>
+        <option value="2033">2033</option>
+        <option value="2034">2034</option>
+        <option value="2035">2035</option>
+    </select>
+</div>
             <div class="row mb-4">
                 <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pemasukan / Tahun</small><br><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
                 <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pengeluaran / Tahun</small><br><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
@@ -400,6 +417,20 @@
                 options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
         }
+        // PERINTAH UNTUK FILTER TAHUN
+document.getElementById('pilih-tahun').addEventListener('change', function() {
+    const tahunTerpilih = this.value;
+    
+    // Ganti tulisan judul laporan di dashboard
+    const judul = document.querySelector('#sec-rekapan h3');
+    if (judul) {
+        judul.innerText = `LAPORAN TAHUN ${tahunTerpilih}`;
+    }
+
+    // Jalankan fungsi update agar data & grafik berubah sesuai tahun
+    if (typeof updateRekapan === "function") updateRekapan();
+    if (typeof updateAnalytics === "function") updateAnalytics();
+});
     </script>
 </body>
 </html>
