@@ -6,11 +6,11 @@
     <title>Sistem Keuangan VIP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
         .login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: #0f172a; }
         
-        /* Login Card dengan efek lampu */
         .login-card { 
             background: #1e293b; 
             padding: 40px; 
@@ -22,22 +22,18 @@
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); 
         }
 
-        /* PERBAIKAN: Agar tulisan Username & Password kelihatan jelas */
         .form-control::placeholder {
             color: rgba(255, 255, 255, 0.5) !important;
             opacity: 1;
         }
         
-        /* Sidebar Responsif */
         .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; display: none; z-index: 1000; }
         .sidebar-header { padding: 25px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; font-size: 1.2rem; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
         .nav-link { color: #94a3b8; padding: 15px 25px; display: block; text-decoration: none; cursor: pointer; border-left: 4px solid transparent; }
         .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; border-left: 4px solid #38bdf8; }
         
-        /* Main Content */
         .main-content { margin-left: 240px; padding: 30px; display: none; transition: 0.3s; }
         
-        /* Kotak Rekap Utama dengan Lampu */
         .card-rekap-utama { 
             background: #1e293b; 
             border-radius: 15px; 
@@ -47,7 +43,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 15px rgba(56, 189, 248, 0.05);
         }
 
-        /* Box Premium Bulanan dengan Lampu Bawah */
         .box-premium { 
             background: linear-gradient(145deg, #1e293b, #0f172a); 
             border: 1px solid #334155; 
@@ -58,7 +53,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2), 0 0 15px rgba(56, 189, 248, 0.1);
         }
 
-        /* Style Input Form (Lebih Terang) */
         label { color: #38bdf8; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; display: block; }
         .form-control { 
             background: #0f172a !important; 
@@ -70,33 +64,37 @@
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important; 
         }
 
-        /* Khusus Input Tanggal biar mencolok */
         input[type="date"] {
             color-scheme: dark;
             border: 1px solid #38bdf8 !important;
             font-weight: bold;
         }
 
-        /* Desain Tabel Riwayat (Diterangkan) */
-        .table-custom { background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 0 20px rgba(0,0,0,0.4); }
-        .table-custom thead th { 
+        /* PERBAIKAN: Agar Riwayat Transaksi bisa digeser ke samping di Mobile */
+        .table-responsive-custom { 
+            background: #1e293b; 
+            border-radius: 12px; 
+            overflow-x: auto; 
+            border: 1px solid #334155; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.4); 
+            -webkit-overflow-scrolling: touch;
+        }
+        .table-custom-full { min-width: 800px; width: 100%; margin-bottom: 0; }
+        .table-custom-full thead th { 
             background: #0f172a; 
             color: #38bdf8; 
             font-size: 0.8rem; 
             text-transform: uppercase; 
-            letter-spacing: 1.2px;
             padding: 15px;
             border-bottom: 2px solid #38bdf8;
         }
-        .table-custom tbody td { 
+        .table-custom-full tbody td { 
             padding: 15px; 
             vertical-align: middle; 
             border-bottom: 1px solid #334155; 
-            font-size: 0.95rem; 
-            color: #f1f5f9; /* Tulisan isi tabel lebih putih */
+            color: #f1f5f9; 
         }
         
-        /* Tombol Hapus Custom */
         .btn-hapus-custom { 
             background: rgba(239, 68, 68, 0.15); 
             color: #f87171; 
@@ -105,24 +103,33 @@
             border-radius: 6px; 
             transition: 0.3s; 
         }
-        .btn-hapus-custom:hover { background: #ef4444; color: white; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        .btn-hapus-custom:hover { background: #ef4444; color: white; }
 
-        .img-preview { width: 45px; height: 45px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid #38bdf8; transition: 0.3s; box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+        .img-preview { width: 45px; height: 45px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid #38bdf8; }
         
-        /* Label Tipe */
-        .badge-tipe { padding: 8px 14px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; display: inline-block; min-width: 110px; text-align: center; }
-        .bg-pemasukan { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; text-shadow: 0 0 5px rgba(74, 222, 128, 0.4); }
-        .bg-pengeluaran { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; text-shadow: 0 0 5px rgba(248, 113, 113, 0.4); }
+        .badge-tipe { padding: 8px 14px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; display: inline-block; min-width: 110px; text-align: center; }
+        .bg-pemasukan { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .bg-pengeluaran { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+
+        /* Card Saldo Modern */
+        .card-saldo-modern {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .saldo-info { padding: 40px 20px; }
+        .marquee-wrapper { background: rgba(0,0,0,0.3); padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
         
-        /* RESPONSIVE MOBILE */
         @media (max-width: 768px) { 
             .sidebar { width: 100%; height: auto; position: relative; display: none; } 
             .main-content { margin-left: 0; padding: 15px; } 
             .sidebar.mobile-show { display: block; }
-            .display-3 { font-size: 2.5rem; }
+            .display-4 { font-size: 2.2rem; }
         }
 
-        /* Tambahan Label Kuning Login */
         .label-login { color: #fbbf24 !important; text-align: left; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 5px; }
     </style>
 </head>
@@ -131,49 +138,42 @@
     <div id="login-section" class="login-page">
         <div class="login-card">
             <h3 class="text-info fw-bold mb-4" style="text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);">🔐 SILAHKAN LOGIN</h3>
-            
             <div class="label-login"><i class="fas fa-user"></i> USERNAME</div>
             <input type="text" id="user" class="form-control mb-3" placeholder="Masukkan username" list="user-list" onkeypress="checkEnter(event)">
             <datalist id="user-list"></datalist>
-            
             <div class="label-login"><i class="fas fa-lock"></i> PASSWORD</div>
             <input type="password" id="pass" class="form-control mb-3" placeholder="Masukkan password" onkeypress="checkEnter(event)">
-            
             <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold text-white py-2">ENTER SYSTEM</button>
-            
-            <div id="error-msg" class="text-danger small mt-3 fw-bold" style="display:none;">
-                <i class="fas fa-times-circle"></i> Username atau Password Salah
-            </div>
+            <div id="error-msg" class="text-danger small mt-3 fw-bold" style="display:none;"><i class="fas fa-times-circle"></i> Username atau Password Salah</div>
         </div>
     </div>
 
     <div class="sidebar" id="sidebar-menu">
-    <div class="sidebar-header">MY FINANCE</div>
-    <div class="nav-link active" onclick="showSection('dashboard', this)">🏠 Dashboard</div>
-    <div class="nav-link" onclick="showSection('masuk', this)">💰 Pemasukan</div>
-    <div class="nav-link" onclick="showSection('keluar', this)">💸 Pengeluaran</div>
-    <div class="nav-link" onclick="showSection('rekapan', this)">📋 Rekapan</div>
-    <div class="nav-link text-danger mt-5" onclick="location.reload()">↪️ Logout</div>
-</div>
+        <div class="sidebar-header">MY FINANCE</div>
+        <div class="nav-link active" onclick="showSection('dashboard', this)">🏠 Dashboard</div>
+        <div class="nav-link" onclick="showSection('masuk', this)">💰 Pemasukan</div>
+        <div class="nav-link" onclick="showSection('keluar', this)">💸 Pengeluaran</div>
+        <div class="nav-link" onclick="showSection('rekapan', this)">📋 Rekapan</div>
+        <div class="nav-link" onclick="showSection('analytics', this)">📊 Analytics</div>
+        <div class="nav-link text-danger mt-5" onclick="location.reload()">↪️ Logout</div>
+    </div>
 
-   <div class="main-content" id="main-content-area">
-    <div id="sec-dashboard" class="section-content">
-        <h2 class="mb-4 fw-bold">Saldo Utama</h2>
+    <div class="main-content" id="main-content-area">
         
-        <div class="card-saldo-modern">
-            <div class="saldo-info">
-                <p class="mb-1 text-uppercase fw-bold opacity-75" style="font-size: 0.8rem; letter-spacing: 1px;">Total Saldo Saat Ini</p>
-                <h1 class="fw-bold display-4" id="total-saldo-display">Rp 0</h1>
-            </div>
-            
-            <div class="marquee-wrapper">
-                <marquee behavior="scroll" direction="left" scrollamount="5">
-                    ✨ Semoga sukses selalu, rezeki lancar, dan tetap semangat dalam mengelola keuangan! ✨
-                </marquee>
+        <div id="sec-dashboard" class="section-content">
+            <h2 class="mb-4 fw-bold">Saldo Utama</h2>
+            <div class="card-saldo-modern">
+                <div class="saldo-info">
+                    <p class="mb-1 text-uppercase fw-bold opacity-75" style="font-size: 0.8rem; letter-spacing: 1px;">Total Saldo Saat Ini</p>
+                    <h1 class="fw-bold display-4" id="total-saldo-display">Rp 0</h1>
+                </div>
+                <div class="marquee-wrapper">
+                    <marquee behavior="scroll" direction="left" scrollamount="5">
+                        ✨ Semoga sukses selalu, rezeki lancar, dan tetap semangat dalam mengelola keuangan! ✨
+                    </marquee>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
         <div id="sec-masuk" class="section-content" style="display:none;">
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
@@ -207,9 +207,9 @@
 
             <div id="container-bulanan" class="row"></div>
 
-            <h5 class="mt-4 fw-bold mb-3">Riwayat Transaksi</h5>
-            <div class="table-responsive table-custom">
-                <table class="table table-dark mb-0">
+            <h5 class="mt-4 fw-bold mb-3">Riwayat Transaksi (Geser ke samping di HP)</h5>
+            <div class="table-responsive-custom">
+                <table class="table table-dark table-custom-full">
                     <thead>
                         <tr>
                             <th class="text-center">Tanggal</th>
@@ -224,11 +224,32 @@
                 </table>
             </div>
         </div>
+
+        <div id="sec-analytics" class="section-content" style="display:none;">
+            <h3 class="mb-4 text-warning fw-bold">Analytics Keuangan</h3>
+            <div class="row">
+                <div class="col-md-8 mb-4">
+                    <div class="card-rekap-utama">
+                        <h5 class="text-center mb-4">Grafik Bulanan</h5>
+                        <canvas id="chartBulanan"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card-rekap-utama">
+                        <h5 class="text-center mb-4">Struktur Tahunan</h5>
+                        <canvas id="chartPie"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         let dataTransaksi = [];
         let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
+        let myChartB = null;
+        let myChartP = null;
 
         window.onload = function() {
             const list = document.getElementById('user-list');
@@ -236,17 +257,13 @@
         };
 
         function checkEnter(event) {
-            if (event.key === "Enter") {
-                handleLogin();
-            }
+            if (event.key === "Enter") handleLogin();
         }
 
-        // Script Login Update: Pesan error di bawah tombol
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
             const errorArea = document.getElementById('error-msg');
-
             if(u !== "" && p === "123") {
                 errorArea.style.display = 'none';
                 if(!savedUsers.includes(u)) {
@@ -257,7 +274,6 @@
                 document.getElementById('sidebar-menu').style.display = 'block';
                 document.getElementById('main-content-area').style.display = 'block';
             } else { 
-                // Munculkan teks error di bawah tombol, bukan alert
                 errorArea.style.display = 'block'; 
             }
         }
@@ -267,6 +283,7 @@
             document.getElementById('sec-' + id).style.display = 'block';
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             element.classList.add('active');
+            if(id === 'analytics') updateAnalytics();
         }
 
         document.querySelectorAll('.format-ribuan').forEach(input => {
@@ -281,7 +298,6 @@
             const nomRaw = document.getElementById(`nom-${tipe}`).value.replace(/,/g, '');
             const ket = document.getElementById(`ket-${tipe}`).value;
             const fileInput = document.getElementById(`file-${tipe}`);
-
             if(!tgl || !nomRaw || !ket) return alert("Mohon lengkapi semua data!");
 
             let fileData = "Gada"; 
@@ -289,23 +305,21 @@
                 fileData = URL.createObjectURL(fileInput.files[0]);
             }
 
-            const transaksi = {
+            dataTransaksi.push({
                 id: Date.now(),
                 tanggal: tgl,
                 tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
                 nominal: parseInt(nomRaw),
                 keterangan: ket,
                 bukti: fileData
-            };
+            });
 
-            dataTransaksi.push(transaksi);
             updateUI();
-            
+            alert("Transaksi Berhasil Dicatat!");
             document.getElementById(`tgl-${tipe}`).value = '';
             document.getElementById(`nom-${tipe}`).value = '';
             document.getElementById(`ket-${tipe}`).value = '';
             fileInput.value = '';
-            alert("Transaksi Berhasil Dicatat!");
         }
 
         function hapusData(id) {
@@ -336,26 +350,16 @@
                 else rekapBulanan[bulanKey].out += t.nominal;
 
                 const buktiHtml = t.bukti !== "Gada" ? `<img src="${t.bukti}" class="img-preview" onclick="window.open('${t.bukti}')">` : `<small class="opacity-50">Gada</small>`;
-                
                 const isKeluar = t.tipe === 'UANG KELUAR';
-                const displayNominal = isKeluar ? `- Rp ${t.nominal.toLocaleString()}` : `Rp ${t.nominal.toLocaleString()}`;
-                const colorNominal = isKeluar ? 'text-danger' : 'text-success';
-                const badgeClass = isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan';
-
                 tbody.innerHTML += `
                     <tr>
-                        <td class="text-center fw-bold text-secondary" style="font-size:0.85rem">${t.tanggal}</td>
-                        <td class="text-center"><span class="badge-tipe ${badgeClass}">${t.tipe}</span></td>
+                        <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
+                        <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
                         <td class="fw-bold">${t.keterangan}</td>
-                        <td class="${colorNominal} fw-bold text-nowrap">${displayNominal}</td>
+                        <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
                         <td class="text-center">${buktiHtml}</td>
-                        <td class="text-center">
-                            <button onclick="hapusData(${t.id})" class="btn-hapus-custom">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
+                        <td class="text-center"><button onclick="hapusData(${t.id})" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
+                    </tr>`;
             });
 
             const sisaTahun = totalTahunIn - totalTahunOut;
@@ -366,25 +370,35 @@
 
             for (const bulan in rekapBulanan) {
                 containerBulan.innerHTML += `
-                    <div class="col-md-4 col-12">
-                        <div class="box-premium">
-                            <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
-                            <div class="d-flex justify-content-between mb-1">
-                                <span style="font-size:0.75rem; font-weight:bold; color:#94a3b8;">UANG MASUK</span>
-                                <span class="text-success fw-bold">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span style="font-size:0.75rem; font-weight:bold; color:#94a3b8;">UANG KELUAR</span>
-                                <span class="text-danger fw-bold">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                    <div class="col-md-4 col-12"><div class="box-premium">
+                        <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
+                        <div class="d-flex justify-content-between mb-1"><span>MASUK</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
+                        <div class="d-flex justify-content-between"><span>KELUAR</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
+                    </div></div>`;
             }
+        }
 
-            if(dataTransaksi.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-secondary">Belum ada riwayat transaksi</td></tr>';
-            }
+        function updateAnalytics() {
+            const bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
+            dataTransaksi.forEach(t => {
+                const m = new Date(t.tanggal).getMonth();
+                if(t.tipe === 'UANG MASUK') dIn[m] += t.nominal; else dOut[m] += t.nominal;
+            });
+
+            if(myChartB) myChartB.destroy();
+            myChartB = new Chart(document.getElementById('chartBulanan'), {
+                type: 'bar',
+                data: { labels: bulanLabels, datasets: [{ label: 'Masuk', data: dIn, backgroundColor: '#22c55e' }, { label: 'Keluar', data: dOut, backgroundColor: '#ef4444' }] },
+                options: { scales: { y: { ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } }, plugins: { legend: { labels: { color: 'white' } } } }
+            });
+
+            if(myChartP) myChartP.destroy();
+            myChartP = new Chart(document.getElementById('chartPie'), {
+                type: 'doughnut',
+                data: { labels: ['Masuk', 'Keluar'], datasets: [{ data: [dIn.reduce((a,b)=>a+b,0), dOut.reduce((a,b)=>a+b,0)], backgroundColor: ['#22c55e', '#ef4444'] }] },
+                options: { plugins: { legend: { labels: { color: 'white' } } } }
+            });
         }
     </script>
 </body>
