@@ -16,7 +16,6 @@
         .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; border-left: 4px solid #38bdf8; }
         .main-content { margin-left: 240px; padding: 30px; display: none; }
         
-        /* Kotak Cantik (Glassmorphism Dark) */
         .card-rekap-utama { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #334155; }
         .box-premium { 
             background: linear-gradient(145deg, #1e293b, #0f172a); 
@@ -26,11 +25,25 @@
             margin-bottom: 20px;
         }
 
-        .table-custom { background: #1e293b; border-radius: 10px; overflow: hidden; }
-        .table-custom th { background: #334155; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
+        /* Desain Tabel Riwayat */
+        .table-custom { background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; }
+        .table-custom thead th { 
+            background: #0f172a; 
+            color: #38bdf8; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.2px;
+            padding: 15px;
+            border-bottom: 2px solid #334155;
+        }
+        .table-custom tbody td { padding: 15px; vertical-align: middle; border-bottom: 1px solid #334155; font-size: 0.95rem; }
         
-        /* Preview Gambar Kecil di Tabel */
-        .img-preview { width: 40px; height: 40px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 1px solid #38bdf8; }
+        .img-preview { width: 45px; height: 45px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 1px solid #38bdf8; transition: 0.3s; }
+        
+        /* Label Tipe yang Lebih Jelas */
+        .badge-tipe { padding: 8px 14px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; display: inline-block; min-width: 110px; text-align: center; }
+        .bg-pemasukan { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .bg-pengeluaran { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
         
         @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main-content { margin-left: 0; } }
     </style>
@@ -39,29 +52,28 @@
 
     <div id="login-section" class="login-page">
         <div class="login-card">
-            <h3 class="color-info fw-bold mb-4">FINANCE LOGIN</h3>
+            <h3 class="text-info fw-bold mb-4">FINANCE VIP</h3>
             <input type="text" id="user" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Username" list="user-list">
-            <datalist id="user-list"></datalist> 
-            
+            <datalist id="user-list"></datalist>
             <input type="password" id="pass" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Password">
-            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold">LOGIN</button>
+            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold">ENTER SYSTEM</button>
         </div>
     </div>
 
     <div class="sidebar" id="sidebar-menu">
         <div class="sidebar-header">MY FINANCE</div>
-        <div class="nav-link active" onclick="showSection('dashboard', this)"><i class="fa fa-home me-2"></i> Dashboard</div>
-        <div class="nav-link" onclick="showSection('masuk', this)"><i class="fa fa-arrow-down me-2 text-success"></i> Uang Masuk</div>
-        <div class="nav-link" onclick="showSection('keluar', this)"><i class="fa fa-arrow-up me-2 text-danger"></i> Uang Keluar</div>
-        <div class="nav-link" onclick="showSection('rekapan', this)"><i class="fa fa-file-invoice me-2 text-info"></i> Rekapan</div>
-        <div class="nav-link text-danger mt-5" onclick="location.reload()"><i class="fa fa-power-off me-2"></i> Logout</div>
+        <div class="nav-link active" onclick="showSection('dashboard', this)"><i class="fa fa-chart-line me-2"></i> Dashboard</div>
+        <div class="nav-link" onclick="showSection('masuk', this)"><i class="fa fa-plus-circle me-2 text-success"></i> Pemasukan</div>
+        <div class="nav-link" onclick="showSection('keluar', this)"><i class="fa fa-minus-circle me-2 text-danger"></i> Pengeluaran</div>
+        <div class="nav-link" onclick="showSection('rekapan', this)"><i class="fa fa-list-alt me-2 text-info"></i> Rekapan</div>
+        <div class="nav-link text-danger mt-5" onclick="location.reload()"><i class="fa fa-sign-out-alt me-2"></i> Logout</div>
     </div>
 
     <div class="main-content" id="main-content-area">
         <div id="sec-dashboard" class="section-content">
-            <h2 class="mb-4 fw-bold">Dashboard</h2>
-            <div class="card-rekap-utama text-center" style="background: linear-gradient(135deg, #0ea5e9, #2563eb); border:none;">
-                <p class="mb-1 opacity-75 fw-bold">TOTAL SALDO SAAT INI</p>
+            <h2 class="mb-4 fw-bold">Saldo Utama</h2>
+            <div class="card-rekap-utama text-center" style="background: linear-gradient(135deg, #2563eb, #3b82f6); border:none;">
+                <p class="mb-1 opacity-75 fw-bold text-uppercase" style="font-size: 0.8rem;">Total Saldo Saat Ini</p>
                 <h1 class="fw-bold display-3" id="total-saldo-display">Rp 0</h1>
             </div>
         </div>
@@ -69,43 +81,46 @@
         <div id="sec-masuk" class="section-content" style="display:none;">
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
             <div class="card-rekap-utama">
-                <div class="mb-3"><label>Tanggal</label><input type="date" id="tgl-masuk" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-masuk" class="form-control bg-dark text-white border-secondary format-ribuan"></div>
-                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-masuk" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label><i class="fa fa-camera me-1"></i> Bukti Pembayaran</label><input type="file" id="file-masuk" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
-                <button onclick="simpanTransaksi('masuk')" class="btn btn-success w-100 fw-bold">SIMPAN DATA</button>
+                <div class="mb-3"><label class="mb-2">Tanggal</label><input type="date" id="tgl-masuk" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label class="mb-2">Nominal (Rp)</label><input type="text" id="nom-masuk" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="0"></div>
+                <div class="mb-3"><label class="mb-2">Keterangan</label><input type="text" id="ket-masuk" class="form-control bg-dark text-white border-secondary" placeholder="Contoh: Gaji Bulanan"></div>
+                <div class="mb-3"><label class="mb-2">Upload Bukti</label><input type="file" id="file-masuk" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
+                <button onclick="simpanTransaksi('masuk')" class="btn btn-success w-100 fw-bold py-3">SIMPAN DATA MASUK</button>
             </div>
         </div>
 
         <div id="sec-keluar" class="section-content" style="display:none;">
             <h3 class="mb-4 text-danger fw-bold">Catat Pengeluaran</h3>
             <div class="card-rekap-utama">
-                <div class="mb-3"><label>Tanggal</label><input type="date" id="tgl-keluar" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-keluar" class="form-control bg-dark text-white border-secondary format-ribuan"></div>
-                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-keluar" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label><i class="fa fa-camera me-1"></i> Bukti Pengeluaran</label><input type="file" id="file-keluar" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
-                <button onclick="simpanTransaksi('keluar')" class="btn btn-danger w-100 fw-bold">SIMPAN DATA</button>
+                <div class="mb-3"><label class="mb-2">Tanggal</label><input type="date" id="tgl-keluar" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label class="mb-2">Nominal (Rp)</label><input type="text" id="nom-keluar" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="0"></div>
+                <div class="mb-3"><label class="mb-2">Keterangan</label><input type="text" id="ket-keluar" class="form-control bg-dark text-white border-secondary" placeholder="Contoh: Beli Makan"></div>
+                <div class="mb-3"><label class="mb-2">Upload Bukti</label><input type="file" id="file-keluar" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
+                <button onclick="simpanTransaksi('keluar')" class="btn btn-danger w-100 fw-bold py-3">SIMPAN DATA KELUAR</button>
             </div>
         </div>
 
         <div id="sec-rekapan" class="section-content" style="display:none;">
-            <h3 class="mb-4 text-info fw-bold" id="judul-tahun">LAPORAN TAHUN 2026</h3>
+            <h3 class="mb-4 text-info fw-bold">LAPORAN TAHUN 2026</h3>
             <div class="row mb-4">
                 <div class="col-md-4 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pemasukan / Tahun</small><br><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
-                <div class="col-md-4 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pengeluaran / Tahun</small><br><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp 0</span></div></div>
+                <div class="col-md-4 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pengeluaran / Tahun</small><br><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
                 <div class="col-md-4 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Sisa Hasil / Tahun</small><br><span class="text-info h4 fw-bold" id="rekap-tahun-sisa">Rp 0</span></div></div>
             </div>
+
             <div id="container-bulanan" class="row"></div>
-            <h5 class="mt-4 fw-bold">Riwayat Transaksi</h5>
+
+            <h5 class="mt-4 fw-bold mb-3">Riwayat Transaksi</h5>
             <div class="table-responsive table-custom">
                 <table class="table table-dark mb-0">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Tipe</th>
                             <th>Keterangan</th>
                             <th>Nominal</th>
-                            <th>Bukti</th>
-                            <th>Hapus</th>
+                            <th class="text-center">Bukti</th>
+                            <th class="text-center">Hapus</th>
                         </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -118,32 +133,23 @@
         let dataTransaksi = [];
         let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
 
-        // Fungsi untuk memuat list username saat halaman dibuka
         window.onload = function() {
             const list = document.getElementById('user-list');
-            savedUsers.forEach(u => {
-                list.innerHTML += `<option value="${u}">`;
-            });
+            savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
         };
 
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
-            
-            // Login sederhana (bisa Anda sesuaikan)
             if(u !== "" && p === "123") {
-                // Simpan username baru jika belum ada di list
                 if(!savedUsers.includes(u)) {
                     savedUsers.push(u);
                     localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
                 }
-
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('sidebar-menu').style.display = 'block';
                 document.getElementById('main-content-area').style.display = 'block';
-            } else { 
-                alert("Login Gagal! Pastikan password benar."); 
-            }
+            } else { alert("Akses Ditolak!"); }
         }
 
         function showSection(id, element) {
@@ -153,6 +159,7 @@
             element.classList.add('active');
         }
 
+        // Auto Format Ribuan
         document.querySelectorAll('.format-ribuan').forEach(input => {
             input.addEventListener('keyup', function() {
                 let val = this.value.replace(/[^0-9]/g, '');
@@ -166,7 +173,7 @@
             const ket = document.getElementById(`ket-${tipe}`).value;
             const fileInput = document.getElementById(`file-${tipe}`);
 
-            if(!tgl || !nomRaw || !ket) return alert("Isi semua data!");
+            if(!tgl || !nomRaw || !ket) return alert("Mohon lengkapi semua data!");
 
             let fileData = "Gada"; 
             if (fileInput.files && fileInput.files[0]) {
@@ -176,7 +183,7 @@
             const transaksi = {
                 id: Date.now(),
                 tanggal: tgl,
-                tipe: tipe === 'masuk' ? 'Masuk' : 'Keluar',
+                tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
                 nominal: parseInt(nomRaw),
                 keterangan: ket,
                 bukti: fileData
@@ -185,15 +192,16 @@
             dataTransaksi.push(transaksi);
             updateUI();
             
+            // Reset Form
             document.getElementById(`tgl-${tipe}`).value = '';
             document.getElementById(`nom-${tipe}`).value = '';
             document.getElementById(`ket-${tipe}`).value = '';
             fileInput.value = '';
-            alert("Data Berhasil Disimpan!");
+            alert("Transaksi Berhasil Dicatat!");
         }
 
         function hapusData(id) {
-            if(confirm("Hapus data ini?")) {
+            if(confirm("Hapus catatan ini?")) {
                 dataTransaksi = dataTransaksi.filter(t => t.id !== id);
                 updateUI();
             }
@@ -212,29 +220,36 @@
                 const dateObj = new Date(t.tanggal);
                 const bulanKey = dateObj.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
 
-                if(t.tipe === 'Masuk') totalTahunIn += t.nominal;
+                if(t.tipe === 'UANG MASUK') totalTahunIn += t.nominal;
                 else totalTahunOut += t.nominal;
 
                 if (!rekapBulanan[bulanKey]) rekapBulanan[bulanKey] = { in: 0, out: 0 };
-                if (t.tipe === 'Masuk') rekapBulanan[bulanKey].in += t.nominal;
+                if (t.tipe === 'UANG MASUK') rekapBulanan[bulanKey].in += t.nominal;
                 else rekapBulanan[bulanKey].out += t.nominal;
 
                 const buktiHtml = t.bukti !== "Gada" ? `<img src="${t.bukti}" class="img-preview" onclick="window.open('${t.bukti}')">` : `<small class="opacity-50">Gada</small>`;
+                
+                // Logika Tampilan Minus & Warna
+                const isKeluar = t.tipe === 'UANG KELUAR';
+                const displayNominal = isKeluar ? `- Rp ${t.nominal.toLocaleString()}` : `Rp ${t.nominal.toLocaleString()}`;
+                const colorNominal = isKeluar ? 'text-danger' : 'text-success';
+                const badgeClass = isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan';
 
                 tbody.innerHTML += `
                     <tr>
-                        <td>${t.tanggal} <br> <span class="badge ${t.tipe === 'Masuk' ? 'bg-success' : 'bg-danger'}">${t.tipe}</span></td>
-                        <td>${t.keterangan}</td>
-                        <td>Rp ${t.nominal.toLocaleString()}</td>
-                        <td>${buktiHtml}</td>
-                        <td><button onclick="hapusData(${t.id})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button></td>
+                        <td class="text-center fw-bold text-secondary" style="font-size:0.85rem">${t.tanggal}</td>
+                        <td class="text-center"><span class="badge-tipe ${badgeClass}">${t.tipe}</span></td>
+                        <td class="fw-bold">${t.keterangan}</td>
+                        <td class="${colorNominal} fw-bold text-nowrap">${displayNominal}</td>
+                        <td class="text-center">${buktiHtml}</td>
+                        <td class="text-center"><button onclick="hapusData(${t.id})" class="btn btn-sm btn-outline-danger border-0"><i class="fa fa-trash-alt"></i></button></td>
                     </tr>
                 `;
             });
 
             const sisaTahun = totalTahunIn - totalTahunOut;
             document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
-            document.getElementById('rekap-tahun-out').innerText = `Rp ${totalTahunOut.toLocaleString()}`;
+            document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
             document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
             document.getElementById('total-saldo-display').innerText = `Rp ${sisaTahun.toLocaleString()}`;
 
@@ -242,16 +257,16 @@
                 containerBulan.innerHTML += `
                     <div class="col-md-4">
                         <div class="box-premium">
-                            <h6 class="fw-bold mb-3"><i class="fa fa-calendar-alt me-2 text-info"></i>${bulan}</h6>
-                            <div class="d-flex justify-content-between small"><span>Masuk:</span><span class="text-success fw-bold">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
-                            <div class="d-flex justify-content-between small"><span>Keluar:</span><span class="text-danger fw-bold">Rp ${rekapBulanan[bulan].out.toLocaleString()}</span></div>
+                            <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
+                            <div class="d-flex justify-content-between mb-1"><span>Masuk:</span><span class="text-success fw-bold">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
+                            <div class="d-flex justify-content-between"><span>Keluar:</span><span class="text-danger fw-bold">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
                         </div>
                     </div>
                 `;
             }
 
             if(dataTransaksi.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 opacity-50">Belum ada data</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-secondary">Belum ada riwayat transaksi</td></tr>';
             }
         }
     </script>
