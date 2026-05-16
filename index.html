@@ -409,45 +409,54 @@ let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
     }
 }
 
-        function updateAnalytics() {
-            const bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-            let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
-           // Filter data berdasarkan tahun sebelum dimasukkan ke grafik
+            function updateAnalytics() {
+    // WAJIB: Hancurkan grafik lama biar memori bersih & GAK LAG
+    if (window.myChartB) window.myChartB.destroy();
+    if (window.myChartP) window.myChartP.destroy();
+
+    const bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
+    
+    // Ambil tahun dari dropdown
     const tahunFilter = document.getElementById('pilih-tahun').value;
     
+    // Filter data (Hanya hitung tahun yang dipilih)
     dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter).forEach(t => {
         const m = new Date(t.tanggal).getMonth();
         if(t.tipe === 'UANG MASUK') dIn[m] += t.nominal; 
         else dOut[m] += t.nominal;
     });
 
-            if(myChartB) myChartB.destroy();
-            myChartB = new Chart(document.getElementById('chartBulanan'), {
-                type: 'bar',
-                data: { labels: bulanLabels, datasets: [{ label: 'Masuk', data: dIn, backgroundColor: '#22c55e' }, { label: 'Keluar', data: dOut, backgroundColor: '#ef4444' }] },
-                options: { scales: { y: { ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } }, plugins: { legend: { labels: { color: 'white' } } } }
-            });
+    // Gambar ulang grafik Bar
+    const ctxB = document.getElementById('chartBulanan').getContext('2d');
+    window.myChartB = new Chart(ctxB, {
+        type: 'bar',
+        data: { labels: bulanLabels, datasets: [{ label: 'Masuk', data: dIn, backgroundColor: '#22c55e' }, { label: 'Keluar', data: dOut, backgroundColor: '#ef4444' }] },
+        options: { responsive: true, scales: { y: { ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } } }
+    });
 
-            if(myChartP) myChartP.destroy();
-            myChartP = new Chart(document.getElementById('chartPie'), {
-                type: 'doughnut',
-                data: { labels: ['Masuk', 'Keluar'], datasets: [{ data: [dIn.reduce((a,b)=>a+b,0), dOut.reduce((a,b)=>a+b,0)], backgroundColor: ['#22c55e', '#ef4444'] }] },
-                options: { plugins: { legend: { labels: { color: 'white' } } } }
-            });
-        }
-        // PERINTAH UNTUK FILTER TAHUN
+    // Gambar ulang grafik Pie
+    const ctxP = document.getElementById('chartPie').getContext('2d');
+    window.myChartP = new Chart(ctxP, {
+        type: 'doughnut',
+        data: { labels: ['Masuk', 'Keluar'], datasets: [{ data: [dIn.reduce((a,b)=>a+b,0), dOut.reduce((a,b)=>a+b,0)], backgroundColor: ['#22c55e', '#ef4444'] }] }
+    });
+}
+     // PERINTAH UNTUK FILTER TAHUN
 document.getElementById('pilih-tahun').addEventListener('change', function() {
     const tahunTerpilih = this.value;
     
-    // Ganti tulisan judul laporan di dashboard
+    // 1. Ganti judul (Langsung ganti, biar gak nunggu)
     const judul = document.querySelector('#sec-rekapan h3');
     if (judul) {
         judul.innerText = `LAPORAN TAHUN ${tahunTerpilih}`;
     }
 
-    // Jalankan fungsi update agar data & grafik berubah sesuai tahun
-    if (typeof updateRekapan === "function") updateRekapan();
-    if (typeof updateAnalytics === "function") updateAnalytics();
+    // 2. Bungkus semua fungsi update di dalam sini (Biar GAK LEMOT)
+    setTimeout(() => {
+        if (typeof updateUI === "function") updateUI();
+        if (typeof updateAnalytics === "function") updateAnalytics();
+    }, 100); // Kasih jeda 0.1 detik biar browser napas
 });
     </script>
 </body>
