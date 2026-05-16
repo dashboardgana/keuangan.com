@@ -63,7 +63,10 @@
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
             <div class="card-rekap-utama">
                 <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Nominal (Rp)</label><input type="number" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3">
+                    <label>Nominal (Rp)</label>
+                    <input type="text" id="nominal-masuk" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="0">
+                </div>
                 <div class="mb-3"><label>Keterangan</label><input type="text" class="form-control bg-dark text-white border-secondary"></div>
                 <div class="mb-3"><label>Upload Bukti</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
                 <button class="btn btn-success w-100 fw-bold">SIMPAN DATA</button>
@@ -74,7 +77,10 @@
             <h3 class="mb-4 text-danger fw-bold">Catat Pengeluaran</h3>
             <div class="card-rekap-utama">
                 <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Nominal (Rp)</label><input type="number" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3">
+                    <label>Nominal (Rp)</label>
+                    <input type="text" id="nominal-keluar" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="0">
+                </div>
                 <div class="mb-3"><label>Keterangan</label><input type="text" class="form-control bg-dark text-white border-secondary"></div>
                 <div class="mb-3"><label>Upload Bukti</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
                 <button class="btn btn-danger w-100 fw-bold">SIMPAN DATA</button>
@@ -120,6 +126,7 @@
     </div>
 
     <script>
+        // SCRIPT 1: Login & Navigasi
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
@@ -136,6 +143,19 @@
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             element.classList.add('active');
         }
+
+        // SCRIPT 2: Otomatis Koma (Ribuan) Saat Mengetik
+        document.querySelectorAll('.format-ribuan').forEach(input => {
+            input.addEventListener('keyup', function(e) {
+                // Ambil angka saja
+                let val = this.value.replace(/[^0-9]/g, '');
+                
+                // Tambahkan koma setiap 3 angka
+                if (val !== "") {
+                    this.value = parseInt(val).toLocaleString('en-US');
+                }
+            });
+        });
     </script>
 </body>
 </html>
