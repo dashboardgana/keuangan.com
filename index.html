@@ -156,14 +156,24 @@
     <div class="nav-link text-danger mt-5" onclick="location.reload()">↪️ Logout</div>
 </div>
 
-    <div class="main-content" id="main-content-area">
-        <div id="sec-dashboard" class="section-content">
-            <h2 class="mb-4 fw-bold">Saldo Utama</h2>
-            <div class="card-rekap-utama text-center" style="background: linear-gradient(135deg, #1d4ed8, #2563eb); border:none; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);">
-                <p class="mb-1 opacity-75 fw-bold text-uppercase" style="font-size: 0.8rem;">Total Saldo Saat Ini</p>
-                <h1 class="fw-bold display-3" id="total-saldo-display">Rp 0</h1>
+   <div class="main-content" id="main-content-area">
+    <div id="sec-dashboard" class="section-content">
+        <h2 class="mb-4 fw-bold">Saldo Utama</h2>
+        
+        <div class="card-saldo-modern">
+            <div class="saldo-info">
+                <p class="mb-1 text-uppercase fw-bold opacity-75" style="font-size: 0.8rem; letter-spacing: 1px;">Total Saldo Saat Ini</p>
+                <h1 class="fw-bold display-4" id="total-saldo-display">Rp 0</h1>
+            </div>
+            
+            <div class="marquee-wrapper">
+                <marquee behavior="scroll" direction="left" scrollamount="5">
+                    ✨ Semoga sukses selalu, rezeki lancar, dan tetap semangat dalam mengelola keuangan! ✨
+                </marquee>
             </div>
         </div>
+    </div>
+</div>
 
         <div id="sec-masuk" class="section-content" style="display:none;">
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
