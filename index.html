@@ -3,79 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Dashboard VIP</title>
+    <title>Sistem Keuangan Gana</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
     <style>
-        body { margin: 0; background: #0f172a; font-family: 'Segoe UI', sans-serif; color: white; overflow-x: hidden; }
-        .login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: radial-gradient(circle, #1e293b 0%, #0f172a 100%); }
-        .login-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .sidebar { width: 260px; height: 100vh; background: #1e293b; position: fixed; left: 0; top: 0; transition: 0.3s; z-index: 999; border-right: 1px solid rgba(255,255,255,0.1); }
-        .main-content { margin-left: 260px; padding: 25px; transition: 0.3s; }
-        .card-custom { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; margin-bottom: 20px; }
-        @media (max-width: 768px) { .sidebar { left: -260px; } .sidebar.active { left: 0; } .main-content { margin-left: 0; } }
+        body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
+        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; }
+        .sidebar-header { padding: 20px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; }
+        .nav-link { color: #94a3b8; padding: 12px 20px; display: block; text-decoration: none; transition: 0.3s; cursor: pointer; }
+        .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; }
+        .main-content { margin-left: 240px; padding: 30px; }
+        .card-custom { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .btn-input { background: #38bdf8; color: #0f172a; border: none; font-weight: bold; }
+        .table-custom { color: white; }
+        @media (max-width: 768px) { .sidebar { width: 70px; } .sidebar span { display: none; } .main-content { margin-left: 70px; } }
     </style>
 </head>
 <body>
-    <div id="login-section" class="login-page">
-        <div class="login-card">
-            <h2 style="color: #38bdf8;" class="fw-bold">FINANCE LOGIN</h2>
-            <p class="text-secondary">Masukkan Akses Admin</p>
-            <input type="text" id="user" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Username">
-            <input type="password" id="pass" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Password">
-            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold">MASUK SEKARANG</button>
+
+<div class="sidebar">
+    <div class="sidebar-header">MY FINANCE</div>
+    <div class="nav-link active" onclick="showSection('dashboard')"><i class="fa fa-home me-2"></i> <span>Dashboard</span></div>
+    <div class="nav-link" onclick="showSection('masuk')"><i class="fa fa-arrow-down me-2 text-success"></i> <span>Uang Masuk</span></div>
+    <div class="nav-link" onclick="showSection('keluar')"><i class="fa fa-arrow-up me-2 text-danger"></i> <span>Uang Keluar</span></div>
+    <div class="nav-link" onclick="showSection('rekapan')"><i class="fa fa-file-invoice me-2 text-info"></i> <span>Rekapan</span></div>
+    <div style="position: absolute; bottom: 20px; width: 100%;">
+        <div class="nav-link text-danger" onclick="location.reload()"><i class="fa fa-sign-out-alt me-2"></i> <span>Logout</span></div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div id="sec-dashboard" class="section-content">
+        <h3 class="mb-4">Saldo Utama</h3>
+        <div class="card-custom text-center" style="background: linear-gradient(135deg, #0ea5e9, #2563eb);">
+            <p class="mb-0 small">TOTAL SALDO SAAT INI</p>
+            <h1 class="fw-bold">Rp 5.000.000</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><div class="card-custom">Pemasukan Bulan Ini<h4 class="text-success">Rp 0</h4></div></div>
+            <div class="col-md-6"><div class="card-custom">Pengeluaran Bulan Ini<h4 class="text-danger">Rp 0</h4></div></div>
         </div>
     </div>
 
-    <div id="dashboard-section" style="display: none;">
-        <div class="sidebar" id="sidebar">
-            <div class="p-4">
-                <h4 class="fw-bold text-info">MY FINANCE</h4><hr>
-                <button class="btn text-white w-100 text-start mb-2" onclick="showTab('home')"><i class="fa fa-home me-2"></i> Dashboard</button>
-                <button class="btn text-white w-100 text-start mb-2" onclick="showTab('input')"><i class="fa fa-plus-circle me-2"></i> Input Data</button>
-                <button class="btn btn-outline-danger w-100 mt-5" onclick="location.reload()">LOGOUT</button>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <button class="btn btn-outline-info d-md-none mb-3" onclick="document.getElementById('sidebar').classList.toggle('active')"><i class="fa fa-bars"></i> MENU</button>
-            
-            <div id="home-tab">
-                <div class="card-custom text-center" style="background: linear-gradient(45deg, #0ea5e9, #2563eb);">
-                    <p class="mb-1">SALDO UTAMA</p><h1 class="fw-bold">Rp 0</h1>
-                </div>
-                <div class="row px-2">
-                    <div class="col-6 p-1"><div class="card-custom text-center border-success">Pemasukan<h4 class="text-success">Rp 0</h4></div></div>
-                    <div class="col-6 p-1"><div class="card-custom text-center border-danger">Pengeluaran<h4 class="text-danger">Rp 0</h4></div></div>
-                </div>
-            </div>
-
-            <div id="input-tab" style="display:none;">
-                <div class="card-custom">
-                    <h5 class="fw-bold mb-3">Catat Transaksi</h5>
-                    <select class="form-select bg-dark text-white border-secondary mb-2"><option>Pemasukan</option><option>Pengeluaran</option></select>
-                    <input type="number" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Nominal Rp">
-                    <textarea class="form-control bg-dark text-white border-secondary mb-2" placeholder="Keterangan"></textarea>
-                    <label class="small text-secondary">Lampiran Screenshot:</label>
-                    <input type="file" class="form-control bg-dark text-white border-secondary mb-3">
-                    <button class="btn btn-info w-100 fw-bold">SIMPAN DATA</button>
-                </div>
-            </div>
+    <div id="sec-masuk" class="section-content" style="display:none;">
+        <h3 class="mb-4 text-success">Input Uang Masuk</h3>
+        <div class="card-custom">
+            <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
+            <div class="mb-3"><label>Nominal</label><input type="number" class="form-control bg-dark text-white border-secondary" placeholder="Rp 0"></div>
+            <div class="mb-3"><label>Keterangan</label><textarea class="form-control bg-dark text-white border-secondary"></textarea></div>
+            <div class="mb-3"><label>Bukti Transfer (Galeri)</label><input type="file" class="form-control bg-dark text-white border-secondary"></div>
+            <button class="btn btn-input w-100 p-2">SIMPAN PEMASUKAN</button>
         </div>
     </div>
 
-    <script>
-        function handleLogin() {
-            // USERNAME: gana | PASSWORD: 123
-            if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") {
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('dashboard-section').style.display = 'block';
-            } else { alert("Akses Ditolak!"); }
-        }
-        function showTab(t) {
-            document.getElementById('home-tab').style.display = t === 'home' ? 'block' : 'none';
-            document.getElementById('input-tab').style.display = t === 'input' ? 'block' : 'none';
-        }
-    </script>
+    <div id="sec-keluar" class="section-content" style="display:none;">
+        <h3 class="mb-4 text-danger">Input Uang Keluar</h3>
+        <div class="card-custom">
+            <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
+            <div class="mb-3"><label>Nominal</label><input type="number" class="form-control bg-dark text-white border-secondary" placeholder="Rp 0"></div>
+            <div class="mb-3"><label>Keterangan</label><textarea class="form-control bg-dark text-white border-secondary"></textarea></div>
+            <div class="mb-3"><label>Bukti Nota/Transfer</label><input type="file" class="form-control bg-dark text-white border-secondary"></div>
+            <button class="btn btn-danger w-100 p-2 fw-bold">SIMPAN PENGELUARAN</button>
+        </div>
+    </div>
+
+    <div id="sec-rekapan" class="section-content" style="display:none;">
+        <h3 class="mb-4 text-info">Rekapan Bulanan</h3>
+        <div class="card-custom">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>Bulan</th>
+                        <th>Masuk</th>
+                        <th>Keluar</th>
+                        <th>Sisa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Mei 2026</td><td class="text-success">Rp 10.000.000</td><td class="text-danger">Rp 5.000.000</td><td>Rp 5.000.000</td></tr>
+                    <tr><td>April 2026</td><td class="text-success">Rp 8.000.000</td><td class="text-danger">Rp 4.000.000</td><td>Rp 4.000.000</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSection(id) {
+        // Sembunyikan semua section
+        document.querySelectorAll('.section-content').forEach(s => s.style.display = 'none');
+        // Tampilkan yang dipilih
+        document.getElementById('sec-' + id).style.display = 'block';
+        // Update menu aktif
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
 </body>
 </html>
