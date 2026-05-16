@@ -7,94 +7,115 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
     <style>
-        body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
-        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; }
+        body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* HALAMAN LOGIN */
+        .login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: radial-gradient(circle, #1e293b 0%, #0f172a 100%); }
+        .login-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); width: 90%; max-width: 400px; text-align: center; }
+
+        /* SIDEBAR & KONTEN */
+        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; display: none; }
         .sidebar-header { padding: 25px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; font-size: 1.2rem; }
-        .nav-link { color: #94a3b8; padding: 15px 25px; display: block; text-decoration: none; transition: 0.3s; cursor: pointer; border-left: 4px solid transparent; }
+        .nav-link { color: #94a3b8; padding: 15px 25px; display: block; text-decoration: none; cursor: pointer; border-left: 4px solid transparent; }
         .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; border-left: 4px solid #38bdf8; }
-        .main-content { margin-left: 240px; padding: 30px; }
+        .main-content { margin-left: 240px; padding: 30px; display: none; }
         .card-custom { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .btn-input { background: #38bdf8; color: #0f172a; border: none; font-weight: bold; padding: 12px; }
-        @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main-content { margin-left: 0; } }
+        
+        @media (max-width: 768px) { 
+            .sidebar { width: 100%; height: auto; position: relative; } 
+            .main-content { margin-left: 0; padding: 15px; } 
+        }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <div class="sidebar-header"><i class="fa fa-wallet me-2"></i>MY FINANCE</div>
-    <div class="nav-link active" onclick="showSection('dashboard', this)"><i class="fa fa-home me-2"></i> Dashboard</div>
-    <div class="nav-link" onclick="showSection('masuk', this)"><i class="fa fa-plus-circle me-2 text-success"></i> Uang Masuk</div>
-    <div class="nav-link" onclick="showSection('keluar', this)"><i class="fa fa-minus-circle me-2 text-danger"></i> Uang Keluar</div>
-    <div class="nav-link" onclick="showSection('rekapan', this)"><i class="fa fa-list-alt me-2 text-info"></i> Rekapan</div>
-    <div class="nav-link text-danger mt-5" onclick="location.reload()"><i class="fa fa-power-off me-2"></i> Logout</div>
-</div>
-
-<div class="main-content">
-    <div id="sec-dashboard" class="section-content">
-        <h3 class="mb-4 fw-bold">Saldo Utama</h3>
-        <div class="card-custom text-center" style="background: linear-gradient(135deg, #0ea5e9, #2563eb);">
-            <p class="mb-1 opacity-75">TOTAL SALDO KESELURUHAN</p>
-            <h1 class="fw-bold display-4">Rp 0</h1>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><div class="card-custom">Pemasukan Bulan Ini<h4 class="text-success fw-bold">Rp 0</h4></div></div>
-            <div class="col-md-6"><div class="card-custom">Pengeluaran Bulan Ini<h4 class="text-danger fw-bold">Rp 0</h4></div></div>
+    <div id="login-section" class="login-page">
+        <div class="login-card">
+            <h2 style="color: #38bdf8;" class="fw-bold mb-4">FINANCE LOGIN</h2>
+            <input type="text" id="user" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Username">
+            <input type="password" id="pass" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Password">
+            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold">MASUK SEKARANG</button>
         </div>
     </div>
 
-    <div id="sec-masuk" class="section-content" style="display:none;">
-        <h3 class="mb-4 text-success fw-bold">Catat Uang Masuk</h3>
-        <div class="card-custom">
-            <div class="mb-3"><label class="mb-2">Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
-            <div class="mb-3"><label class="mb-2">Nominal (Rp)</label><input type="number" class="form-control bg-dark text-white border-secondary" placeholder="Contoh: 500000"></div>
-            <div class="mb-3"><label class="mb-2">Keterangan</label><textarea class="form-control bg-dark text-white border-secondary" rows="3" placeholder="Uang dari..."></textarea></div>
-            <div class="mb-3"><label class="mb-2">Bukti Transfer (Galeri)</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
-            <button class="btn btn-input w-100">SIMPAN PEMASUKAN</button>
-        </div>
+    <div class="sidebar" id="sidebar-menu">
+        <div class="sidebar-header"><i class="fa fa-wallet me-2"></i>MY FINANCE</div>
+        <div class="nav-link active" onclick="showSection('dashboard', this)"><i class="fa fa-home me-2"></i> Dashboard</div>
+        <div class="nav-link" onclick="showSection('masuk', this)"><i class="fa fa-arrow-down me-2 text-success"></i> Uang Masuk</div>
+        <div class="nav-link" onclick="showSection('keluar', this)"><i class="fa fa-arrow-up me-2 text-danger"></i> Uang Keluar</div>
+        <div class="nav-link" onclick="showSection('rekapan', this)"><i class="fa fa-list-alt me-2 text-info"></i> Rekapan</div>
+        <div class="nav-link text-danger mt-5" onclick="location.reload()"><i class="fa fa-power-off me-2"></i> Logout</div>
     </div>
 
-    <div id="sec-keluar" class="section-content" style="display:none;">
-        <h3 class="mb-4 text-danger fw-bold">Catat Uang Keluar</h3>
-        <div class="card-custom">
-            <div class="mb-3"><label class="mb-2">Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
-            <div class="mb-3"><label class="mb-2">Nominal (Rp)</label><input type="number" class="form-control bg-dark text-white border-secondary" placeholder="Contoh: 100000"></div>
-            <div class="mb-3"><label class="mb-2">Keterangan</label><textarea class="form-control bg-dark text-white border-secondary" rows="3" placeholder="Bayar untuk..."></textarea></div>
-            <div class="mb-3"><label class="mb-2">Bukti Nota/Keluar (Galeri)</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
-            <button class="btn btn-danger w-100 fw-bold p-2">SIMPAN PENGELUARAN</button>
+    <div class="main-content" id="main-content-area">
+        <div id="sec-dashboard" class="section-content">
+            <h3 class="mb-4 fw-bold">Saldo Utama</h3>
+            <div class="card-custom text-center" style="background: linear-gradient(135deg, #0ea5e9, #2563eb);">
+                <p class="mb-1 opacity-75">TOTAL SALDO SAAT INI</p>
+                <h1 class="fw-bold display-4">Rp 0</h1>
+            </div>
+            <div class="row">
+                <div class="col-6"><div class="card-custom">Masuk/Bulan<h4 class="text-success fw-bold">Rp 0</h4></div></div>
+                <div class="col-6"><div class="card-custom">Keluar/Bulan<h4 class="text-danger fw-bold">Rp 0</h4></div></div>
+            </div>
         </div>
-    </div>
 
-    <div id="sec-rekapan" class="section-content" style="display:none;">
-        <h3 class="mb-4 text-info fw-bold">Rekapan Bulanan</h3>
-        <div class="card-custom">
-            <div class="table-responsive">
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th>Bulan</th>
-                            <th>Uang Masuk</th>
-                            <th>Uang Keluar</th>
-                            <th>Sisa Saldo</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rekap-body">
-                        <tr><td>Mei 2026</td><td class="text-success">Rp 0</td><td class="text-danger">Rp 0</td><td class="fw-bold">Rp 0</td></tr>
-                        <tr><td>Juni 2026</td><td class="text-success">Rp 0</td><td class="text-danger">Rp 0</td><td class="fw-bold">Rp 0</td></tr>
+        <div id="sec-masuk" class="section-content" style="display:none;">
+            <h3 class="mb-4 text-success fw-bold">Input Uang Masuk</h3>
+            <div class="card-custom">
+                <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label>Nominal (Rp)</label><input type="number" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label>Keterangan</label><textarea class="form-control bg-dark text-white border-secondary"></textarea></div>
+                <div class="mb-3"><label>Bukti Transfer (Galeri)</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
+                <button class="btn btn-info w-100 fw-bold">SIMPAN DATA</button>
+            </div>
+        </div>
+
+        <div id="sec-keluar" class="section-content" style="display:none;">
+            <h3 class="mb-4 text-danger fw-bold">Input Uang Keluar</h3>
+            <div class="card-custom">
+                <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label>Nominal (Rp)</label><input type="number" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label>Keterangan</label><textarea class="form-control bg-dark text-white border-secondary"></textarea></div>
+                <div class="mb-3"><label>Bukti Nota (Galeri)</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
+                <button class="btn btn-danger w-100 fw-bold text-white">SIMPAN DATA</button>
+            </div>
+        </div>
+
+        <div id="sec-rekapan" class="section-content" style="display:none;">
+            <h3 class="mb-4 text-info fw-bold">Rekapan Bulanan</h3>
+            <div class="card-custom">
+                <table class="table table-dark">
+                    <thead><tr><th>Bulan</th><th>Masuk</th><th>Keluar</th><th>Sisa</th></tr></thead>
+                    <tbody>
+                        <tr><td>Mei 2026</td><td class="text-success">Rp 0</td><td class="text-danger">Rp 0</td><td>Rp 0</td></tr>
+                        <tr><td>Juni 2026</td><td class="text-success">Rp 0</td><td class="text-danger">Rp 0</td><td>Rp 0</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    function showSection(id, element) {
-        document.querySelectorAll('.section-content').forEach(s => s.style.display = 'none');
-        document.getElementById('sec-' + id).style.display = 'block';
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        element.classList.add('active');
-    }
-</script>
+    <script>
+        function handleLogin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            // Ganti "admin" dan "123" sesuai keinginanmu
+            if(u === "admin" && p === "123") {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('sidebar-menu').style.display = 'block';
+                document.getElementById('main-content-area').style.display = 'block';
+            } else {
+                alert("Username atau Password Salah!");
+            }
+        }
 
+        function showSection(id, element) {
+            document.querySelectorAll('.section-content').forEach(s => s.style.display = 'none');
+            document.getElementById('sec-' + id).style.display = 'block';
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
