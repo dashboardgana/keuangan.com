@@ -347,61 +347,75 @@
         }
 
         function updateUI() {
-            const tbody = document.getElementById('table-body');
-            const containerBulan = document.getElementById('container-bulanan');
-            tbody.innerHTML = '';
-            containerBulan.innerHTML = '';
-            
-            let totalTahunIn = 0, totalTahunOut = 0;
-            let rekapBulanan = {};
+    const tbody = document.getElementById('table-body'); // Sesuaikan ID tabel abang
+    const containerBulan = document.getElementById('container-bulanan');
+    const tahunFilter = document.getElementById('pilih-tahun').value; // Ambil tahun yang dipilih
+    
+    tbody.innerHTML = '';
+    containerBulan.innerHTML = '';
+    
+    let totalTahunIn = 0, totalTahunOut = 0;
+    let rekapBulanan = {};
 
-            dataTransaksi.sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
-                const dateObj = new Date(t.tanggal);
-                const bulanKey = dateObj.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+    // --- PROSES FILTER TAHUN DI SINI ---
+    const dataFiltered = dataTransaksi.filter(t => {
+        const tahunData = t.tanggal.split('-')[0]; 
+        return tahunData === tahunFilter;
+    });
 
-                if(t.tipe === 'UANG MASUK') totalTahunIn += t.nominal;
-                else totalTahunOut += t.nominal;
+    // Urutkan data dari yang terbaru
+    dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
+        const dateObj = new Date(t.tanggal);
+        const bulanKey = dateObj.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
 
-                if (!rekapBulanan[bulanKey]) rekapBulanan[bulanKey] = { in: 0, out: 0 };
-                if (t.tipe === 'UANG MASUK') rekapBulanan[bulanKey].in += t.nominal;
-                else rekapBulanan[bulanKey].out += t.nominal;
+        if (t.tipe === 'UANG MASUK') totalTahunIn += t.nominal;
+        else totalTahunOut += t.nominal;
 
-                const buktiHtml = t.bukti !== "Gada" ? `<img src="${t.bukti}" class="img-preview" onclick="window.open('${t.bukti}')">` : `<small class="opacity-50">Gada</small>`;
-                const isKeluar = t.tipe === 'UANG KELUAR';
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
-                        <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
-                        <td class="fw-bold">${t.keterangan}</td>
-                        <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
-                        <td class="text-center">${buktiHtml}</td>
-                        <td class="text-center"><button onclick="hapusData(${t.id})" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
-                    </tr>`;
-            });
+        if (!rekapBulanan[bulanKey]) rekapBulanan[bulanKey] = { in: 0, out: 0 };
+        if (t.tipe === 'UANG MASUK') rekapBulanan[bulanKey].in += t.nominal;
+        else rekapBulanan[bulanKey].out += t.nominal;
 
-            const sisaTahun = totalTahunIn - totalTahunOut;
-            document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
-            document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
-            document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
-            document.getElementById('total-saldo-display').innerText = `Rp ${sisaTahun.toLocaleString()}`;
+        const isKeluar = t.tipe === 'UANG KELUAR';
+        tbody.innerHTML += `
+            <tr>
+                <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
+                <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
+                <td class="fw-bold">${t.keterangan}</td>
+                <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
+                <td class="text-center">Gada</td>
+                <td class="text-center"><button onclick="hapusData('${t.id}')" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
+            </tr>`;
+    });
 
-            for (const bulan in rekapBulanan) {
-                containerBulan.innerHTML += `
-                    <div class="col-md-4 col-12"><div class="box-premium">
-                        <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
-                        <div class="d-flex justify-content-between mb-1"><span>MASUK</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
-                        <div class="d-flex justify-content-between"><span>KELUAR</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
-                    </div></div>`;
-            }
-        }
+    // Update Kotak Angka di Atas
+    const sisaTahun = totalTahunIn - totalTahunOut;
+    document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
+    document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
+    document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
+    document.getElementById('total-saldo-display').innerText = `Rp ${sisaTahun.toLocaleString()}`;
+
+    // Update Kotak Bulanan
+    for (const bulan in rekapBulanan) {
+        containerBulan.innerHTML += `
+            <div class="col-md-4 col-12"><div class="box-premium">
+                <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
+                <div class="d-flex justify-content-between mb-1"><span>MASUK</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
+                <div class="d-flex justify-content-between"><span>KELUAR</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
+            </div></div>`;
+    }
+}
 
         function updateAnalytics() {
             const bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
             let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
-            dataTransaksi.forEach(t => {
-                const m = new Date(t.tanggal).getMonth();
-                if(t.tipe === 'UANG MASUK') dIn[m] += t.nominal; else dOut[m] += t.nominal;
-            });
+           // Filter data berdasarkan tahun sebelum dimasukkan ke grafik
+    const tahunFilter = document.getElementById('pilih-tahun').value;
+    
+    dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter).forEach(t => {
+        const m = new Date(t.tanggal).getMonth();
+        if(t.tipe === 'UANG MASUK') dIn[m] += t.nominal; 
+        else dOut[m] += t.nominal;
+    });
 
             if(myChartB) myChartB.destroy();
             myChartB = new Chart(document.getElementById('chartBulanan'), {
