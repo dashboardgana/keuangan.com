@@ -8,24 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
     <style>
         body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
-        
-        /* LOGIN SECTION */
         .login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: #0f172a; }
         .login-card { background: #1e293b; padding: 40px; border-radius: 15px; border: 1px solid #334155; width: 100%; max-width: 350px; text-align: center; }
-
-        /* DASHBOARD LAYOUT */
         .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; display: none; }
         .sidebar-header { padding: 25px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; font-size: 1.2rem; }
         .nav-link { color: #94a3b8; padding: 15px 25px; display: block; text-decoration: none; cursor: pointer; border-left: 4px solid transparent; }
         .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; border-left: 4px solid #38bdf8; }
         .main-content { margin-left: 240px; padding: 30px; display: none; }
-        
-        /* STYLE KHUSUS REKAPAN KEK GAMBAR */
         .card-rekap-utama { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #334155; }
         .box-info { background: #1e293b; border-radius: 10px; padding: 15px; border-left: 5px solid #38bdf8; }
         .table-custom { background: #1e293b; border-radius: 10px; overflow: hidden; }
         .table-custom th { background: #334155; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
-        
         @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main-content { margin-left: 0; } }
     </style>
 </head>
@@ -55,78 +48,58 @@
             <h2 class="mb-4 fw-bold">Dashboard</h2>
             <div class="card-rekap-utama text-center" style="background: linear-gradient(135deg, #0ea5e9, #2563eb); border:none;">
                 <p class="mb-1 opacity-75 fw-bold">TOTAL SALDO SAAT INI</p>
-                <h1 class="fw-bold display-3">Rp 0</h1>
+                <h1 class="fw-bold display-3" id="total-saldo-display">Rp 0</h1>
             </div>
         </div>
 
         <div id="sec-masuk" class="section-content" style="display:none;">
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
             <div class="card-rekap-utama">
-                <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3">
-                    <label>Nominal (Rp)</label>
-                    <input type="text" id="nominal-masuk" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="0">
-                </div>
-                <div class="mb-3"><label>Keterangan</label><input type="text" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Upload Bukti</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
-                <button class="btn btn-success w-100 fw-bold">SIMPAN DATA</button>
+                <div class="mb-3"><label>Tanggal</label><input type="date" id="tgl-masuk" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-masuk" class="form-control bg-dark text-white border-secondary format-ribuan"></div>
+                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-masuk" class="form-control bg-dark text-white border-secondary"></div>
+                <button onclick="simpanTransaksi('masuk')" class="btn btn-success w-100 fw-bold">SIMPAN DATA</button>
             </div>
         </div>
 
         <div id="sec-keluar" class="section-content" style="display:none;">
             <h3 class="mb-4 text-danger fw-bold">Catat Pengeluaran</h3>
             <div class="card-rekap-utama">
-                <div class="mb-3"><label>Tanggal</label><input type="date" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3">
-                    <label>Nominal (Rp)</label>
-                    <input type="text" id="nominal-keluar" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="0">
-                </div>
-                <div class="mb-3"><label>Keterangan</label><input type="text" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Upload Bukti</label><input type="file" class="form-control bg-dark text-white border-secondary" accept="image/*"></div>
-                <button class="btn btn-danger w-100 fw-bold">SIMPAN DATA</button>
+                <div class="mb-3"><label>Tanggal</label><input type="date" id="tgl-keluar" class="form-control bg-dark text-white border-secondary"></div>
+                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-keluar" class="form-control bg-dark text-white border-secondary format-ribuan"></div>
+                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-keluar" class="form-control bg-dark text-white border-secondary"></div>
+                <button onclick="simpanTransaksi('keluar')" class="btn btn-danger w-100 fw-bold">SIMPAN DATA</button>
             </div>
         </div>
 
         <div id="sec-rekapan" class="section-content" style="display:none;">
-            <h3 class="mb-4 text-info fw-bold">Laporan Tahunan 2026</h3>
-            
+            <h3 class="mb-4 text-info fw-bold">Rekapan Transaksi</h3>
             <div class="row mb-4 text-center">
-                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #22c55e;">Pemasukan<br><span class="text-success fw-bold">Rp 0</span></div></div>
-                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #ef4444;">Pengeluaran<br><span class="text-danger fw-bold">Rp 0</span></div></div>
-                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #38bdf8;">Sisa Hasil<br><span class="text-info fw-bold">Rp 0</span></div></div>
+                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #22c55e;">Pemasukan<br><span class="text-success fw-bold" id="rekap-in">Rp 0</span></div></div>
+                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #ef4444;">Pengeluaran<br><span class="text-danger fw-bold" id="rekap-out">Rp 0</span></div></div>
+                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #38bdf8;">Sisa Hasil<br><span class="text-info fw-bold" id="rekap-sisa">Rp 0</span></div></div>
             </div>
-
-            <div class="card-rekap-utama">
-                <h5 class="fw-bold mb-3"><i class="fa fa-calendar-alt me-2"></i>Mei 2026</h5>
-                <p class="text-success mb-1">Masuk: Rp 0</p>
-                <p class="text-danger">Keluar: Rp 0</p>
-                <hr border-secondary>
-                
-                <div class="table-responsive table-custom">
-                    <table class="table table-dark mb-0">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Tipe</th>
-                                <th>Keterangan</th>
-                                <th>Nominal</th>
-                                <th>Hapus</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="5" class="text-center text-secondary py-4">Belum ada data transaksi bulan ini</td>
-                            </tr>
+            <div class="table-responsive table-custom">
+                <table class="table table-dark mb-0">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Tipe</th>
+                            <th>Keterangan</th>
+                            <th>Nominal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
                         </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
         </div>
-
     </div>
 
     <script>
-        // SCRIPT 1: Login & Navigasi
+        let dataTransaksi = [];
+
         function handleLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
@@ -134,7 +107,7 @@
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('sidebar-menu').style.display = 'block';
                 document.getElementById('main-content-area').style.display = 'block';
-            } else { alert("Salah!"); }
+            } else { alert("Login Gagal!"); }
         }
 
         function showSection(id, element) {
@@ -144,18 +117,75 @@
             element.classList.add('active');
         }
 
-        // SCRIPT 2: Otomatis Koma (Ribuan) Saat Mengetik
+        // Format Ribuan Otomatis
         document.querySelectorAll('.format-ribuan').forEach(input => {
-            input.addEventListener('keyup', function(e) {
-                // Ambil angka saja
+            input.addEventListener('keyup', function() {
                 let val = this.value.replace(/[^0-9]/g, '');
-                
-                // Tambahkan koma setiap 3 angka
-                if (val !== "") {
-                    this.value = parseInt(val).toLocaleString('en-US');
-                }
+                this.value = val ? parseInt(val).toLocaleString('en-US') : '';
             });
         });
+
+        function simpanTransaksi(tipe) {
+            const tgl = document.getElementById(`tgl-${tipe}`).value;
+            const nomRaw = document.getElementById(`nom-${tipe}`).value.replace(/,/g, '');
+            const ket = document.getElementById(`ket-${tipe}`).value;
+
+            if(!tgl || !nomRaw || !ket) return alert("Isi semua data!");
+
+            const transaksi = {
+                id: Date.now(),
+                tanggal: tgl,
+                tipe: tipe === 'masuk' ? 'Masuk' : 'Keluar',
+                nominal: parseInt(nomRaw),
+                keterangan: ket
+            };
+
+            dataTransaksi.push(transaksi);
+            updateUI();
+            
+            // Reset Input
+            document.getElementById(`tgl-${tipe}`).value = '';
+            document.getElementById(`nom-${tipe}`).value = '';
+            document.getElementById(`ket-${tipe}`).value = '';
+            alert("Data Berhasil Disimpan!");
+        }
+
+        function hapusData(id) {
+            dataTransaksi = dataTransaksi.filter(t => t.id !== id);
+            updateUI();
+        }
+
+        function updateUI() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            
+            let totalIn = 0, totalOut = 0;
+
+            dataTransaksi.sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
+                if(t.tipe === 'Masuk') totalIn += t.nominal;
+                else totalOut += t.nominal;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${t.tanggal}</td>
+                        <td><span class="badge ${t.tipe === 'Masuk' ? 'bg-success' : 'bg-danger'}">${t.tipe}</span></td>
+                        <td>${t.keterangan}</td>
+                        <td>Rp ${t.nominal.toLocaleString()}</td>
+                        <td><button onclick="hapusData(${t.id})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                `;
+            });
+
+            const sisa = totalIn - totalOut;
+            document.getElementById('total-saldo-display').innerText = `Rp ${sisa.toLocaleString()}`;
+            document.getElementById('rekap-in').innerText = `Rp ${totalIn.toLocaleString()}`;
+            document.getElementById('rekap-out').innerText = `Rp ${totalOut.toLocaleString()}`;
+            document.getElementById('rekap-sisa').innerText = `Rp ${sisa.toLocaleString()}`;
+
+            if(dataTransaksi.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 opacity-50">Belum ada data</td></tr>';
+            }
+        }
     </script>
 </body>
 </html>
