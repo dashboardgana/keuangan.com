@@ -271,6 +271,7 @@ let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
 
         window.onload = function() {
             const list = document.getElementById('user-list');
+            updateUI();
             savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
         };
 
