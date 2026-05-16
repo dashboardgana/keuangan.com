@@ -7,26 +7,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
     <style>
-        body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
         .login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: #0f172a; }
         .login-card { background: #1e293b; padding: 40px; border-radius: 15px; border: 1px solid #334155; width: 100%; max-width: 350px; text-align: center; }
-        
-        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; display: none; z-index: 100; }
+        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; display: none; z-index: 1000; }
         .sidebar-header { padding: 25px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; font-size: 1.2rem; }
         .nav-link { color: #94a3b8; padding: 15px 25px; display: block; text-decoration: none; cursor: pointer; border-left: 4px solid transparent; }
         .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; border-left: 4px solid #38bdf8; }
-        
-        .main-content { margin-left: 240px; padding: 30px; display: none; min-height: 100vh; position: relative; z-index: 10; }
+        .main-content { margin-left: 240px; padding: 30px; display: none; }
         .card-rekap-utama { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #334155; }
-        
-        /* Tombol Simpan Custom agar terlihat aktif */
-        .btn-simpan { transition: all 0.3s; cursor: pointer !important; position: relative; z-index: 20; border: none; padding: 12px; }
-        .btn-simpan:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .btn-simpan:active { transform: translateY(0); }
-
         .box-info { background: #1e293b; border-radius: 10px; padding: 15px; border-left: 5px solid #38bdf8; }
-        .table-custom { background: #1e293b; border-radius: 10px; overflow: hidden; margin-top: 20px; }
-        
+        .table-custom { background: #1e293b; border-radius: 10px; overflow: hidden; }
+        .table-custom th { background: #334155; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
+        button { cursor: pointer !important; }
         @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main-content { margin-left: 0; } }
     </style>
 </head>
@@ -34,7 +27,7 @@
 
     <div id="login-section" class="login-page">
         <div class="login-card">
-            <h3 class="text-info fw-bold mb-4">FINANCE LOGIN</h3>
+            <h3 class="color-info fw-bold mb-4">FINANCE LOGIN</h3>
             <input type="text" id="user" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Username">
             <input type="password" id="pass" class="form-control mb-3 bg-dark text-white border-secondary" placeholder="Password">
             <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold">LOGIN</button>
@@ -64,9 +57,9 @@
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
             <div class="card-rekap-utama">
                 <div class="mb-3"><label>Tanggal</label><input type="date" id="tgl-masuk" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-masuk" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="Contoh: 50,000"></div>
-                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-masuk" class="form-control bg-dark text-white border-secondary" placeholder="Beli apa..."></div>
-                <button type="button" onclick="simpanTransaksi('masuk')" class="btn btn-success w-100 fw-bold btn-simpan">SIMPAN DATA MASUK</button>
+                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-masuk" class="form-control bg-dark text-white border-secondary format-ribuan"></div>
+                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-masuk" class="form-control bg-dark text-white border-secondary"></div>
+                <button type="button" onclick="simpanTransaksi('masuk')" class="btn btn-success w-100 fw-bold">SIMPAN DATA</button>
             </div>
         </div>
 
@@ -74,32 +67,31 @@
             <h3 class="mb-4 text-danger fw-bold">Catat Pengeluaran</h3>
             <div class="card-rekap-utama">
                 <div class="mb-3"><label>Tanggal</label><input type="date" id="tgl-keluar" class="form-control bg-dark text-white border-secondary"></div>
-                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-keluar" class="form-control bg-dark text-white border-secondary format-ribuan" placeholder="Contoh: 20,000"></div>
-                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-keluar" class="form-control bg-dark text-white border-secondary" placeholder="Keterangan..."></div>
-                <button type="button" onclick="simpanTransaksi('keluar')" class="btn btn-danger w-100 fw-bold btn-simpan">SIMPAN DATA KELUAR</button>
+                <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-keluar" class="form-control bg-dark text-white border-secondary format-ribuan"></div>
+                <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-keluar" class="form-control bg-dark text-white border-secondary"></div>
+                <button type="button" onclick="simpanTransaksi('keluar')" class="btn btn-danger w-100 fw-bold">SIMPAN DATA</button>
             </div>
         </div>
 
         <div id="sec-rekapan" class="section-content" style="display:none;">
-            <h3 class="mb-4 text-info fw-bold">Riwayat Transaksi</h3>
+            <h3 class="mb-4 text-info fw-bold">Rekapan Transaksi</h3>
             <div class="row mb-4 text-center">
-                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #22c55e;">Masuk<br><span id="rekap-in" class="text-success fw-bold">Rp 0</span></div></div>
-                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #ef4444;">Keluar<br><span id="rekap-out" class="text-danger fw-bold">Rp 0</span></div></div>
-                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #38bdf8;">Sisa<br><span id="rekap-sisa" class="text-info fw-bold">Rp 0</span></div></div>
+                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #22c55e;">Pemasukan<br><span class="text-success fw-bold" id="rekap-in">Rp 0</span></div></div>
+                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #ef4444;">Pengeluaran<br><span class="text-danger fw-bold" id="rekap-out">Rp 0</span></div></div>
+                <div class="col-md-4 mb-2"><div class="box-info" style="border-color: #38bdf8;">Sisa Hasil<br><span class="text-info fw-bold" id="rekap-sisa">Rp 0</span></div></div>
             </div>
             <div class="table-responsive table-custom">
-                <table class="table table-dark table-hover mb-0">
+                <table class="table table-dark mb-0">
                     <thead>
                         <tr>
                             <th>Tanggal</th>
                             <th>Tipe</th>
                             <th>Keterangan</th>
                             <th>Nominal</th>
-                            <th>Hapus</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        <tr><td colspan="5" class="text-center py-4 opacity-50">Belum ada data</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -107,7 +99,7 @@
     </div>
 
     <script>
-        let listTransaksi = [];
+        let dataTransaksi = [];
 
         function handleLogin() {
             const u = document.getElementById('user').value;
@@ -116,7 +108,7 @@
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('sidebar-menu').style.display = 'block';
                 document.getElementById('main-content-area').style.display = 'block';
-            } else { alert("User/Pass Salah!"); }
+            } else { alert("Login Gagal!"); }
         }
 
         function showSection(id, element) {
@@ -126,7 +118,6 @@
             element.classList.add('active');
         }
 
-        // Format Ribuan
         document.querySelectorAll('.format-ribuan').forEach(input => {
             input.addEventListener('keyup', function() {
                 let val = this.value.replace(/[^0-9]/g, '');
@@ -134,52 +125,45 @@
             });
         });
 
-        function simpanTransaksi(jenis) {
-            console.log("Mencoba simpan: " + jenis); // Cek di console log f12
-            
-            const tgl = document.getElementById(`tgl-${jenis}`).value;
-            const nomStr = document.getElementById(`nom-${jenis}`).value.replace(/,/g, '');
-            const ket = document.getElementById(`ket-${jenis}`).value;
+        function simpanTransaksi(tipe) {
+            const tgl = document.getElementById(`tgl-${tipe}`).value;
+            const nomRaw = document.getElementById(`nom-${tipe}`).value.replace(/,/g, '');
+            const ket = document.getElementById(`ket-${tipe}`).value;
 
-            if(!tgl || !nomStr || !ket) {
-                alert("Woi! Isi dulu semua kolomnya!");
+            if(!tgl || !nomRaw || !ket) {
+                alert("Isi semua data!");
                 return;
             }
 
-            const data = {
+            const transaksi = {
                 id: Date.now(),
                 tanggal: tgl,
-                tipe: jenis === 'masuk' ? 'Masuk' : 'Keluar',
-                nominal: parseInt(nomStr),
+                tipe: tipe === 'masuk' ? 'Masuk' : 'Keluar',
+                nominal: parseInt(nomRaw),
                 keterangan: ket
             };
 
-            listTransaksi.push(data);
+            dataTransaksi.push(transaksi);
+            updateUI();
+            
+            document.getElementById(`tgl-${tipe}`).value = '';
+            document.getElementById(`nom-${tipe}`).value = '';
+            document.getElementById(`ket-${tipe}`).value = '';
             alert("Data Berhasil Disimpan!");
-            
-            // Reset Form
-            document.getElementById(`tgl-${jenis}`).value = '';
-            document.getElementById(`nom-${jenis}`).value = '';
-            document.getElementById(`ket-${jenis}`).value = '';
-            
-            updateTampilan();
         }
 
         function hapusData(id) {
-            if(confirm("Hapus data ini?")) {
-                listTransaksi = listTransaksi.filter(t => t.id !== id);
-                updateTampilan();
-            }
+            dataTransaksi = dataTransaksi.filter(t => t.id !== id);
+            updateUI();
         }
 
-        function updateTampilan() {
+        function updateUI() {
             const tbody = document.getElementById('table-body');
             tbody.innerHTML = '';
             
-            let totalIn = 0;
-            let totalOut = 0;
+            let totalIn = 0, totalOut = 0;
 
-            listTransaksi.sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
+            dataTransaksi.sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
                 if(t.tipe === 'Masuk') totalIn += t.nominal;
                 else totalOut += t.nominal;
 
@@ -189,20 +173,20 @@
                         <td><span class="badge ${t.tipe === 'Masuk' ? 'bg-success' : 'bg-danger'}">${t.tipe}</span></td>
                         <td>${t.keterangan}</td>
                         <td>Rp ${t.nominal.toLocaleString()}</td>
-                        <td><button onclick="hapusData(${t.id})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>
+                        <td><button onclick="hapusData(${t.id})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button></td>
                     </tr>
                 `;
             });
-
-            if(listTransaksi.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 opacity-50">Belum ada data</td></tr>';
-            }
 
             const sisa = totalIn - totalOut;
             document.getElementById('total-saldo-display').innerText = `Rp ${sisa.toLocaleString()}`;
             document.getElementById('rekap-in').innerText = `Rp ${totalIn.toLocaleString()}`;
             document.getElementById('rekap-out').innerText = `Rp ${totalOut.toLocaleString()}`;
             document.getElementById('rekap-sisa').innerText = `Rp ${sisa.toLocaleString()}`;
+
+            if(dataTransaksi.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 opacity-50">Belum ada data</td></tr>';
+            }
         }
     </script>
 </body>
