@@ -122,14 +122,34 @@
         .bg-pemasukan { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
         .bg-pengeluaran { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
 
-        .card-saldo-modern {
-            background: linear-gradient(135deg, #1d4ed8, #2563eb);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        /* Ganti kode baris 125-131 dengan ini */
+.card-saldo-modern {
+    background: #000000 !important; /* Mengubah background jadi hitam agar neon kontras */
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    border: 3px solid #38bdf8;
+    /* Menambahkan animasi pelangi */
+    animation: auraGlow 5s linear infinite;
+}
+
+/* Tambahkan animasi ini di bawahnya */
+@keyframes auraGlow {
+    0% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+    25% { border-color: #ff00ff; box-shadow: 0 0 20px #ff00ff; }
+    50% { border-color: #0000ff; box-shadow: 0 0 20px #0000ff; }
+    75% { border-color: #00ffff; box-shadow: 0 0 20px #00ffff; }
+    100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+}
+
+/* Tambahkan ini supaya angka saldonya menyala neon */
+#total-saldo-display {
+    color: #ffffff;
+    font-weight: 800;
+    text-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+}
         .saldo-info { padding: 40px 20px; }
         .marquee-wrapper { background: rgba(0,0,0,0.3); padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
 
