@@ -7,8 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
         body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
         
@@ -270,27 +268,44 @@
 
         <div id="sec-rekapan" class="section-content" style="display:none;">
             <h3 class="mb-4 text-info fw-bold">LAPORAN TAHUN 2026</h3>
-            <div class="mb-4" style="max-width: 250px;">
-                <label style="color: #fbbf24;">FILTER TAHUN:</label>
-                <select id="pilih-tahun" class="form-control bg-dark text-white border-secondary">
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026" selected>2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                </select>
+            <div class="d-flex gap-3 mb-4">
+                <div style="flex: 1; max-width: 200px;">
+                    <label style="color: #fbbf24;">FILTER TAHUN:</label>
+                    <select id="pilih-tahun" class="form-control bg-dark text-white border-secondary">
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026" selected>2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
+                <div style="flex: 1; max-width: 200px;">
+                    <label style="color: #38bdf8;">FILTER BANK:</label>
+                    <select id="filter-bank-laporan" class="form-control bg-dark text-white border-secondary">
+                        <option value="ALL">SEMUA BANK</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BRI">BRI</option>
+                        <option value="MANDIRI">MANDIRI</option>
+                        <option value="DANAMON">DANAMON</option>
+                        <option value="CIMB">CIMB NIAGA</option>
+                        <option value="DANA">DANA</option>
+                        <option value="OVO">OVO</option>
+                        <option value="GOPAY">GOPAY</option>
+                    </select>
+                </div>
             </div>
             <div class="row mb-4">
-                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pemasukan / Tahun</label><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
-                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pengeluaran / Tahun</label><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
-                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Sisa Hasil / Tahun</label><span class="text-info h4 fw-bold" id="rekap-tahun-sisa">Rp 0</span></div></div>
+                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pemasukan</label><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
+                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pengeluaran</label><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
+                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Sisa Hasil</label><span class="text-info h4 fw-bold" id="rekap-tahun-sisa">Rp 0</span></div></div>
             </div>
 
             <div id="container-bulanan" class="row"></div>
 
-            <h5 class="mt-4 fw-bold mb-3 text-info">Riwayat Transaksi </h5>
+            <h5 class="mt-4 fw-bold mb-3 text-info">Riwayat Transaksi</h5>
             <div class="table-responsive-custom">
                 <table class="table table-dark table-custom-full">
                     <thead>
@@ -330,42 +345,15 @@
     </div>
 
     <script>
-        // 1. FIREBASE CONFIG - Ganti dengan data project Firebase-mu
-        const firebaseConfig = {
-            apiKey: "ISI_API_KEY_KAMU",
-            authDomain: "chatgana.firebaseapp.com",
-            databaseURL: "https://chatgana-default-rtdb.firebaseio.com",
-            projectId: "chatgana",
-            storageBucket: "chatgana.appspot.com",
-            messagingSenderId: "12345678",
-            appId: "1:12345678:web:abcdef"
-        };
-
-        // Inisialisasi Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        let dataTransaksi = []; 
+        let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
         let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
         window.myChartB = null;
         window.myChartP = null;
 
         window.onload = function() {
             const list = document.getElementById('user-list');
+            updateUI();
             savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
-            
-            // Ambil data Realtime dari Firebase
-            db.ref('data_keuangan').on('value', (snapshot) => {
-                const val = snapshot.val();
-                if (val) {
-                    // Ubah format object Firebase jadi array agar script lama tidak rusak
-                    dataTransaksi = Object.keys(val).map(key => ({ id: key, ...val[key] }));
-                } else {
-                    dataTransaksi = [];
-                }
-                updateUI();
-                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
-            });
         };
 
         function checkEnter(event) {
@@ -409,7 +397,6 @@
             });
         });
 
-        // 2. MODIFIKASI FUNGSI SIMPAN (KE FIREBASE)
         function simpanTransaksi(tipe) {
             const tgl = document.getElementById(`tgl-${tipe}`).value;
             const bank = document.getElementById(`bank-${tipe}`).value; 
@@ -419,42 +406,52 @@
             
             if(!tgl || !nomRaw || !ket) return alert("Mohon lengkapi semua data!");
 
-            const newTransaksi = {
-                tanggal: tgl,
-                bank: bank,
-                tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
-                nominal: parseInt(nomRaw),
-                keterangan: ket,
-                timestamp: Date.now()
-            };
-
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    newTransaksi.bukti = e.target.result;
-                    db.ref('data_keuangan').push(newTransaksi).then(() => lanjutSimpan(tipe));
+                    dataTransaksi.push({
+                        id: Date.now(),
+                        tanggal: tgl,
+                        bank: bank,
+                        tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
+                        nominal: parseInt(nomRaw),
+                        keterangan: ket,
+                        bukti: e.target.result
+                    });
+                    localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+                    lanjutSimpan(tipe);
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
-                newTransaksi.bukti = "Gada";
-                db.ref('data_keuangan').push(newTransaksi).then(() => lanjutSimpan(tipe));
+                dataTransaksi.push({
+                    id: Date.now(),
+                    tanggal: tgl,
+                    bank: bank,
+                    tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
+                    nominal: parseInt(nomRaw),
+                    keterangan: ket,
+                    bukti: "Gada"
+                });
+                localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+                lanjutSimpan(tipe);
             }
         }
 
         function lanjutSimpan(tipe) {
-            alert("Transaksi Berhasil Dicatat ke Cloud!");
+            updateUI();
+            alert("Transaksi Berhasil Dicatat!");
             document.getElementById(`tgl-${tipe}`).value = '';
             document.getElementById(`nom-${tipe}`).value = '';
             document.getElementById(`ket-${tipe}`).value = '';
             document.getElementById(`file-${tipe}`).value = '';
         }
 
-        // 3. MODIFIKASI FUNGSI HAPUS (DI FIREBASE)
-        function hapusData(idFirebase) {
-            if(confirm("Hapus catatan ini dari database selamanya?")) {
-                db.ref('data_keuangan/' + idFirebase).remove().then(() => {
-                    alert("Data dihapus!");
-                });
+        function hapusData(id) {
+            if(confirm("Hapus catatan ini?")) {
+                dataTransaksi = dataTransaksi.filter(t => t.id != id);
+                localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+                updateUI();
+                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
             }
         }
 
@@ -463,6 +460,7 @@
             const containerBulan = document.getElementById('container-bulanan');
             const gridBank = document.getElementById('grid-saldo-bank');
             const tahunFilter = document.getElementById('pilih-tahun').value;
+            const bankFilter = document.getElementById('filter-bank-laporan').value;
             
             tbody.innerHTML = '';
             containerBulan.innerHTML = '';
@@ -473,6 +471,7 @@
             let saldoPerBank = {};
             let totalSaldoSistem = 0;
 
+            // Hitung Saldo Dashboard (Selalu Semua Data)
             dataTransaksi.forEach(t => {
                 if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
                 if (t.tipe === 'UANG MASUK') {
@@ -491,10 +490,13 @@
                         <div style="color: white;">Rp ${saldoPerBank[b].toLocaleString()}</div>
                     </div>`;
             }
-
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
 
-            const dataFiltered = dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter);
+            // Filter untuk Laporan
+            let dataFiltered = dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter);
+            if (bankFilter !== 'ALL') {
+                dataFiltered = dataFiltered.filter(t => t.bank === bankFilter);
+            }
 
             dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
                 const dateObj = new Date(t.tanggal);
@@ -522,10 +524,9 @@
                     </tr>`;
             });
 
-            const sisaTahun = totalTahunIn - totalTahunOut;
             document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
             document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
-            document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
+            document.getElementById('rekap-tahun-sisa').innerText = `Rp ${(totalTahunIn - totalTahunOut).toLocaleString()}`;
 
             for (const bulan in rekapBulanan) {
                 containerBulan.innerHTML += `
@@ -595,13 +596,8 @@
             });
         }
 
-        document.getElementById('pilih-tahun').addEventListener('change', function() {
-            const tahunTerpilih = this.value;
-            const judul = document.querySelector('#sec-rekapan h3');
-            if (judul) judul.innerText = `LAPORAN TAHUN ${tahunTerpilih}`;
-            updateUI();
-            if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
-        });
+        document.getElementById('pilih-tahun').addEventListener('change', updateUI);
+        document.getElementById('filter-bank-laporan').addEventListener('change', updateUI);
     </script>
 </body>
 </html>
