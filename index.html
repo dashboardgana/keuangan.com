@@ -153,7 +153,7 @@
         <div class="nav-link" onclick="showSection('keluar', this)">💸 Pengeluaran</div>
         <div class="nav-link" onclick="showSection('rekapan', this)">📋 Rekapan</div>
         <div class="nav-link" onclick="showSection('analytics', this)">📊 Analytics</div>
-        <div class="nav-link text-danger mt-5" onclick="location.reload()">↪️ Logout</div>
+        <div class="nav-link text-danger mt-5" onclick="handleLogout()">↪️ Logout</div>
     </div>
 
     <div class="main-content" id="main-content-area">
@@ -265,6 +265,14 @@
             const list = document.getElementById('user-list');
             updateUI();
             savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
+
+            // TAMBAHAN: CEK APAKAH SUDAH LOGIN SEBELUMNYA
+            const sudahLogin = localStorage.getItem('isLoggedIn');
+            if (sudahLogin === 'true') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('sidebar-menu').style.display = 'block';
+                document.getElementById('main-content-area').style.display = 'block';
+            }
         };
 
         function checkEnter(event) {
@@ -277,6 +285,10 @@
             const errorArea = document.getElementById('error-msg');
             if(u !== "" && p === "123") {
                 errorArea.style.display = 'none';
+                
+                // TAMBAHAN: SIMPAN STATUS LOGIN
+                localStorage.setItem('isLoggedIn', 'true');
+
                 if(!savedUsers.includes(u)) {
                     savedUsers.push(u);
                     localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
@@ -287,6 +299,12 @@
             } else { 
                 errorArea.style.display = 'block'; 
             }
+        }
+
+        // TAMBAHAN: FUNGSI LOGOUT AGAR STATUS LOGIN TERHAPUS
+        function handleLogout() {
+            localStorage.removeItem('isLoggedIn');
+            location.reload();
         }
 
         function showSection(id, element) {
