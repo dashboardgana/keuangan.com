@@ -436,8 +436,8 @@
                 data: { 
                     labels: bulanLabels, 
                     datasets: [
-                        { label: 'Masuk', data: dIn, backgroundColor: '#22c55e', borderRadius: 5 }, 
-                        { label: 'Keluar', data: dOut, backgroundColor: '#ef4444', borderRadius: 5 }
+                        { label: 'Uang Masuk', data: dIn, backgroundColor: '#22c55e', borderRadius: 5 }, 
+                        { label: 'Uang Keluar', data: dOut, backgroundColor: '#ef4444', borderRadius: 5 }
                     ] 
                 },
                 options: { 
@@ -457,7 +457,7 @@
             window.myChartP = new Chart(ctxP, {
                 type: 'doughnut',
                 data: { 
-                    labels: ['Masuk', 'Keluar'], 
+                    labels: ['Uang Masuk', 'Uang Keluar'], 
                     datasets: [{ 
                         data: [totalIn, totalOut], 
                         backgroundColor: ['#22c55e', '#ef4444'],
