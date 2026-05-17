@@ -9,6 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* Cegah kedip: sembunyikan semua secara default */
+        #login-section, #sidebar-menu, #main-content-area { display: none; }
+
         .login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: #0f172a; }
         
         .login-card { 
@@ -23,16 +27,18 @@
         }
 
         .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.5) !important;
+            color: rgba(255, 255, 255, 0.8) !important; /* Terang, tidak abu-abu kusam */
             opacity: 1;
         }
         
-        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; display: none; z-index: 1000; }
+        .sidebar { width: 240px; height: 100vh; background: #1e293b; position: fixed; border-right: 1px solid #334155; z-index: 1000; }
         .sidebar-header { padding: 25px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; font-size: 1.2rem; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
-        .nav-link { color: #94a3b8; padding: 15px 25px; display: block; text-decoration: none; cursor: pointer; border-left: 4px solid transparent; }
+        
+        /* Perbaikan Warna Nav Link */
+        .nav-link { color: #ffffff; padding: 15px 25px; display: block; text-decoration: none; cursor: pointer; border-left: 4px solid transparent; font-weight: 600; }
         .nav-link:hover, .nav-link.active { background: #334155; color: #38bdf8; border-left: 4px solid #38bdf8; }
         
-        .main-content { margin-left: 240px; padding: 30px; display: none; transition: 0.3s; }
+        .main-content { margin-left: 240px; padding: 30px; transition: 0.3s; }
         
         .card-rekap-utama { 
             background: #1e293b; 
@@ -54,6 +60,10 @@
         }
 
         label { color: #38bdf8; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; display: block; }
+        
+        /* Teks pendukung tidak boleh abu-abu kusam */
+        .text-secondary { color: #fbbf24 !important; font-weight: bold; } 
+
         .form-control { 
             background: #0f172a !important; 
             color: #ffffff !important; 
@@ -68,6 +78,7 @@
             color-scheme: dark;
             border: 1px solid #38bdf8 !important;
             font-weight: bold;
+            color: white !important;
         }
 
         .table-responsive-custom { 
@@ -91,7 +102,8 @@
             padding: 15px; 
             vertical-align: middle; 
             border-bottom: 1px solid #334155; 
-            color: #f1f5f9; 
+            color: #ffffff; /* Putih terang */
+            font-weight: 500;
         }
         
         .btn-hapus-custom { 
@@ -121,10 +133,9 @@
         .saldo-info { padding: 40px 20px; }
         .marquee-wrapper { background: rgba(0,0,0,0.3); padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
 
-        /* TAMBAHAN STYLE UNTUK GRID BANK */
         .grid-bank-saldo { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 10px; }
         .card-bank-item { background: #1e293b; border: 1px solid #334155; padding: 15px; border-radius: 12px; border-left: 4px solid #38bdf8; }
-        .card-bank-item small { color: #94a3b8; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; }
+        .card-bank-item small { color: #fbbf24; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; }
         .card-bank-item div { font-size: 1.1rem; font-weight: bold; color: #fff; margin-top: 5px; }
         
         @media (max-width: 768px) { 
@@ -134,10 +145,21 @@
             .display-4 { font-size: 2.2rem; }
         }
 
-        .label-login { color: #fbbf24 !important; text-align: left; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 5px; }
+        .label-login { color: #fbbf24 !important; text-align: left; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
+
+    <script>
+        (function() {
+            const isLogged = localStorage.getItem('isLoggedIn');
+            if (isLogged === 'true') {
+                document.write('<style>#sidebar-menu, #main-content-area { display: block !important; } #login-section { display: none !important; }</style>');
+            } else {
+                document.write('<style>#login-section { display: flex !important; } #sidebar-menu, #main-content-area { display: none !important; }</style>');
+            }
+        })();
+    </script>
 
     <div id="login-section" class="login-page">
         <div class="login-card">
@@ -147,7 +169,7 @@
             <datalist id="user-list"></datalist>
             <div class="label-login"><i class="fas fa-lock"></i> PASSWORD</div>
             <input type="password" id="pass" class="form-control mb-3" placeholder="Masukkan password" onkeypress="checkEnter(event)">
-            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold text-white py-2">ENTER SYSTEM</button>
+            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold text-white py-2 shadow">ENTER SYSTEM</button>
             <div id="error-msg" class="text-danger small mt-3 fw-bold" style="display:none;"><i class="fas fa-times-circle"></i> Username atau Password Salah</div>
         </div>
     </div>
@@ -163,24 +185,22 @@
     </div>
 
     <div class="main-content" id="main-content-area">
-        
         <div id="sec-dashboard" class="section-content">
             <h2 class="mb-4 fw-bold">Saldo Utama</h2>
             <div class="card-saldo-modern">
                 <div class="saldo-info">
-                    <p class="mb-1 text-uppercase fw-bold opacity-75" style="font-size: 0.8rem; letter-spacing: 1px;">Total Saldo Keseluruhan (Semua Bank)</p>
+                    <p class="mb-1 text-uppercase fw-bold" style="font-size: 0.85rem; color: #fbbf24; letter-spacing: 1px;">Total Saldo Keseluruhan (Semua Bank)</p>
                     <h1 class="fw-bold display-4" id="total-saldo-display">Rp 0</h1>
                 </div>
                 <div class="marquee-wrapper">
-                    <marquee behavior="scroll" direction="left" scrollamount="5">
+                    <marquee behavior="scroll" direction="left" scrollamount="5" style="font-weight: bold; color: #38bdf8;">
                         ✨ Semoga sukses selalu, rezeki lancar, dan tetap semangat dalam mengelola keuangan! ✨
                     </marquee>
                 </div>
             </div>
 
             <h5 class="fw-bold mb-3"><i class="fas fa-university me-2 text-info"></i> Rincian Saldo Per Bank</h5>
-            <div class="grid-bank-saldo" id="grid-saldo-bank">
-                </div>
+            <div class="grid-bank-saldo" id="grid-saldo-bank"></div>
         </div>
 
         <div id="sec-masuk" class="section-content" style="display:none;">
@@ -236,7 +256,7 @@
         <div id="sec-rekapan" class="section-content" style="display:none;">
             <h3 class="mb-4 text-info fw-bold">LAPORAN TAHUN 2026</h3>
             <div class="mb-4" style="max-width: 250px;">
-                <label class="text-secondary small fw-bold">FILTER TAHUN:</label>
+                <label style="color: #fbbf24;">FILTER TAHUN:</label>
                 <select id="pilih-tahun" class="form-control bg-dark text-white border-secondary">
                     <option value="2024">2024</option>
                     <option value="2025">2025</option>
@@ -248,14 +268,14 @@
                 </select>
             </div>
             <div class="row mb-4">
-                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pemasukan / Tahun</small><br><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
-                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pengeluaran / Tahun</small><br><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
-                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Sisa Hasil / Tahun</small><br><span class="text-info h4 fw-bold" id="rekap-tahun-sisa">Rp 0</span></div></div>
+                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pemasukan / Tahun</label><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
+                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pengeluaran / Tahun</label><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
+                <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Sisa Hasil / Tahun</label><span class="text-info h4 fw-bold" id="rekap-tahun-sisa">Rp 0</span></div></div>
             </div>
 
             <div id="container-bulanan" class="row"></div>
 
-            <h5 class="mt-4 fw-bold mb-3">Riwayat Transaksi </h5>
+            <h5 class="mt-4 fw-bold mb-3 text-info">Riwayat Transaksi </h5>
             <div class="table-responsive-custom">
                 <table class="table table-dark table-custom-full">
                     <thead>
@@ -279,13 +299,13 @@
             <div class="row">
                 <div class="col-md-8 mb-4">
                     <div class="card-rekap-utama">
-                        <h5 class="text-center mb-4">Grafik Bulanan</h5>
+                        <h5 class="text-center mb-4 text-info">Grafik Bulanan</h5>
                         <canvas id="chartBulanan"></canvas>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card-rekap-utama">
-                        <h5 class="text-center mb-4">Struktur Tahunan</h5>
+                        <h5 class="text-center mb-4 text-info">Struktur Tahunan</h5>
                         <canvas id="chartPie"></canvas>
                     </div>
                 </div>
@@ -304,13 +324,6 @@
             const list = document.getElementById('user-list');
             updateUI();
             savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
-
-            const sudahLogin = localStorage.getItem('isLoggedIn');
-            if (sudahLogin === 'true') {
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('sidebar-menu').style.display = 'block';
-                document.getElementById('main-content-area').style.display = 'block';
-            }
         };
 
         function checkEnter(event) {
@@ -328,9 +341,7 @@
                     savedUsers.push(u);
                     localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
                 }
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('sidebar-menu').style.display = 'block';
-                document.getElementById('main-content-area').style.display = 'block';
+                location.reload(); 
             } else { 
                 errorArea.style.display = 'block'; 
             }
@@ -422,19 +433,15 @@
             
             tbody.innerHTML = '';
             containerBulan.innerHTML = '';
-            gridBank.innerHTML = ''; // Reset rincian bank
+            gridBank.innerHTML = ''; 
             
             let totalTahunIn = 0, totalTahunOut = 0;
             let rekapBulanan = {};
-            
-            // LOGIKA SALDO AKUMULATIF (SEPANJANG MASA)
             let saldoPerBank = {};
             let totalSaldoSistem = 0;
 
-            // Kita hitung semua data yang ada di database untuk saldo utama & bank
             dataTransaksi.forEach(t => {
                 if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
-                
                 if (t.tipe === 'UANG MASUK') {
                     saldoPerBank[t.bank] += t.nominal;
                     totalSaldoSistem += t.nominal;
@@ -444,19 +451,16 @@
                 }
             });
 
-            // Tampilkan rincian bank di Dashboard (Akumulatif)
             for (let b in saldoPerBank) {
                 gridBank.innerHTML += `
                     <div class="card-bank-item">
                         <small>SALDO ${b}</small>
-                        <div>Rp ${saldoPerBank[b].toLocaleString()}</div>
+                        <div style="color: white;">Rp ${saldoPerBank[b].toLocaleString()}</div>
                     </div>`;
             }
 
-            // Update Saldo Utama (Akumulatif Sepanjang Masa)
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
 
-            // FILTER DATA UNTUK REKAPAN TAHUNAN SAJA
             const dataFiltered = dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter);
 
             dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
@@ -475,10 +479,10 @@
 
                 tbody.innerHTML += `
                     <tr>
-                        <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
+                        <td class="text-center fw-bold" style="color: #38bdf8;">${t.tanggal}</td>
                         <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
-                        <td class="text-center fw-bold text-info">${t.bank || '-'}</td>
-                        <td class="fw-bold">${t.keterangan}</td>
+                        <td class="text-center fw-bold" style="color: #fbbf24;">${t.bank || '-'}</td>
+                        <td class="fw-bold" style="color: white;">${t.keterangan}</td>
                         <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
                         <td class="text-center">${htmlBukti}</td>
                         <td class="text-center"><button onclick="hapusData('${t.id}')" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
@@ -494,8 +498,8 @@
                 containerBulan.innerHTML += `
                     <div class="col-md-4 col-12"><div class="box-premium">
                         <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
-                        <div class="d-flex justify-content-between mb-1"><span>Uang Masuk</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
-                        <div class="d-flex justify-content-between"><span>Uang Keluar</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
+                        <div class="d-flex justify-content-between mb-1"><span style="color: white;">Uang Masuk</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
+                        <div class="d-flex justify-content-between"><span style="color: white;">Uang Keluar</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
                     </div></div>`;
             }
         }
@@ -541,7 +545,7 @@
             window.myChartP = new Chart(ctxP, {
                 type: 'doughnut',
                 data: { 
-                    labels: ['Uang Masuk', 'Uang Keluar'], 
+                    labels: ['Masuk', 'Keluar'], 
                     datasets: [{ 
                         data: [totalIn, totalOut], 
                         backgroundColor: ['#22c55e', '#ef4444'],
