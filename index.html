@@ -207,11 +207,6 @@
                     <option value="2028">2028</option>
                     <option value="2029">2029</option>
                     <option value="2030">2030</option>
-                    <option value="2031">2031</option>
-                    <option value="2032">2032</option>
-                    <option value="2033">2033</option>
-                    <option value="2034">2034</option>
-                    <option value="2035">2035</option>
                 </select>
             </div>
             <div class="row mb-4">
@@ -318,24 +313,41 @@
 
             let fileData = "Gada"; 
             if (fileInput.files && fileInput.files[0]) {
-                fileData = URL.createObjectURL(fileInput.files[0]);
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    dataTransaksi.push({
+                        id: Date.now(),
+                        tanggal: tgl,
+                        tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
+                        nominal: parseInt(nomRaw),
+                        keterangan: ket,
+                        bukti: e.target.result
+                    });
+                    localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+                    lanjutSimpan(tipe);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                dataTransaksi.push({
+                    id: Date.now(),
+                    tanggal: tgl,
+                    tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
+                    nominal: parseInt(nomRaw),
+                    keterangan: ket,
+                    bukti: "Gada"
+                });
+                localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+                lanjutSimpan(tipe);
             }
+        }
 
-            dataTransaksi.push({
-                id: Date.now(),
-                tanggal: tgl,
-                tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
-                nominal: parseInt(nomRaw),
-                keterangan: ket,
-                bukti: fileData
-            });
-            localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+        function lanjutSimpan(tipe) {
             updateUI();
             alert("Transaksi Berhasil Dicatat!");
             document.getElementById(`tgl-${tipe}`).value = '';
             document.getElementById(`nom-${tipe}`).value = '';
             document.getElementById(`ket-${tipe}`).value = '';
-            fileInput.value = '';
+            document.getElementById(`file-${tipe}`).value = '';
         }
 
         function hapusData(id) {
@@ -375,13 +387,15 @@
                 else rekapBulanan[bulanKey].out += t.nominal;
 
                 const isKeluar = t.tipe === 'UANG KELUAR';
+                const htmlBukti = t.bukti !== "Gada" ? `<img src="${t.bukti}" class="img-preview" onclick="window.open('${t.bukti}')">` : "Gada";
+
                 tbody.innerHTML += `
                     <tr>
                         <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
                         <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
                         <td class="fw-bold">${t.keterangan}</td>
                         <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
-                        <td class="text-center">Gada</td>
+                        <td class="text-center">${htmlBukti}</td>
                         <td class="text-center"><button onclick="hapusData('${t.id}')" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
                     </tr>`;
             });
@@ -464,11 +478,8 @@
             const tahunTerpilih = this.value;
             const judul = document.querySelector('#sec-rekapan h3');
             if (judul) judul.innerText = `LAPORAN TAHUN ${tahunTerpilih}`;
-
-            setTimeout(() => {
-                updateUI();
-                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
-            }, 100);
+            updateUI();
+            if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
         });
     </script>
 </body>
