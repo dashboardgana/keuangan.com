@@ -70,7 +70,6 @@
             font-weight: bold;
         }
 
-        /* PERBAIKAN: Agar Riwayat Transaksi bisa digeser ke samping di Mobile */
         .table-responsive-custom { 
             background: #1e293b; 
             border-radius: 12px; 
@@ -111,7 +110,6 @@
         .bg-pemasukan { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
         .bg-pengeluaran { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
 
-        /* Card Saldo Modern */
         .card-saldo-modern {
             background: linear-gradient(135deg, #1d4ed8, #2563eb);
             border-radius: 20px;
@@ -200,22 +198,22 @@
         <div id="sec-rekapan" class="section-content" style="display:none;">
             <h3 class="mb-4 text-info fw-bold">LAPORAN TAHUN 2026</h3>
             <div class="mb-4" style="max-width: 250px;">
-    <label class="text-secondary small fw-bold">FILTER TAHUN:</label>
-    <select id="pilih-tahun" class="form-control bg-dark text-white border-secondary">
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-        <option value="2026" selected>2026</option>
-        <option value="2027">2027</option>
-        <option value="2028">2028</option>
-        <option value="2029">2029</option>
-        <option value="2030">2030</option>
-        <option value="2031">2031</option>
-        <option value="2032">2032</option>
-        <option value="2033">2033</option>
-        <option value="2034">2034</option>
-        <option value="2035">2035</option>
-    </select>
-</div>
+                <label class="text-secondary small fw-bold">FILTER TAHUN:</label>
+                <select id="pilih-tahun" class="form-control bg-dark text-white border-secondary">
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026" selected>2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <option value="2032">2032</option>
+                    <option value="2033">2033</option>
+                    <option value="2034">2034</option>
+                    <option value="2035">2035</option>
+                </select>
+            </div>
             <div class="row mb-4">
                 <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pemasukan / Tahun</small><br><span class="text-success h4 fw-bold" id="rekap-tahun-in">Rp 0</span></div></div>
                 <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><small class="text-secondary fw-bold">Pengeluaran / Tahun</small><br><span class="text-danger h4 fw-bold" id="rekap-tahun-out">Rp -0</span></div></div>
@@ -263,11 +261,10 @@
     </div>
 
     <script>
-       // Mengambil data dari memori browser, kalau kosong baru jadi array []
-let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
+        let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
         let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
-        let myChartB = null;
-        let myChartP = null;
+        window.myChartB = null;
+        window.myChartP = null;
 
         window.onload = function() {
             const list = document.getElementById('user-list');
@@ -332,7 +329,7 @@ let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
                 keterangan: ket,
                 bukti: fileData
             });
-         localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+            localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
             updateUI();
             alert("Transaksi Berhasil Dicatat!");
             document.getElementById(`tgl-${tipe}`).value = '';
@@ -342,122 +339,137 @@ let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
         }
 
         function hapusData(id) {
-    if(confirm("Hapus catatan ini?")) {
-        dataTransaksi = dataTransaksi.filter(t => t.id !== id);
-        // Tambahkan baris ini biar memori browser juga update
-        localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
-        updateUI();
-    }
-}
+            if(confirm("Hapus catatan ini?")) {
+                dataTransaksi = dataTransaksi.filter(t => t.id != id);
+                localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
+                updateUI();
+                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
+            }
+        }
 
         function updateUI() {
-    const tbody = document.getElementById('table-body'); // Sesuaikan ID tabel abang
-    const containerBulan = document.getElementById('container-bulanan');
-    const tahunFilter = document.getElementById('pilih-tahun').value; // Ambil tahun yang dipilih
-    
-    tbody.innerHTML = '';
-    containerBulan.innerHTML = '';
-    
-    let totalTahunIn = 0, totalTahunOut = 0;
-    let rekapBulanan = {};
+            const tbody = document.getElementById('table-body');
+            const containerBulan = document.getElementById('container-bulanan');
+            const tahunFilter = document.getElementById('pilih-tahun').value;
+            
+            tbody.innerHTML = '';
+            containerBulan.innerHTML = '';
+            
+            let totalTahunIn = 0, totalTahunOut = 0;
+            let rekapBulanan = {};
 
-    // --- PROSES FILTER TAHUN DI SINI ---
-    const dataFiltered = dataTransaksi.filter(t => {
-        const tahunData = t.tanggal.split('-')[0]; 
-        return tahunData === tahunFilter;
-    });
+            const dataFiltered = dataTransaksi.filter(t => {
+                const tahunData = t.tanggal.split('-')[0]; 
+                return tahunData === tahunFilter;
+            });
 
-    // Urutkan data dari yang terbaru
-    dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
-        const dateObj = new Date(t.tanggal);
-        const bulanKey = dateObj.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+            dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
+                const dateObj = new Date(t.tanggal);
+                const bulanKey = dateObj.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
 
-        if (t.tipe === 'UANG MASUK') totalTahunIn += t.nominal;
-        else totalTahunOut += t.nominal;
+                if (t.tipe === 'UANG MASUK') totalTahunIn += t.nominal;
+                else totalTahunOut += t.nominal;
 
-        if (!rekapBulanan[bulanKey]) rekapBulanan[bulanKey] = { in: 0, out: 0 };
-        if (t.tipe === 'UANG MASUK') rekapBulanan[bulanKey].in += t.nominal;
-        else rekapBulanan[bulanKey].out += t.nominal;
+                if (!rekapBulanan[bulanKey]) rekapBulanan[bulanKey] = { in: 0, out: 0 };
+                if (t.tipe === 'UANG MASUK') rekapBulanan[bulanKey].in += t.nominal;
+                else rekapBulanan[bulanKey].out += t.nominal;
 
-        const isKeluar = t.tipe === 'UANG KELUAR';
-        tbody.innerHTML += `
-            <tr>
-                <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
-                <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
-                <td class="fw-bold">${t.keterangan}</td>
-                <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
-                <td class="text-center">Gada</td>
-                <td class="text-center"><button onclick="hapusData('${t.id}')" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
-            </tr>`;
-    });
+                const isKeluar = t.tipe === 'UANG KELUAR';
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
+                        <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
+                        <td class="fw-bold">${t.keterangan}</td>
+                        <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
+                        <td class="text-center">Gada</td>
+                        <td class="text-center"><button onclick="hapusData('${t.id}')" class="btn-hapus-custom"><i class="fa-solid fa-trash-can"></i></button></td>
+                    </tr>`;
+            });
 
-    // Update Kotak Angka di Atas
-    const sisaTahun = totalTahunIn - totalTahunOut;
-    document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
-    document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
-    document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
-    document.getElementById('total-saldo-display').innerText = `Rp ${sisaTahun.toLocaleString()}`;
+            const sisaTahun = totalTahunIn - totalTahunOut;
+            document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
+            document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
+            document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
+            document.getElementById('total-saldo-display').innerText = `Rp ${sisaTahun.toLocaleString()}`;
 
-    // Update Kotak Bulanan
-    for (const bulan in rekapBulanan) {
-        containerBulan.innerHTML += `
-            <div class="col-md-4 col-12"><div class="box-premium">
-                <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
-                <div class="d-flex justify-content-between mb-1"><span>MASUK</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
-                <div class="d-flex justify-content-between"><span>KELUAR</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
-            </div></div>`;
-    }
-}
+            for (const bulan in rekapBulanan) {
+                containerBulan.innerHTML += `
+                    <div class="col-md-4 col-12"><div class="box-premium">
+                        <h6 class="fw-bold mb-3 text-info"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
+                        <div class="d-flex justify-content-between mb-1"><span>MASUK</span><span class="text-success">Rp ${rekapBulanan[bulan].in.toLocaleString()}</span></div>
+                        <div class="d-flex justify-content-between"><span>KELUAR</span><span class="text-danger">Rp -${rekapBulanan[bulan].out.toLocaleString()}</span></div>
+                    </div></div>`;
+            }
+        }
 
-            function updateAnalytics() {
-    // WAJIB: Hancurkan grafik lama biar memori bersih & GAK LAG
-    if (window.myChartB) window.myChartB.destroy();
-    if (window.myChartP) window.myChartP.destroy();
+        function updateAnalytics() {
+            if (window.myChartB) window.myChartB.destroy();
+            if (window.myChartP) window.myChartP.destroy();
 
-    const bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-    let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
-    
-    // Ambil tahun dari dropdown
-    const tahunFilter = document.getElementById('pilih-tahun').value;
-    
-    // Filter data (Hanya hitung tahun yang dipilih)
-    dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter).forEach(t => {
-        const m = new Date(t.tanggal).getMonth();
-        if(t.tipe === 'UANG MASUK') dIn[m] += t.nominal; 
-        else dOut[m] += t.nominal;
-    });
+            const bulanLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
+            const tahunFilter = document.getElementById('pilih-tahun').value;
+            
+            dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter).forEach(t => {
+                const m = new Date(t.tanggal).getMonth();
+                if(t.tipe === 'UANG MASUK') dIn[m] += t.nominal; 
+                else dOut[m] += t.nominal;
+            });
 
-    // Gambar ulang grafik Bar
-    const ctxB = document.getElementById('chartBulanan').getContext('2d');
-    window.myChartB = new Chart(ctxB, {
-        type: 'bar',
-        data: { labels: bulanLabels, datasets: [{ label: 'Masuk', data: dIn, backgroundColor: '#22c55e' }, { label: 'Keluar', data: dOut, backgroundColor: '#ef4444' }] },
-        options: { responsive: true, scales: { y: { ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } } }
-    });
+            const ctxB = document.getElementById('chartBulanan').getContext('2d');
+            window.myChartB = new Chart(ctxB, {
+                type: 'bar',
+                data: { 
+                    labels: bulanLabels, 
+                    datasets: [
+                        { label: 'Masuk', data: dIn, backgroundColor: '#22c55e', borderRadius: 5 }, 
+                        { label: 'Keluar', data: dOut, backgroundColor: '#ef4444', borderRadius: 5 }
+                    ] 
+                },
+                options: { 
+                    responsive: true, 
+                    plugins: { legend: { labels: { color: 'white' } } },
+                    scales: { 
+                        y: { beginAtZero: true, ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }, 
+                        x: { ticks: { color: 'white' }, grid: { display: false } } 
+                    } 
+                }
+            });
 
-    // Gambar ulang grafik Pie
-    const ctxP = document.getElementById('chartPie').getContext('2d');
-    window.myChartP = new Chart(ctxP, {
-        type: 'doughnut',
-        data: { labels: ['Masuk', 'Keluar'], datasets: [{ data: [dIn.reduce((a,b)=>a+b,0), dOut.reduce((a,b)=>a+b,0)], backgroundColor: ['#22c55e', '#ef4444'] }] }
-    });
-}
-     // PERINTAH UNTUK FILTER TAHUN
-document.getElementById('pilih-tahun').addEventListener('change', function() {
-    const tahunTerpilih = this.value;
-    
-    // 1. Ganti judul (Langsung ganti, biar gak nunggu)
-    const judul = document.querySelector('#sec-rekapan h3');
-    if (judul) {
-        judul.innerText = `LAPORAN TAHUN ${tahunTerpilih}`;
-    }
+            const ctxP = document.getElementById('chartPie').getContext('2d');
+            const totalIn = dIn.reduce((a,b)=>a+b,0);
+            const totalOut = dOut.reduce((a,b)=>a+b,0);
+            
+            window.myChartP = new Chart(ctxP, {
+                type: 'doughnut',
+                data: { 
+                    labels: ['Masuk', 'Keluar'], 
+                    datasets: [{ 
+                        data: [totalIn, totalOut], 
+                        backgroundColor: ['#22c55e', '#ef4444'],
+                        borderWidth: 0
+                    }] 
+                },
+                options: { 
+                    responsive: true,
+                    cutout: '70%',
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { color: 'white', padding: 20 } } 
+                    } 
+                }
+            });
+        }
 
-    // 2. Bungkus semua fungsi update di dalam sini (Biar GAK LEMOT)
-    setTimeout(() => {
-        if (typeof updateUI === "function") updateUI();
-        if (typeof updateAnalytics === "function") updateAnalytics();
-    }, 100); // Kasih jeda 0.1 detik biar browser napas
-});
+        document.getElementById('pilih-tahun').addEventListener('change', function() {
+            const tahunTerpilih = this.value;
+            const judul = document.querySelector('#sec-rekapan h3');
+            if (judul) judul.innerText = `LAPORAN TAHUN ${tahunTerpilih}`;
+
+            setTimeout(() => {
+                updateUI();
+                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
+            }, 100);
+        });
     </script>
 </body>
 </html>
