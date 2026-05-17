@@ -120,6 +120,12 @@
         }
         .saldo-info { padding: 40px 20px; }
         .marquee-wrapper { background: rgba(0,0,0,0.3); padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+
+        /* TAMBAHAN STYLE UNTUK GRID BANK */
+        .grid-bank-saldo { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 10px; }
+        .card-bank-item { background: #1e293b; border: 1px solid #334155; padding: 15px; border-radius: 12px; border-left: 4px solid #38bdf8; }
+        .card-bank-item small { color: #94a3b8; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; }
+        .card-bank-item div { font-size: 1.1rem; font-weight: bold; color: #fff; margin-top: 5px; }
         
         @media (max-width: 768px) { 
             .sidebar { width: 100%; height: auto; position: relative; display: none; } 
@@ -162,7 +168,7 @@
             <h2 class="mb-4 fw-bold">Saldo Utama</h2>
             <div class="card-saldo-modern">
                 <div class="saldo-info">
-                    <p class="mb-1 text-uppercase fw-bold opacity-75" style="font-size: 0.8rem; letter-spacing: 1px;">Total Saldo Saat Ini</p>
+                    <p class="mb-1 text-uppercase fw-bold opacity-75" style="font-size: 0.8rem; letter-spacing: 1px;">Total Saldo Keseluruhan (Semua Bank)</p>
                     <h1 class="fw-bold display-4" id="total-saldo-display">Rp 0</h1>
                 </div>
                 <div class="marquee-wrapper">
@@ -171,6 +177,10 @@
                     </marquee>
                 </div>
             </div>
+
+            <h5 class="fw-bold mb-3"><i class="fas fa-university me-2 text-info"></i> Rincian Saldo Per Bank</h5>
+            <div class="grid-bank-saldo" id="grid-saldo-bank">
+                </div>
         </div>
 
         <div id="sec-masuk" class="section-content" style="display:none;">
@@ -348,7 +358,7 @@
 
         function simpanTransaksi(tipe) {
             const tgl = document.getElementById(`tgl-${tipe}`).value;
-            const bank = document.getElementById(`bank-${tipe}`).value; // AMBIL DATA BANK
+            const bank = document.getElementById(`bank-${tipe}`).value; 
             const nomRaw = document.getElementById(`nom-${tipe}`).value.replace(/,/g, '');
             const ket = document.getElementById(`ket-${tipe}`).value;
             const fileInput = document.getElementById(`file-${tipe}`);
@@ -407,18 +417,47 @@
         function updateUI() {
             const tbody = document.getElementById('table-body');
             const containerBulan = document.getElementById('container-bulanan');
+            const gridBank = document.getElementById('grid-saldo-bank');
             const tahunFilter = document.getElementById('pilih-tahun').value;
             
             tbody.innerHTML = '';
             containerBulan.innerHTML = '';
+            gridBank.innerHTML = ''; // Reset rincian bank
             
             let totalTahunIn = 0, totalTahunOut = 0;
             let rekapBulanan = {};
+            
+            // LOGIKA SALDO AKUMULATIF (SEPANJANG MASA)
+            let saldoPerBank = {};
+            let totalSaldoSistem = 0;
 
-            const dataFiltered = dataTransaksi.filter(t => {
-                const tahunData = t.tanggal.split('-')[0]; 
-                return tahunData === tahunFilter;
+            // Kita hitung semua data yang ada di database untuk saldo utama & bank
+            dataTransaksi.forEach(t => {
+                if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
+                
+                if (t.tipe === 'UANG MASUK') {
+                    saldoPerBank[t.bank] += t.nominal;
+                    totalSaldoSistem += t.nominal;
+                } else {
+                    saldoPerBank[t.bank] -= t.nominal;
+                    totalSaldoSistem -= t.nominal;
+                }
             });
+
+            // Tampilkan rincian bank di Dashboard (Akumulatif)
+            for (let b in saldoPerBank) {
+                gridBank.innerHTML += `
+                    <div class="card-bank-item">
+                        <small>SALDO ${b}</small>
+                        <div>Rp ${saldoPerBank[b].toLocaleString()}</div>
+                    </div>`;
+            }
+
+            // Update Saldo Utama (Akumulatif Sepanjang Masa)
+            document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
+
+            // FILTER DATA UNTUK REKAPAN TAHUNAN SAJA
+            const dataFiltered = dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter);
 
             dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
                 const dateObj = new Date(t.tanggal);
@@ -450,7 +489,6 @@
             document.getElementById('rekap-tahun-in').innerText = `Rp ${totalTahunIn.toLocaleString()}`;
             document.getElementById('rekap-tahun-out').innerText = `Rp -${totalTahunOut.toLocaleString()}`;
             document.getElementById('rekap-tahun-sisa').innerText = `Rp ${sisaTahun.toLocaleString()}`;
-            document.getElementById('total-saldo-display').innerText = `Rp ${sisaTahun.toLocaleString()}`;
 
             for (const bulan in rekapBulanan) {
                 containerBulan.innerHTML += `
