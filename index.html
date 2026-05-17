@@ -64,7 +64,7 @@
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important; 
         }
 
-        input[type="date"] {
+        input[type="date"], select.form-control {
             color-scheme: dark;
             border: 1px solid #38bdf8 !important;
             font-weight: bold;
@@ -78,7 +78,7 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.4); 
             -webkit-overflow-scrolling: touch;
         }
-        .table-custom-full { min-width: 800px; width: 100%; margin-bottom: 0; }
+        .table-custom-full { min-width: 900px; width: 100%; margin-bottom: 0; }
         .table-custom-full thead th { 
             background: #0f172a; 
             color: #38bdf8; 
@@ -177,6 +177,20 @@
             <h3 class="mb-4 text-success fw-bold">Catat Pemasukan</h3>
             <div class="card-rekap-utama">
                 <div class="mb-3"><label>Tanggal Transaksi</label><input type="date" id="tgl-masuk" class="form-control"></div>
+                <div class="mb-3">
+                    <label>Pilih Bank</label>
+                    <select id="bank-masuk" class="form-control">
+                        <option value="BCA">BCA</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BRI">BRI</option>
+                        <option value="MANDIRI">MANDIRI</option>
+                        <option value="DANAMON">DANAMON</option>
+                        <option value="CIMB">CIMB NIAGA</option>
+                        <option value="DANA">DANA</option>
+                        <option value="OVO">OVO</option>
+                        <option value="GOPAY">GOPAY</option>
+                    </select>
+                </div>
                 <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-masuk" class="form-control format-ribuan" placeholder="0"></div>
                 <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-masuk" class="form-control" placeholder="Contoh: Gaji Bulanan"></div>
                 <div class="mb-3"><label>Upload Bukti</label><input type="file" id="file-masuk" class="form-control" accept="image/*"></div>
@@ -188,6 +202,20 @@
             <h3 class="mb-4 text-danger fw-bold">Catat Pengeluaran</h3>
             <div class="card-rekap-utama">
                 <div class="mb-3"><label>Tanggal Transaksi</label><input type="date" id="tgl-keluar" class="form-control"></div>
+                <div class="mb-3">
+                    <label>Pilih Bank</label>
+                    <select id="bank-keluar" class="form-control">
+                        <option value="BCA">BCA</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BRI">BRI</option>
+                        <option value="MANDIRI">MANDIRI</option>
+                        <option value="DANAMON">DANAMON</option>
+                        <option value="CIMB">CIMB NIAGA</option>
+                        <option value="DANA">DANA</option>
+                        <option value="OVO">OVO</option>
+                        <option value="GOPAY">GOPAY</option>
+                    </select>
+                </div>
                 <div class="mb-3"><label>Nominal (Rp)</label><input type="text" id="nom-keluar" class="form-control format-ribuan" placeholder="0"></div>
                 <div class="mb-3"><label>Keterangan</label><input type="text" id="ket-keluar" class="form-control" placeholder="Contoh: Beli Makan"></div>
                 <div class="mb-3"><label>Upload Bukti</label><input type="file" id="file-keluar" class="form-control" accept="image/*"></div>
@@ -224,6 +252,7 @@
                         <tr>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Tipe</th>
+                            <th class="text-center">Bank</th>
                             <th>Keterangan</th>
                             <th>Nominal</th>
                             <th class="text-center">Bukti</th>
@@ -266,7 +295,6 @@
             updateUI();
             savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
 
-            // TAMBAHAN: CEK APAKAH SUDAH LOGIN SEBELUMNYA
             const sudahLogin = localStorage.getItem('isLoggedIn');
             if (sudahLogin === 'true') {
                 document.getElementById('login-section').style.display = 'none';
@@ -285,10 +313,7 @@
             const errorArea = document.getElementById('error-msg');
             if(u !== "" && p === "123") {
                 errorArea.style.display = 'none';
-                
-                // TAMBAHAN: SIMPAN STATUS LOGIN
                 localStorage.setItem('isLoggedIn', 'true');
-
                 if(!savedUsers.includes(u)) {
                     savedUsers.push(u);
                     localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
@@ -301,7 +326,6 @@
             }
         }
 
-        // TAMBAHAN: FUNGSI LOGOUT AGAR STATUS LOGIN TERHAPUS
         function handleLogout() {
             localStorage.removeItem('isLoggedIn');
             location.reload();
@@ -324,18 +348,20 @@
 
         function simpanTransaksi(tipe) {
             const tgl = document.getElementById(`tgl-${tipe}`).value;
+            const bank = document.getElementById(`bank-${tipe}`).value; // AMBIL DATA BANK
             const nomRaw = document.getElementById(`nom-${tipe}`).value.replace(/,/g, '');
             const ket = document.getElementById(`ket-${tipe}`).value;
             const fileInput = document.getElementById(`file-${tipe}`);
+            
             if(!tgl || !nomRaw || !ket) return alert("Mohon lengkapi semua data!");
 
-            let fileData = "Gada"; 
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     dataTransaksi.push({
                         id: Date.now(),
                         tanggal: tgl,
+                        bank: bank,
                         tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
                         nominal: parseInt(nomRaw),
                         keterangan: ket,
@@ -349,6 +375,7 @@
                 dataTransaksi.push({
                     id: Date.now(),
                     tanggal: tgl,
+                    bank: bank,
                     tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
                     nominal: parseInt(nomRaw),
                     keterangan: ket,
@@ -411,6 +438,7 @@
                     <tr>
                         <td class="text-center fw-bold text-secondary">${t.tanggal}</td>
                         <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
+                        <td class="text-center fw-bold text-info">${t.bank || '-'}</td>
                         <td class="fw-bold">${t.keterangan}</td>
                         <td class="${isKeluar ? 'text-danger' : 'text-success'} fw-bold">Rp ${t.nominal.toLocaleString()}</td>
                         <td class="text-center">${htmlBukti}</td>
