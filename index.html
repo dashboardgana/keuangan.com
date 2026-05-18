@@ -605,6 +605,7 @@
 
     <script>
     (function() {
+      // 1. Konfigurasi Database (Sudah Benar)
       const firebaseConfig = {
         apiKey: "AIzaSyA5y0DQ2FpNIhLXNYPkPaxQkGUxQ1xnAY",
         authDomain: "myfinancedata-ad5ad.firebaseapp.com",
@@ -620,63 +621,55 @@
       }
       const database = firebase.database();
 
+      // 2. Fungsi Simpan yang Lebih Galak
       async function simpanKeFirebase() {
-        // Ambil semua input dan select di dalam form Catat Pemasukan
-        const inputs = document.querySelectorAll('input');
+        // Ambil elemen secara paksa berdasarkan tipe dan urutan
+        const inputTgl = document.querySelector('input[type="date"]');
+        const allInputs = document.querySelectorAll('input');
         const selectBank = document.querySelector('select');
 
-        // Target berdasarkan urutan atau tipe (Metode paling aman)
-        const tglVal = document.querySelector('input[type="date"]')?.value || "";
-        
-        // Kita cari input nominal & keterangan berdasarkan urutan di layar
-        let nomVal = "";
-        let ketVal = "";
-
-        inputs.forEach(input => {
-           // Jika input isinya angka atau ada koma/titik, kita anggap itu nominal
-           if(input.placeholder && (input.placeholder.includes('000') || input.placeholder.toLowerCase().includes('nominal'))) {
-               nomVal = input.value;
-           }
-           // Jika input placeholder ada kata gaji atau keterangan
-           if(input.placeholder && (input.placeholder.toLowerCase().includes('gaji') || input.placeholder.toLowerCase().includes('keterangan'))) {
-               ketVal = input.value;
-           }
+        // Cari nominal & keterangan berdasarkan placeholder
+        let inputNom, inputKet;
+        allInputs.forEach(inp => {
+          if (inp.placeholder && inp.placeholder.includes('000')) inputNom = inp;
+          if (inp.placeholder && inp.placeholder.includes('gaji')) inputKet = inp;
         });
 
-        // Backup jika pencarian placeholder gagal, ambil berdasarkan index
-        if (!nomVal && inputs[1]) nomVal = inputs[1].value;
-        if (!ketVal && inputs[2]) ketVal = inputs[2].value;
-
+        const tglVal = inputTgl ? inputTgl.value : "";
+        const nomVal = inputNom ? inputNom.value : "";
         const bnkVal = selectBank ? selectBank.value : "-";
+        const ketVal = inputKet ? inputKet.value : "-";
 
-        // VALIDASI
+        // VALIDASI: Hanya proses jika Tanggal dan Nominal TIDAK KOSONG
         if (tglVal.trim() !== "" && nomVal.trim() !== "") {
-          const nomBersih = nomVal.replace(/[^0-9]/g, ''); // Hapus semua selain angka
+          const nomBersih = nomVal.replace(/[^0-9]/g, ''); // Ambil angka murni saja
           
           try {
             await database.ref('pemasukan').push({
               tanggal: tglVal,
               bank: bnkVal,
               nominal: parseInt(nomBersih),
-              keterangan: ketVal || "-",
+              keterangan: ketVal,
               waktu_input: new Date().toLocaleString()
             });
             
+            // Pesan sukses hanya muncul 1x
             alert("Transaksi Berhasil Dicatat!");
             location.reload(); 
           } catch (e) {
-            alert("Gagal Simpan: " + e.message);
+            alert("Gagal konek ke Database: " + e.message);
           }
         } else {
-          alert("Mohon isi Tanggal dan Nominal dulu ya!");
+          // Jika ini muncul, berarti script gagal membaca input di layar kamu
+          alert("Sistem gagal membaca input. Coba isi ulang Tanggal dan Nominal!");
         }
       }
 
-      // Pasang listener klik pada tombol
+      // 3. Deteksi Klik Tombol (Anti-Double Alert)
       document.addEventListener('click', function(e) {
         if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
           e.preventDefault();
-          e.stopImmediatePropagation();
+          e.stopImmediatePropagation(); // Kunci agar pesan tidak muncul 2x
           simpanKeFirebase();
         }
       }, true);
