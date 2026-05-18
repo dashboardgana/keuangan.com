@@ -415,7 +415,37 @@
             });
         });
 
-        function simpanTransaksi(tipe) {
+        // --- TAMBAHAN SCRIPT GOOGLE DRIVE ---
+        async function uploadKeGoogleDrive(file) {
+            const reader = new FileReader();
+            return new Promise((resolve, reject) => {
+                reader.onload = async () => {
+                    const base64Data = reader.result.split(',')[1];
+                    const payload = {
+                        base64: base64Data,
+                        type: file.type,
+                        name: file.name
+                    };
+                    try {
+                        const response = await fetch("https://script.google.com/macros/s/AKfycbxGOWk2DF_Orypfg4SkhENzzYxeusza7jfQgM9KXlDenk_qQIQhWivVI9zzHkk_xMZFaQ/exec", {
+                            method: "POST",
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+                        if (result.status === "success") {
+                            resolve(result.url);
+                        } else {
+                            reject("Gagal upload");
+                        }
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function simpanTransaksi(tipe) {
             const tgl = document.getElementById(`tgl-${tipe}`).value;
             const bank = document.getElementById(`bank-${tipe}`).value; 
             const nomRaw = document.getElementById(`nom-${tipe}`).value.replace(/,/g, '');
@@ -440,10 +470,16 @@
                 });
             };
 
+            // MODIFIKASI: Gunakan upload Google Drive jika ada file
             if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => pushData(e.target.result);
-                reader.readAsDataURL(fileInput.files[0]);
+                alert("Sedang mengupload foto bukti...");
+                try {
+                    const linkDrive = await uploadKeGoogleDrive(fileInput.files[0]);
+                    pushData(linkDrive);
+                } catch (e) {
+                    alert("Gagal upload foto, data tetap disimpan tanpa bukti.");
+                    pushData("Gada");
+                }
             } else {
                 pushData("Gada");
             }
@@ -517,7 +553,9 @@
                 else rekapBulanan[bulanKey].out += t.nominal;
 
                 const isKeluar = t.tipe === 'UANG KELUAR';
-                const htmlBukti = t.bukti !== "Gada" ? `<img src="${t.bukti}" class="img-preview" onclick="window.open('${t.bukti}')">` : "Gada";
+                
+                // MODIFIKASI: Link agar bisa diklik terbuka di tab baru
+                const htmlBukti = t.bukti !== "Gada" ? `<a href="${t.bukti}" target="_blank"><img src="${t.bukti}" class="img-preview" onerror="this.src='https://cdn-icons-png.flaticon.com/512/337/337948.png'"></a>` : "Gada";
 
                 tbody.innerHTML += `
                     <tr>
