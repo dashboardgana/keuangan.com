@@ -6,6 +6,8 @@
     <title>Sistem Keuangan VIP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { background: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
@@ -345,15 +347,31 @@
     </div>
 
     <script>
-        let dataTransaksi = JSON.parse(localStorage.getItem('data_keuangan')) || [];
+        // --- KONFIGURASI FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSy...", // GANTI DENGAN API KEY KAMU
+            databaseURL: "https://myfinancedata-ad5ad-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "myfinancedata-ad5ad",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let dataTransaksi = [];
         let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
         window.myChartB = null;
         window.myChartP = null;
 
         window.onload = function() {
             const list = document.getElementById('user-list');
-            updateUI();
             savedUsers.forEach(u => list.innerHTML += `<option value="${u}">`);
+            
+            // AMBIL DATA DARI FIREBASE (PERMANEN)
+            db.ref('data_keuangan').on('value', (snapshot) => {
+                const data = snapshot.val();
+                dataTransaksi = data ? Object.values(data) : [];
+                updateUI();
+                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
+            });
         };
 
         function checkEnter(event) {
@@ -406,40 +424,32 @@
             
             if(!tgl || !nomRaw || !ket) return alert("Mohon lengkapi semua data!");
 
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    dataTransaksi.push({
-                        id: Date.now(),
-                        tanggal: tgl,
-                        bank: bank,
-                        tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
-                        nominal: parseInt(nomRaw),
-                        keterangan: ket,
-                        bukti: e.target.result
-                    });
-                    localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
-                    lanjutSimpan(tipe);
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                dataTransaksi.push({
-                    id: Date.now(),
+            const pushData = (buktiUrl) => {
+                const idUnik = Date.now().toString();
+                db.ref('data_keuangan/' + idUnik).set({
+                    id: idUnik,
                     tanggal: tgl,
                     bank: bank,
                     tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
                     nominal: parseInt(nomRaw),
                     keterangan: ket,
-                    bukti: "Gada"
+                    bukti: buktiUrl
+                }).then(() => {
+                    alert("DATA TERSIMPAN PERMANEN DI CLOUD!");
+                    lanjutSimpan(tipe);
                 });
-                localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
-                lanjutSimpan(tipe);
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => pushData(e.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                pushData("Gada");
             }
         }
 
         function lanjutSimpan(tipe) {
-            updateUI();
-            alert("Transaksi Berhasil Dicatat!");
             document.getElementById(`tgl-${tipe}`).value = '';
             document.getElementById(`nom-${tipe}`).value = '';
             document.getElementById(`ket-${tipe}`).value = '';
@@ -447,11 +457,10 @@
         }
 
         function hapusData(id) {
-            if(confirm("Hapus catatan ini?")) {
-                dataTransaksi = dataTransaksi.filter(t => t.id != id);
-                localStorage.setItem('data_keuangan', JSON.stringify(dataTransaksi));
-                updateUI();
-                if(document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
+            if(confirm("Hapus catatan ini secara PERMANEN?")) {
+                db.ref('data_keuangan/' + id).remove().then(() => {
+                    alert("Data terhapus!");
+                });
             }
         }
 
@@ -471,7 +480,6 @@
             let saldoPerBank = {};
             let totalSaldoSistem = 0;
 
-            // Hitung Saldo Dashboard (Selalu Semua Data)
             dataTransaksi.forEach(t => {
                 if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
                 if (t.tipe === 'UANG MASUK') {
@@ -492,7 +500,6 @@
             }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
 
-            // Filter untuk Laporan
             let dataFiltered = dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter);
             if (bankFilter !== 'ALL') {
                 dataFiltered = dataFiltered.filter(t => t.bank === bankFilter);
