@@ -621,25 +621,37 @@
       const database = firebase.database();
 
       async function simpanKeFirebase() {
-        // Cari elemen secara spesifik berdasarkan labelnya agar tidak salah tangkap
-        const inputTgl = document.querySelector('input[type="date"]');
-        const inputNom = document.querySelector('input[placeholder="19,000,000"]');
-        const inputBank = document.querySelector('select');
-        const inputKet = document.querySelector('input[placeholder="gaji"]');
+        // AMBIL SEMUA INPUT YANG ADA DI HALAMAN
+        const semuaInput = document.querySelectorAll('input');
+        
+        let tglVal = "";
+        let nomVal = "";
+        let ketVal = "";
 
-        const tglVal = inputTgl ? inputTgl.value : "";
-        const nomVal = inputNom ? inputNom.value : "";
+        // Loop untuk mencari data berdasarkan tipe atau placeholder yang mirip
+        semuaInput.forEach(input => {
+          if (input.type === 'date') {
+            tglVal = input.value;
+          } else if (input.placeholder && (input.placeholder.includes('000') || input.placeholder.includes('Nominal'))) {
+            nomVal = input.value;
+          } else if (input.placeholder && (input.placeholder.includes('gaji') || input.placeholder.includes('Keterangan'))) {
+            ketVal = input.value;
+          }
+        });
 
-        // Validasi: Harus ada tanggal DAN nominal (tidak boleh kosong)
-        if (tglVal !== "" && nomVal !== "") {
-          const nomBersih = nomVal.replace(/,/g, ''); 
+        const bnkVal = document.querySelector('select') ? document.querySelector('select').value : "-";
+
+        // VALIDASI: Cek apakah tanggal dan nominal ada isinya
+        if (tglVal && nomVal) {
+          // Bersihkan nominal dari koma atau titik agar jadi angka murni
+          const nomBersih = nomVal.replace(/[^0-9]/g, ''); 
           
           try {
             await database.ref('pemasukan').push({
               tanggal: tglVal,
-              bank: inputBank ? inputBank.value : "-",
+              bank: bnkVal,
               nominal: parseInt(nomBersih),
-              keterangan: inputKet ? inputKet.value : "-",
+              keterangan: ketVal || "-",
               waktu_input: new Date().toLocaleString()
             });
             
@@ -649,12 +661,12 @@
             alert("Gagal Simpan: " + e.message);
           }
         } else {
-          // Pesan ini hanya muncul jika beneran kosong
+          // Pesan ini hanya akan muncul jika kamu benar-benar lupa mengisi
           alert("Mohon isi Tanggal dan Nominal dulu ya!");
         }
       }
 
-      // Pastikan hanya satu event klik yang berjalan
+      // Pastikan tombol klik terdeteksi dengan benar dan hanya jalan 1x
       document.addEventListener('click', function(e) {
         if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
           e.preventDefault();
