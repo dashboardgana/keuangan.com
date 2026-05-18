@@ -621,30 +621,37 @@
       const database = firebase.database();
 
       async function simpanKeFirebase() {
-        // AMBIL SEMUA INPUT YANG ADA DI HALAMAN
-        const semuaInput = document.querySelectorAll('input');
+        // Ambil semua input dan select di dalam form Catat Pemasukan
+        const inputs = document.querySelectorAll('input');
+        const selectBank = document.querySelector('select');
+
+        // Target berdasarkan urutan atau tipe (Metode paling aman)
+        const tglVal = document.querySelector('input[type="date"]')?.value || "";
         
-        let tglVal = "";
+        // Kita cari input nominal & keterangan berdasarkan urutan di layar
         let nomVal = "";
         let ketVal = "";
 
-        // Loop untuk mencari data berdasarkan tipe atau placeholder yang mirip
-        semuaInput.forEach(input => {
-          if (input.type === 'date') {
-            tglVal = input.value;
-          } else if (input.placeholder && (input.placeholder.includes('000') || input.placeholder.includes('Nominal'))) {
-            nomVal = input.value;
-          } else if (input.placeholder && (input.placeholder.includes('gaji') || input.placeholder.includes('Keterangan'))) {
-            ketVal = input.value;
-          }
+        inputs.forEach(input => {
+           // Jika input isinya angka atau ada koma/titik, kita anggap itu nominal
+           if(input.placeholder && (input.placeholder.includes('000') || input.placeholder.toLowerCase().includes('nominal'))) {
+               nomVal = input.value;
+           }
+           // Jika input placeholder ada kata gaji atau keterangan
+           if(input.placeholder && (input.placeholder.toLowerCase().includes('gaji') || input.placeholder.toLowerCase().includes('keterangan'))) {
+               ketVal = input.value;
+           }
         });
 
-        const bnkVal = document.querySelector('select') ? document.querySelector('select').value : "-";
+        // Backup jika pencarian placeholder gagal, ambil berdasarkan index
+        if (!nomVal && inputs[1]) nomVal = inputs[1].value;
+        if (!ketVal && inputs[2]) ketVal = inputs[2].value;
 
-        // VALIDASI: Cek apakah tanggal dan nominal ada isinya
-        if (tglVal && nomVal) {
-          // Bersihkan nominal dari koma atau titik agar jadi angka murni
-          const nomBersih = nomVal.replace(/[^0-9]/g, ''); 
+        const bnkVal = selectBank ? selectBank.value : "-";
+
+        // VALIDASI
+        if (tglVal.trim() !== "" && nomVal.trim() !== "") {
+          const nomBersih = nomVal.replace(/[^0-9]/g, ''); // Hapus semua selain angka
           
           try {
             await database.ref('pemasukan').push({
@@ -661,12 +668,11 @@
             alert("Gagal Simpan: " + e.message);
           }
         } else {
-          // Pesan ini hanya akan muncul jika kamu benar-benar lupa mengisi
           alert("Mohon isi Tanggal dan Nominal dulu ya!");
         }
       }
 
-      // Pastikan tombol klik terdeteksi dengan benar dan hanya jalan 1x
+      // Pasang listener klik pada tombol
       document.addEventListener('click', function(e) {
         if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
           e.preventDefault();
