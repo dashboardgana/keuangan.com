@@ -600,7 +600,7 @@
         document.getElementById('filter-bank-laporan').addEventListener('change', updateUI);
     </script>
 
-   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
@@ -621,42 +621,46 @@
       const database = firebase.database();
 
       async function simpanKeFirebase() {
-        const tgl = document.querySelector('input[type="date"]')?.value;
-        const bnk = document.querySelector('select')?.value;
-        const nomInput = document.querySelector('input[placeholder="19,000,000"]');
-        const ket = document.querySelector('input[placeholder="gaji"]')?.value;
+        // Cari elemen secara spesifik berdasarkan labelnya agar tidak salah tangkap
+        const inputTgl = document.querySelector('input[type="date"]');
+        const inputNom = document.querySelector('input[placeholder="19,000,000"]');
+        const inputBank = document.querySelector('select');
+        const inputKet = document.querySelector('input[placeholder="gaji"]');
 
-        if (tgl && nomInput && nomInput.value) {
-          const nom = nomInput.value.replace(/,/g, ''); 
+        const tglVal = inputTgl ? inputTgl.value : "";
+        const nomVal = inputNom ? inputNom.value : "";
+
+        // Validasi: Harus ada tanggal DAN nominal (tidak boleh kosong)
+        if (tglVal !== "" && nomVal !== "") {
+          const nomBersih = nomVal.replace(/,/g, ''); 
           
           try {
             await database.ref('pemasukan').push({
-              tanggal: tgl,
-              bank: bnk,
-              nominal: parseInt(nom),
-              keterangan: ket,
+              tanggal: tglVal,
+              bank: inputBank ? inputBank.value : "-",
+              nominal: parseInt(nomBersih),
+              keterangan: inputKet ? inputKet.value : "-",
               waktu_input: new Date().toLocaleString()
             });
-            // Teks alert sudah diubah sesuai permintaan
+            
             alert("Transaksi Berhasil Dicatat!");
             location.reload(); 
           } catch (e) {
             alert("Gagal Simpan: " + e.message);
           }
         } else {
+          // Pesan ini hanya muncul jika beneran kosong
           alert("Mohon isi Tanggal dan Nominal dulu ya!");
         }
       }
 
-      // Perbaikan agar tidak terpanggil 2x
+      // Pastikan hanya satu event klik yang berjalan
       document.addEventListener('click', function(e) {
         if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
           e.preventDefault();
-          e.stopImmediatePropagation(); // Kunci agar hanya script ini yang jalan
+          e.stopImmediatePropagation();
           simpanKeFirebase();
         }
-      }, true); // Prioritas tinggi agar tidak bentrok
+      }, true);
     })();
     </script>
-</body>
-</html>
