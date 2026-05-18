@@ -600,12 +600,11 @@
         document.getElementById('filter-bank-laporan').addEventListener('change', updateUI);
     </script>
 
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
     (function() {
-      // 1. Konfigurasi Database (Sudah Benar)
       const firebaseConfig = {
         apiKey: "AIzaSyA5y0DQ2FpNIhLXNYPkPaxQkGUxQ1xnAY",
         authDomain: "myfinancedata-ad5ad.firebaseapp.com",
@@ -621,55 +620,62 @@
       }
       const database = firebase.database();
 
-      // 2. Fungsi Simpan yang Lebih Galak
       async function simpanKeFirebase() {
-        // Ambil elemen secara paksa berdasarkan tipe dan urutan
-        const inputTgl = document.querySelector('input[type="date"]');
-        const allInputs = document.querySelectorAll('input');
+        // AMBIL SEMUA INPUT DI HALAMAN
+        const inputs = document.querySelectorAll('input');
         const selectBank = document.querySelector('select');
+        
+        // Cari Tanggal secara spesifik
+        const inputTgl = document.querySelector('input[type="date"]');
+        
+        // Gunakan pencarian cerdas untuk Nominal dan Keterangan
+        let valNom = "";
+        let valKet = "";
 
-        // Cari nominal & keterangan berdasarkan placeholder
-        let inputNom, inputKet;
-        allInputs.forEach(inp => {
-          if (inp.placeholder && inp.placeholder.includes('000')) inputNom = inp;
-          if (inp.placeholder && inp.placeholder.includes('gaji')) inputKet = inp;
+        inputs.forEach(inp => {
+          // Cari input yang isinya angka atau placeholder berbau uang/nominal
+          if (inp.placeholder && (inp.placeholder.includes('000') || inp.placeholder.toLowerCase().includes('nominal'))) {
+            valNom = inp.value;
+          }
+          // Cari input yang placeholder-nya berbau keterangan atau gaji
+          if (inp.placeholder && (inp.placeholder.toLowerCase().includes('gaji') || inp.placeholder.toLowerCase().includes('keterangan'))) {
+            valKet = inp.value;
+          }
         });
 
         const tglVal = inputTgl ? inputTgl.value : "";
-        const nomVal = inputNom ? inputNom.value : "";
         const bnkVal = selectBank ? selectBank.value : "-";
-        const ketVal = inputKet ? inputKet.value : "-";
 
-        // VALIDASI: Hanya proses jika Tanggal dan Nominal TIDAK KOSONG
-        if (tglVal.trim() !== "" && nomVal.trim() !== "") {
-          const nomBersih = nomVal.replace(/[^0-9]/g, ''); // Ambil angka murni saja
+        // VALIDASI KETAT
+        if (tglVal !== "" && valNom !== "") {
+          const nomBersih = valNom.replace(/[^0-9]/g, ''); // Ambil angka saja
           
           try {
             await database.ref('pemasukan').push({
               tanggal: tglVal,
               bank: bnkVal,
               nominal: parseInt(nomBersih),
-              keterangan: ketVal,
+              keterangan: valKet || "-",
               waktu_input: new Date().toLocaleString()
             });
             
-            // Pesan sukses hanya muncul 1x
+            // PESAN SUKSES PASTI MUNCUL 1X
             alert("Transaksi Berhasil Dicatat!");
             location.reload(); 
           } catch (e) {
-            alert("Gagal konek ke Database: " + e.message);
+            alert("Gagal Simpan ke Cloud: " + e.message);
           }
         } else {
-          // Jika ini muncul, berarti script gagal membaca input di layar kamu
-          alert("Sistem gagal membaca input. Coba isi ulang Tanggal dan Nominal!");
+          // Jika ini muncul, sistem benar-benar tidak bisa melihat apa yang kamu ketik
+          alert("Sistem tidak mendeteksi isi input. Mohon isi ulang Tanggal dan Nominal!");
         }
       }
 
-      // 3. Deteksi Klik Tombol (Anti-Double Alert)
+      // Deteksi tombol klik dengan prioritas tinggi
       document.addEventListener('click', function(e) {
         if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
           e.preventDefault();
-          e.stopImmediatePropagation(); // Kunci agar pesan tidak muncul 2x
+          e.stopImmediatePropagation();
           simpanKeFirebase();
         }
       }, true);
