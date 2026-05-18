@@ -600,7 +600,7 @@
         document.getElementById('filter-bank-laporan').addEventListener('change', updateUI);
     </script>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
@@ -637,7 +637,8 @@
               keterangan: ket,
               waktu_input: new Date().toLocaleString()
             });
-            alert("Sip! Data Berhasil Disimpan.");
+            // Teks alert sudah diubah sesuai permintaan
+            alert("Transaksi Berhasil Dicatat!");
             location.reload(); 
           } catch (e) {
             alert("Gagal Simpan: " + e.message);
@@ -647,13 +648,14 @@
         }
       }
 
+      // Perbaikan agar tidak terpanggil 2x
       document.addEventListener('click', function(e) {
         if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
           e.preventDefault();
-          e.stopPropagation();
+          e.stopImmediatePropagation(); // Kunci agar hanya script ini yang jalan
           simpanKeFirebase();
         }
-      });
+      }, true); // Prioritas tinggi agar tidak bentrok
     })();
     </script>
 </body>
