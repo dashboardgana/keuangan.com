@@ -595,89 +595,9 @@
                 }
             });
         }
-        
+
         document.getElementById('pilih-tahun').addEventListener('change', updateUI);
         document.getElementById('filter-bank-laporan').addEventListener('change', updateUI);
     </script>
-
- <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
-    <script>
-    (function() {
-      const firebaseConfig = {
-        apiKey: "AIzaSyA5y0DQ2FpNIhLXNYPkPaxQkGUxQ1xnAY",
-        authDomain: "myfinancedata-ad5ad.firebaseapp.com",
-        databaseURL: "https://myfinancedata-ad5ad-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "myfinancedata-ad5ad",
-        storageBucket: "myfinancedata-ad5ad.firebasestorage.app",
-        messagingSenderId: "4333918249052",
-        appId: "1:433918249052:web:3ad863cb513fe1e1513e99"
-      };
-
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
-      const database = firebase.database();
-
-      async function simpanKeFirebase() {
-        // AMBIL SEMUA INPUT DI HALAMAN
-        const inputs = document.querySelectorAll('input');
-        const selectBank = document.querySelector('select');
-        
-        // Cari Tanggal secara spesifik
-        const inputTgl = document.querySelector('input[type="date"]');
-        
-        // Gunakan pencarian cerdas untuk Nominal dan Keterangan
-        let valNom = "";
-        let valKet = "";
-
-        inputs.forEach(inp => {
-          // Cari input yang isinya angka atau placeholder berbau uang/nominal
-          if (inp.placeholder && (inp.placeholder.includes('000') || inp.placeholder.toLowerCase().includes('nominal'))) {
-            valNom = inp.value;
-          }
-          // Cari input yang placeholder-nya berbau keterangan atau gaji
-          if (inp.placeholder && (inp.placeholder.toLowerCase().includes('gaji') || inp.placeholder.toLowerCase().includes('keterangan'))) {
-            valKet = inp.value;
-          }
-        });
-
-        const tglVal = inputTgl ? inputTgl.value : "";
-        const bnkVal = selectBank ? selectBank.value : "-";
-
-        // VALIDASI KETAT
-        if (tglVal !== "" && valNom !== "") {
-          const nomBersih = valNom.replace(/[^0-9]/g, ''); // Ambil angka saja
-          
-          try {
-            await database.ref('pemasukan').push({
-              tanggal: tglVal,
-              bank: bnkVal,
-              nominal: parseInt(nomBersih),
-              keterangan: valKet || "-",
-              waktu_input: new Date().toLocaleString()
-            });
-            
-            // PESAN SUKSES PASTI MUNCUL 1X
-            alert("Transaksi Berhasil Dicatat!");
-            location.reload(); 
-          } catch (e) {
-            alert("Gagal Simpan ke Cloud: " + e.message);
-          }
-        } else {
-          // Jika ini muncul, sistem benar-benar tidak bisa melihat apa yang kamu ketik
-          alert("Sistem tidak mendeteksi isi input. Mohon isi ulang Tanggal dan Nominal!");
-        }
-      }
-
-      // Deteksi tombol klik dengan prioritas tinggi
-      document.addEventListener('click', function(e) {
-        if (e.target && e.target.textContent.trim() === 'SIMPAN DATA MASUK') {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          simpanKeFirebase();
-        }
-      }, true);
-    })();
-    </script>
+</body>
+</html>
