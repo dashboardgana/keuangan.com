@@ -658,24 +658,22 @@
             wadah.style.display = "none";
             frameGambar.src = ""; 
         }
-  <script>
-    // Fungsi menutup popup yang aman dan tidak merusak menu dashboard
-    function tutupPopUp() {
-        var wadahPopUp = document.getElementById("popUpFoto");
-        var frameGambarBesar = document.getElementById("fotoBesar");
+ function tutupFoto() {
+        var wadah = document.getElementById('popUpFoto');
+        var frameGambar = document.getElementById('fotoBesar');
         
-        if (wadahPopUp) {
-            wadahPopUp.style.display = "none";
+        if (wadah) {
+            wadah.style.display = "none";
         }
-        if (frameGambarBesar) {
-            frameGambarBesar.src = "";
+        if (frameGambar) {
+            frameGambar.src = "";
         }
     }
 </script>
 
-<div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupPopUp()">
+<div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupFoto()">
     
-    <span style="position: absolute; top: 15px; right: 25px; color: #fff; font-size: 45px; font-weight: bold; cursor: pointer; user-select: none; z-index: 10000; padding: 20px; line-height: 30px;" onclick="tutupPopUp(); event.stopPropagation();">&times;</span>
+    <span style="position: absolute; top: 15px; right: 25px; color: #fff; font-size: 45px; font-weight: bold; cursor: pointer; user-select: none; z-index: 10000; padding: 20px; line-height: 30px;" onclick="tutupFoto(); event.stopPropagation();">&times;</span>
     
     <img id="fotoBesar" src="" style="max-width: 90%; max-height: 90vh; width: auto; height: auto; object-fit: contain; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); flex-shrink: 0;" onclick="event.stopPropagation()">
 </div>
