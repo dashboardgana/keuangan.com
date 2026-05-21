@@ -427,7 +427,7 @@
                         name: file.name
                     };
                     try {
-                        const response = await fetch("https://script.google.com/macros/s/AKfycbxCA2sFRWYLeassJHeOwZq79em-YCcFH-fmZqTRYADxpzEy0rCl_niIuc9oqapfycaOdA/exec", {
+                        const response = await fetch("https://script.google.com/macros/s/AKfycbzpTUKa7IC3f_KobyaKtbCHbeGvES5e-xk2oHz-9RYtJh7J-fiQEanubaDGhewDWY_EXw/exec", {
                             method: "POST",
                             body: JSON.stringify(payload)
                         });
@@ -643,45 +643,6 @@
 
         document.getElementById('pilih-tahun').addEventListener('change', updateUI);
         document.getElementById('filter-bank-laporan').addEventListener('change', updateUI);
-  <div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 15px; box-sizing: border-box;" onclick="tutupFoto()">
-  <span style="position: absolute; top: 15px; right: 25px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; user-select: none; z-index: 10000;">&times;</span>
-  <iframe id="fotoBesar" src="" style="width: 90%; height: 80vh; max-width: 500px; border: none; border-radius: 8px; background: #fff;" onclick="event.stopPropagation()"></iframe>
-</div>
-
-<script>
-  // Taruh fungsi ini di dalam tag <script> kamu (misal di bawah baris 645)
-  function perbesarGambar(urlGambar) {
-    var wadah = document.getElementById('popUpFoto');
-    var frameGambar = document.getElementById('fotoBesar');
-    
-    // Trik mengubah link /view dari Apps Script menjadi /preview agar bisa nampil di dalam web/mobile
-    var embedUrl = urlGambar.replace('/view?usp=drivesdk', '/preview');
-    
-    frameGambar.src = embedUrl; 
-    wadah.style.display = "flex"; 
-  }
-
-  function tutupFoto() {
-    var wadah = document.getElementById('popUpFoto');
-    var frameGambar = document.getElementById('fotoBesar');
-    
-    wadah.style.display = "none";
-    frameGambar.src = ""; // Dikosongkan lagi pas tutup biar enteng
-  }
-
-  // TRINK PINTAR: Otomatis mendeteksi klik pada gambar kecil bukti transfer di tabel
-  document.addEventListener('click', function(e) {
-    // Jika yang diklik adalah gambar di dalam kolom BUKTI tabel
-    if (e.target && e.target.tagName === 'IMG' && e.target.closest('td')) {
-      var srcUrl = e.target.getAttribute('src');
-      // Pastikan gambar tersebut adalah link dari Google Drive, bukan gambar kosong/ikon lain
-      if (srcUrl && srcUrl.includes('drive.google.com')) {
-        e.preventDefault();
-        perbesarGambar(srcUrl);
-      }
-    }
-  });
-</script>
-
+    </script>
 </body>
 </html>
