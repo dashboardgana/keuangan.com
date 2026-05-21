@@ -669,6 +669,32 @@
             frameGambar.src = "";
         }
     }
+
+    // ==========================================
+    // SCRIPT PROTEKSI ANTI-F12 & KLI KANAN (TAMBAHAN BARU)
+    // ==========================================
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "F12") {
+            e.preventDefault();
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.key === 'i' || e.key === 'j' || e.key === 'c')) {
+            e.preventDefault();
+            return false;
+        }
+        if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    setInterval(function() {
+        debugger;
+    }, 100);
 </script>
 
 <div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupFoto()">
