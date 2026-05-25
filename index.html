@@ -677,6 +677,31 @@
         e.preventDefault();
     });
 
+   <script>
+    // ==========================================
+    // TAMBAHAN BACKGROUND (AMAN - TIDAK MERUSAK)
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', (event) => {
+        // 1. Mengatur Background Luar Aplikasi
+        document.body.style.backgroundImage = "url('https://lh3.googleusercontent.com/d/13jsxh9QFRz_K-XQejf_-Yb50gcYQuorq')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
+
+        // 2. Mengatur Background Dalam Kotak Dashboard
+        var kotakDalam = document.querySelector('.container, .container-fluid');
+        if (kotakDalam) {
+            kotakDalam.style.backgroundImage = "url('https://lh3.googleusercontent.com/d/1TCdDSbYQmnKSjPMB3GfWWOacodfmbB_z')";
+            kotakDalam.style.backgroundSize = "cover";
+            kotakDalam.style.backgroundPosition = "center";
+            kotakDalam.style.backgroundRepeat = "no-repeat";
+        }
+    });
+
+    // ==========================================
+    // SCRIPT ASLI KAMU (TETAP UTUH & AMAN)
+    // ==========================================
     document.addEventListener('keydown', function(e) {
         if (e.key === "F12") {
             e.preventDefault();
