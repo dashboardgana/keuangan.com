@@ -676,32 +676,7 @@
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     });
-
-   <script>
-    // ==========================================
-    // TAMBAHAN BACKGROUND (AMAN - TIDAK MERUSAK)
-    // ==========================================
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // 1. Mengatur Background Luar Aplikasi
-        document.body.style.backgroundImage = "url('https://lh3.googleusercontent.com/d/13jsxh9QFRz_K-XQejf_-Yb50gcYQuorq')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundRepeat = "no-repeat";
-        document.body.style.backgroundAttachment = "fixed";
-
-        // 2. Mengatur Background Dalam Kotak Dashboard
-        var kotakDalam = document.querySelector('.container, .container-fluid');
-        if (kotakDalam) {
-            kotakDalam.style.backgroundImage = "url('https://lh3.googleusercontent.com/d/1TCdDSbYQmnKSjPMB3GfWWOacodfmbB_z')";
-            kotakDalam.style.backgroundSize = "cover";
-            kotakDalam.style.backgroundPosition = "center";
-            kotakDalam.style.backgroundRepeat = "no-repeat";
-        }
-    });
-
-    // ==========================================
-    // SCRIPT ASLI KAMU (TETAP UTUH & AMAN)
-    // ==========================================
+        
     document.addEventListener('keydown', function(e) {
         if (e.key === "F12") {
             e.preventDefault();
@@ -721,6 +696,23 @@
         debugger;
     }, 100);
 </script>
+
+<style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/d/13jsxh9QFRz_K-XQejf_-Yb50gcYQuorq')no-repeat center center;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+    }
+    .container, .container-fluid {
+        background-image: url('https://lh3.googleusercontent.com/d/1TCdDSbYQmnKSjPMB3GfWWOacodfmbB_z')no-repeat center center;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-color: transparent !important;
+    }
+</style>
 
 <div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupFoto()">
     
