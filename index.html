@@ -677,7 +677,7 @@
         e.preventDefault();
     });
         
-    document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function(e) {
         if (e.key === "F12") {
             e.preventDefault();
             return false;
@@ -698,17 +698,20 @@
 </script>
 
 <style>
+    /* 1. BACKGROUND LUAR (Seluruh Layar HP/Monitor) */
     body {
-        background-image: url('https://lh3.googleusercontent.com/d/13jsxh9QFRz_K-XQejf_-Yb50gcYQuorq')no-repeat center center;
+        background-image: url('https://lh3.googleusercontent.com/d/13jsxh9QFRz_K-XQejf_-Yb50gcYQuorq') !important;
         background-size: cover !important;
-        background-position: center !important;
+        background-position: center center !important;
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
     }
+
+    /* 2. BACKGROUND DALAM (Kotak Pembungkus Utama) */
     .container, .container-fluid {
-        background-image: url('https://lh3.googleusercontent.com/d/1TCdDSbYQmnKSjPMB3GfWWOacodfmbB_z')no-repeat center center;
+        background-image: url('https://lh3.googleusercontent.com/d/1TCdDSbYQmnKSjPMB3GfWW0acodfmbB_z') !important;
         background-size: cover !important;
-        background-position: center !important;
+        background-position: center center !important;
         background-repeat: no-repeat !important;
         background-color: transparent !important;
     }
