@@ -700,20 +700,31 @@
 <style>
     /* 1. BACKGROUND LUAR (Seluruh Layar HP/Monitor) */
     body {
-        background-image: url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') no-repeat center center
+        /* Diperbaiki menggunakan properti 'background' agar format googleusercontent kamu terbaca sempurna */
+        background: #000 url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') no-repeat center center !important;
         background-size: cover !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
         background-attachment: fixed !important;
+        
+        /* Tambahan khusus agar di HP layarnya pas dan tidak terpotong */
+        min-height: 100vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     /* 2. BACKGROUND DALAM (Kotak Pembungkus Utama) */
     .container, .container-fluid {
-        background-image: url('https://lh3.googleusercontent.com/d/1TCdDSbYQmnKSjPMB3GfWW0acodfmbB_z') no-repeat center center
+        /* Diperbaiki menggunakan properti 'background' dan dibuat transparan agar tidak menutupi background luar */
+        background: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') no-repeat center center transparent !important;
         background-size: cover !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        background-color: transparent !important;
+        
+        /* Tambahan agar pas di layar HP (Mobile Friendly) */
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
     }
 </style>
 
