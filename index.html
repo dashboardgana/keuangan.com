@@ -698,46 +698,62 @@
 </script>
 
 <style>
-    /* ==================================================================
-       1. BACKGROUND LUAR (MUTLAK GAMBAR 0 - GEDUNG)
-       ================================================================== */
-    html, body, #login-page, .login-page {
-        background-color: #000 !important;
-        background-image: url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') !important;
-        background-repeat: no-repeat !important;
-        background-position: center center !important;
-        background-attachment: fixed !important;
-        background-size: cover !important;
-    }
+/* =========================================================
+   BACKGROUND LUAR
+========================================================= */
+html, body, #login-page, .login-page {
+    background-color: #000 !important;
+    background-image: url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+}
 
-    /* Memaksa pembungkus luar bawaan template agar bening */
-    .main-wrapper, .layout-wrapper, .page-wrapper, .wrapper, #wrapper {
-        background-color: transparent !important;
-        background-image: none !important;
-    }
+/* Wrapper luar transparan */
+.main-wrapper,
+.layout-wrapper,
+.page-wrapper,
+.wrapper,
+#wrapper {
+    background: transparent !important;
+}
 
-    /* ==================================================================
-       2. HALAMAN LOGIN (KOTAKNYA WAJIB TRANSPARAN / BENING)
-       ================================================================== */
-    .login-card, .login-box, .auth-box, .card, .card-body,
-    .form-group, .form-control, .input-group, .input-group-text {
-        background: transparent !important;
-        background-color: transparent !important;
-        background-image: none !important;
-    }
+/* =========================================================
+   LOGIN CARD TRANSPARAN
+========================================================= */
+.login-card,
+.login-box,
+.auth-box,
+.card,
+.card-body,
+.form-group,
+.form-control,
+.input-group,
+.input-group-text {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
 
-    /* ==================================================================
-       3. BACKGROUND DALAM (MUTLAK GAMBAR 1 - TEKSTUR GELAP)
-       ================================================================== */
-    /* Target langsung ke container dashboard utama agar Gambar 1 mengunci di dalam */
-    .container, .container-fluid, .content, .page-content, .container-panel {
-        background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
-        background-repeat: no-repeat !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-color: transparent !important;
-        display: block !important;
-    }
+/* =========================================================
+   BACKGROUND DALAM DASHBOARD
+========================================================= */
+
+/* HANYA area content dashboard */
+.content,
+.page-content,
+.container-panel,
+.main-content {
+    background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: transparent !important;
+
+    min-height: 100vh !important;
+}
 </style>
 
 <div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupFoto()">
