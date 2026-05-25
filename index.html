@@ -698,37 +698,42 @@
 </script>
 
 <style>
-    /* 1. PAKSA BACKGROUND GEDUNG DI LUAR SECARA MUTLAK */
-    body, html, :root {
+    /* ==================================================================
+       1. BACKGROUND LUAR (GAMBAR 3)
+       ================================================================== */
+    html, body {
         background: #000 url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') no-repeat center center !important;
         background-size: cover !important;
         background-attachment: fixed !important;
+        min-height: 100vh !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
-    /* 2. JEBROLKAN SEMUA DINDING BAWAAN TEMPLATE BIAR TRANSPARAN */
-    /* Ini adalah semua class template admin yang sering mengunci warna gelap di luar kotak */
-    .page-wrapper, 
-    .main-content, 
-    .content-page, 
-    .wrapper, 
-    #wrapper, 
-    .main-panel, 
-    .content-wrapper,
-    body::before {
+    /* Menembak dan memaksa semua lapisan pembungkus template agar BENING 
+       Supaya Gambar 3 di atas tidak ketutupan warna biru/hitam bawaan */
+    .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .main-panel, .content-wrapper, .app-content, #app {
         background: transparent !important;
         background-color: transparent !important;
         background-image: none !important;
     }
 
-    /* 3. KUNCI BACKGROUND KOTAK DALAM (TEKSTUR / WARNA TRANSPARAN) */
-    /* Agar area menu utama dan rincian saldo tetap terbaca dengan latar belakang yang serasi */
-    .container, 
-    .container-fluid, 
-    .content, 
-    .page-content {
+    /* ==================================================================
+       2. BACKGROUND DALAM (GAMBAR 4)
+       ================================================================== */
+    .container, .container-fluid, .content, .page-content, .container-panel {
         background: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') no-repeat center center transparent !important;
         background-size: cover !important;
-        background-color: rgba(20, 20, 20, 0.6) !important; /* Memberi efek gelap transparan agar tulisan saldo kelihatan jelas */
+        
+        /* Memberi lapisan gelap tipis (0.5) agar teks dashboard dan saldo tetap kontras & terbaca */
+        background-color: rgba(20, 20, 20, 0.5) !important; 
+        
+        /* Penyesuaian agar rapi di HP / Mobile */
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-right: 15px !important;
+        padding-left: 15px !important;
     }
 </style>
 
