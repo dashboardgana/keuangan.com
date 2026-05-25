@@ -698,227 +698,62 @@
 </script>
 
 <style>
-
 /* =========================================================
-   GLOBAL RESET
+   BACKGROUND LUAR
 ========================================================= */
-html,
-body{
-    margin:0 !important;
-    padding:0 !important;
-    width:100% !important;
-    height:100% !important;
-    overflow-x:hidden !important;
-    font-family:'Segoe UI',sans-serif !important;
-
-    /* BACKGROUND LUAR */
-    background:
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-    url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') !important;
-
-    background-position:center center !important;
-    background-repeat:no-repeat !important;
-    background-size:cover !important;
-    background-attachment:fixed !important;
-
-    animation:bgZoom 18s ease-in-out infinite alternate;
+html, body, #login-page, .login-page {
+    background-color: #000 !important;
+    background-image: url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
 }
 
-/* EFFECT GERAK HALUS */
-@keyframes bgZoom{
-    0%{
-        background-size:100%;
-    }
-    100%{
-        background-size:105%;
-    }
-}
-
-/* =========================================================
-   WRAPPER TRANSPARAN
-========================================================= */
+/* Wrapper luar transparan */
 .main-wrapper,
 .layout-wrapper,
 .page-wrapper,
 .wrapper,
-#wrapper{
-    background:transparent !important;
+#wrapper {
+    background: transparent !important;
 }
 
 /* =========================================================
-   LOGIN BOX ELEGANT
+   LOGIN CARD TRANSPARAN
 ========================================================= */
 .login-card,
 .login-box,
 .auth-box,
-.card{
-
-    background:rgba(0,0,0,0.55) !important;
-    backdrop-filter:blur(10px) !important;
-    -webkit-backdrop-filter:blur(10px) !important;
-
-    border:1px solid rgba(0,255,255,0.35) !important;
-
-    border-radius:18px !important;
-
-    box-shadow:
-    0 0 15px rgba(0,255,255,0.20),
-    0 0 40px rgba(0,0,0,0.70) !important;
-}
-
-/* =========================================================
-   FORM LOGIN
-========================================================= */
+.card,
+.card-body,
+.form-group,
 .form-control,
-.input-group-text{
-
-    background:rgba(255,255,255,0.06) !important;
-    border:1px solid rgba(0,255,255,0.18) !important;
-
-    color:#fff !important;
-
-    border-radius:10px !important;
-
-    transition:0.3s ease !important;
-}
-
-.form-control:focus{
-
-    border-color:#00e5ff !important;
-
-    box-shadow:
-    0 0 10px rgba(0,229,255,0.45) !important;
-
-    background:rgba(255,255,255,0.10) !important;
+.input-group,
+.input-group-text {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
 }
 
 /* =========================================================
    BACKGROUND DALAM DASHBOARD
 ========================================================= */
+
+/* HANYA area content dashboard */
 .content,
 .page-content,
 .container-panel,
-.main-content{
+.main-content {
+    background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: transparent !important;
 
-    background:
-    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-    url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
-
-    background-position:center center !important;
-    background-repeat:no-repeat !important;
-    background-size:cover !important;
-    background-attachment:fixed !important;
-
-    min-height:100vh !important;
-
-    border-radius:18px !important;
-
-    box-shadow:
-    inset 0 0 80px rgba(0,0,0,0.55) !important;
+    min-height: 100vh !important;
 }
-
-/* =========================================================
-   SIDEBAR MEWAH
-========================================================= */
-.sidebar,
-.sidebar-wrapper,
-.main-sidebar,
-.left-sidebar,
-.nav-sidebar{
-
-    background:
-    linear-gradient(rgba(5,10,20,0.92), rgba(5,10,20,0.92)),
-    url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
-
-    background-position:center center !important;
-    background-repeat:no-repeat !important;
-    background-size:cover !important;
-
-    border-right:
-    1px solid rgba(0,255,255,0.20) !important;
-
-    box-shadow:
-    0 0 25px rgba(0,255,255,0.08) !important;
-}
-
-/* =========================================================
-   MENU SIDEBAR
-========================================================= */
-.sidebar a,
-.nav-sidebar a{
-
-    color:#d7f9ff !important;
-
-    transition:0.3s ease !important;
-
-    border-radius:12px !important;
-
-    margin:4px 10px !important;
-}
-
-.sidebar a:hover,
-.nav-sidebar a:hover{
-
-    background:rgba(0,229,255,0.15) !important;
-
-    color:#00e5ff !important;
-
-    transform:translateX(4px);
-
-    box-shadow:
-    0 0 12px rgba(0,229,255,0.20);
-}
-
-/* ACTIVE MENU */
-.sidebar .active,
-.nav-sidebar .active{
-
-    background:linear-gradient(90deg,#00e5ff,#00bfff) !important;
-
-    color:#000 !important;
-
-    font-weight:bold !important;
-
-    box-shadow:
-    0 0 18px rgba(0,229,255,0.45) !important;
-}
-
-/* =========================================================
-   TEXT GLOW
-========================================================= */
-h1,h2,h3,h4,h5,
-.logo,
-.brand-text{
-
-    color:#00e5ff !important;
-
-    text-shadow:
-    0 0 10px rgba(0,229,255,0.50);
-}
-
-/* =========================================================
-   MOBILE RESPONSIVE
-========================================================= */
-@media(max-width:768px){
-
-    .content,
-    .page-content,
-    .main-content{
-
-        background-position:center center !important;
-        background-size:cover !important;
-
-        border-radius:0 !important;
-    }
-
-    .sidebar,
-    .main-sidebar{
-
-        backdrop-filter:blur(12px);
-    }
-
-}
-
 </style>
 
 <div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupFoto()">
