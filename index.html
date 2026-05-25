@@ -699,10 +699,9 @@
 
 <style>
     /* ==================================================================
-       1. BACKGROUND LUAR (GAMBAR 3) - GEDUNG / KOTA
+       1. BACKGROUND LUAR (GAMBAR 3 - KOTA/GEDUNG)
        ================================================================== */
     html, body, #login-page, .login-page, .auth-wrapper {
-        /* Warna dasar hitam dipasang terpisah agar tidak menimpa gambar */
         background-color: #000 !important;
         background-image: url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') !important;
         background-repeat: no-repeat !important;
@@ -716,26 +715,37 @@
         padding: 0 !important;
     }
 
-    /* Memaksa semua dinding transparan agar Gambar 3 di body terlihat jelas keluar */
-    .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .main-panel, .content-wrapper, .app-content, #app, .authentication-wrapper {
+    /* Bikin bening semua dinding template biar Gambar 3 (Luar) kelihatan bersih */
+    .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .main-panel, .content-wrapper, .app-content, #app {
         background: transparent !important;
         background-color: transparent !important;
         background-image: none !important;
     }
 
     /* ==================================================================
-       2. BACKGROUND DALAM (GAMBAR 4) - KOTAK FORM / LOGIN / DASHBOARD
+       2. BACKGROUND DALAM (GAMBAR 4 - TEKSTUR/GELAP)
        ================================================================== */
+    /* Hanya menembak container utama dashboard dan kotak form login besar saja */
     .container, .container-fluid, .content, .page-content, .container-panel,
-    .card, .login-box, .login-card, .auth-box, .card-body {
-        /* Menggabungkan gambar dan warna gelap transparan 0.5 secara sah di CSS */
-        background: linear-gradient(rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.5)), url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') no-repeat center center !important;
+    #login-page .login-card, .login-box, .auth-box {
+        background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
         background-size: cover !important;
+        background-color: transparent !important;
         
-        /* Penyesuaian agar rapi dan tidak meluber di HP (Mobile) */
+        /* Setelan mobile friendly */
         width: 100% !important;
-        padding-right: 15px !important;
-        padding-left: 15px !important;
+    }
+
+    /* ==================================================================
+       3. PEMBERSIHAN (AGAR GAMBAR DALAM TIDAK MASUK KE TEMPAT USERNAME)
+       ================================================================== */
+    /* Memaksa area input, icon, grup teks, dan form-group agar TETAP BENING */
+    .form-group, .input-group, .form-control, .input-group-text, 
+    .form-group *, .input-group *, .card-body, .card-header, .card-footer {
+        background-image: none !important;
+        background-color: transparent !important;
     }
 </style>
 
