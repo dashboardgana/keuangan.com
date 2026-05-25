@@ -698,33 +698,32 @@
 </script>
 
 <style>
-    /* 1. BACKGROUND LUAR (Seluruh Layar HP/Monitor) */
-    body {
-        /* Diperbaiki menggunakan properti 'background' agar format googleusercontent kamu terbaca sempurna */
+    /* 1. BACKGROUND LUAR (Latar Belakang Seluruh Layar / Kota Gedung Mewah) */
+    body, html {
+        /* Link diubah ke Gambar 3 (Gedung Luar) */
         background: #000 url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') no-repeat center center !important;
         background-size: cover !important;
         background-attachment: fixed !important;
-        
-        /* Tambahan khusus agar di HP layarnya pas dan tidak terpotong */
         min-height: 100vh;
         width: 100%;
         margin: 0;
         padding: 0;
     }
 
-    /* 2. BACKGROUND DALAM (Kotak Pembungkus Utama) */
-    .container, .container-fluid {
-        /* Diperbaiki menggunakan properti 'background' dan dibuat transparan agar tidak menutupi background luar */
+    /* 2. BACKGROUND DALAM (Kotak Pembungkus Utama / Konten Dashboard) */
+    .container, .container-fluid, .content-wrapper, .main-panel {
+        /* Link diubah ke Gambar 4 (Tekstur Dalam/Gelap) */
         background: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') no-repeat center center transparent !important;
         background-size: cover !important;
         
-        /* Tambahan agar pas di layar HP (Mobile Friendly) */
-        width: 100% !important;
-        max-width: 100% !important;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
+        /* Memaksa elemen pembungkus bawaan tema agar transparan dan tidak menutupi gambar body */
+        background-color: transparent !important;
+    }
+
+    /* Tambahan agar background luar tidak tertutup blok warna gelap bawaan template */
+    .wrapper, #wrapper, .content {
+        background: transparent !important;
+        background-color: transparent !important;
     }
 </style>
 
