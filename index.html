@@ -698,32 +698,37 @@
 </script>
 
 <style>
-    /* 1. BACKGROUND LUAR (Latar Belakang Seluruh Layar / Kota Gedung Mewah) */
-    body, html {
-        /* Link diubah ke Gambar 3 (Gedung Luar) */
+    /* 1. PAKSA BACKGROUND GEDUNG DI LUAR SECARA MUTLAK */
+    body, html, :root {
         background: #000 url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') no-repeat center center !important;
         background-size: cover !important;
         background-attachment: fixed !important;
-        min-height: 100vh;
-        width: 100%;
-        margin: 0;
-        padding: 0;
     }
 
-    /* 2. BACKGROUND DALAM (Kotak Pembungkus Utama / Konten Dashboard) */
-    .container, .container-fluid, .content-wrapper, .main-panel {
-        /* Link diubah ke Gambar 4 (Tekstur Dalam/Gelap) */
-        background: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') no-repeat center center transparent !important;
-        background-size: cover !important;
-        
-        /* Memaksa elemen pembungkus bawaan tema agar transparan dan tidak menutupi gambar body */
-        background-color: transparent !important;
-    }
-
-    /* Tambahan agar background luar tidak tertutup blok warna gelap bawaan template */
-    .wrapper, #wrapper, .content {
+    /* 2. JEBROLKAN SEMUA DINDING BAWAAN TEMPLATE BIAR TRANSPARAN */
+    /* Ini adalah semua class template admin yang sering mengunci warna gelap di luar kotak */
+    .page-wrapper, 
+    .main-content, 
+    .content-page, 
+    .wrapper, 
+    #wrapper, 
+    .main-panel, 
+    .content-wrapper,
+    body::before {
         background: transparent !important;
         background-color: transparent !important;
+        background-image: none !important;
+    }
+
+    /* 3. KUNCI BACKGROUND KOTAK DALAM (TEKSTUR / WARNA TRANSPARAN) */
+    /* Agar area menu utama dan rincian saldo tetap terbaca dengan latar belakang yang serasi */
+    .container, 
+    .container-fluid, 
+    .content, 
+    .page-content {
+        background: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') no-repeat center center transparent !important;
+        background-size: cover !important;
+        background-color: rgba(20, 20, 20, 0.6) !important; /* Memberi efek gelap transparan agar tulisan saldo kelihatan jelas */
     }
 </style>
 
