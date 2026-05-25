@@ -699,7 +699,7 @@
 
 <style>
     /* ==================================================================
-       1. BACKGROUND LUAR (MUTLAK MENGGUNAKAN GAMBAR 1)
+       1. BACKGROUND LUAR (MUTLAK MENGGUNAKAN GAMBAR 1 - GEDUNG)
        ================================================================== */
     html, body, #login-page, .login-page, .auth-wrapper {
         background-color: #000 !important;
@@ -715,8 +715,8 @@
         padding: 0 !important;
     }
 
-    /* Memaksa seluruh lapisan pembungkus template agar bening, supaya Gambar 1 (Luar) tidak tertutup */
-    .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .main-panel, .content-wrapper, .app-content, #app {
+    /* Membuka jalan agar Gambar 1 di body terlihat jelas di area luar sidebar/wrapper */
+    .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .app-content, #app {
         background: transparent !important;
         background-color: transparent !important;
         background-image: none !important;
@@ -725,7 +725,7 @@
     /* ==================================================================
        2. KOTAK LOGIN & INPUT USERNAME (MUTLAK BENING / TRANSPARAN)
        ================================================================== */
-    /* Menghapus semua background di kotak login agar Gambar 1 langsung menembus kelihatan */
+    /* Kotak login wajib bening tanpa gambar apa pun agar Gambar 1 (Gedung) menembus langsung */
     .login-card, .login-box, .auth-box, .card, .card-body,
     .form-group, .input-group, .form-control, .input-group-text, 
     .form-group *, .input-group * {
@@ -735,10 +735,10 @@
     }
 
     /* ==================================================================
-       3. BACKGROUND DALAM (MUTLAK MENGGUNAKAN GAMBAR 2)
+       3. BACKGROUND DALAM (MUTLAK MENGGUNAKAN GAMBAR 2 - TEKSTUR GELAP)
        ================================================================== */
-    /* Gambar 2 hanya mengunci di dalam container halaman dashboard utama */
-    .container, .container-fluid, .content, .page-content, .container-panel {
+    /* Memaksa Gambar 2 mengunci di panel utama dashboard konten (di balik saldo) */
+    .main-panel, .content-wrapper, .container, .container-fluid, .content, .page-content, .container-panel {
         background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
         background-repeat: no-repeat !important;
         background-position: center center !important;
