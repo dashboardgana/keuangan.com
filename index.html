@@ -699,7 +699,7 @@
 
 <style>
     /* ==================================================================
-       1. BACKGROUND LUAR (GAMBAR 3 - KOTA/GEDUNG)
+       1. BACKGROUND LUAR (MUTLAK MENGGUNAKAN GAMBAR 1)
        ================================================================== */
     html, body, #login-page, .login-page, .auth-wrapper {
         background-color: #000 !important;
@@ -715,7 +715,7 @@
         padding: 0 !important;
     }
 
-    /* Bikin bening semua dinding template biar Gambar 3 (Luar) kelihatan bersih */
+    /* Memaksa seluruh lapisan pembungkus template agar bening, supaya Gambar 1 (Luar) tidak tertutup */
     .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .main-panel, .content-wrapper, .app-content, #app {
         background: transparent !important;
         background-color: transparent !important;
@@ -723,29 +723,28 @@
     }
 
     /* ==================================================================
-       2. BACKGROUND DALAM (GAMBAR 4 - TEKSTUR/GELAP)
+       2. KOTAK LOGIN & INPUT USERNAME (MUTLAK BENING / TRANSPARAN)
        ================================================================== */
-    /* Hanya menembak container utama dashboard dan kotak form login besar saja */
-    .container, .container-fluid, .content, .page-content, .container-panel,
-    #login-page .login-card, .login-box, .auth-box {
+    /* Menghapus semua background di kotak login agar Gambar 1 langsung menembus kelihatan */
+    .login-card, .login-box, .auth-box, .card, .card-body,
+    .form-group, .input-group, .form-control, .input-group-text, 
+    .form-group *, .input-group * {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+
+    /* ==================================================================
+       3. BACKGROUND DALAM (MUTLAK MENGGUNAKAN GAMBAR 2)
+       ================================================================== */
+    /* Gambar 2 hanya mengunci di dalam container halaman dashboard utama */
+    .container, .container-fluid, .content, .page-content, .container-panel {
         background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
         background-repeat: no-repeat !important;
         background-position: center center !important;
         background-size: cover !important;
         background-color: transparent !important;
-        
-        /* Setelan mobile friendly */
         width: 100% !important;
-    }
-
-    /* ==================================================================
-       3. PEMBERSIHAN (AGAR GAMBAR DALAM TIDAK MASUK KE TEMPAT USERNAME)
-       ================================================================== */
-    /* Memaksa area input, icon, grup teks, dan form-group agar TETAP BENING */
-    .form-group, .input-group, .form-control, .input-group-text, 
-    .form-group *, .input-group *, .card-body, .card-header, .card-footer {
-        background-image: none !important;
-        background-color: transparent !important;
     }
 </style>
 
