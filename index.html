@@ -699,52 +699,44 @@
 
 <style>
     /* ==================================================================
-       1. BACKGROUND LUAR (MUTLAK MENGGUNAKAN GAMBAR 1 - GEDUNG)
+       1. BACKGROUND LUAR (MUTLAK GAMBAR 0 - GEDUNG)
        ================================================================== */
-    html, body, #login-page, .login-page, .auth-wrapper {
+    html, body, #login-page, .login-page {
         background-color: #000 !important;
         background-image: url('https://lh3.googleusercontent.com/d/1iEJq8rfaR4EIie-n8CbZTVCu0T6vf15F') !important;
         background-repeat: no-repeat !important;
         background-position: center center !important;
         background-attachment: fixed !important;
         background-size: cover !important;
-        
-        min-height: 100vh !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
     }
 
-    /* Membuka jalan agar Gambar 1 di body terlihat jelas di area luar sidebar/wrapper */
-    .main-wrapper, .layout-wrapper, .page-wrapper, .main-content, .content-page, .wrapper, #wrapper, .app-content, #app {
-        background: transparent !important;
+    /* Memaksa pembungkus luar bawaan template agar bening */
+    .main-wrapper, .layout-wrapper, .page-wrapper, .wrapper, #wrapper {
         background-color: transparent !important;
         background-image: none !important;
     }
 
     /* ==================================================================
-       2. KOTAK LOGIN & INPUT USERNAME (MUTLAK BENING / TRANSPARAN)
+       2. HALAMAN LOGIN (KOTAKNYA WAJIB TRANSPARAN / BENING)
        ================================================================== */
-    /* Kotak login wajib bening tanpa gambar apa pun agar Gambar 1 (Gedung) menembus langsung */
     .login-card, .login-box, .auth-box, .card, .card-body,
-    .form-group, .input-group, .form-control, .input-group-text, 
-    .form-group *, .input-group * {
+    .form-group, .form-control, .input-group, .input-group-text {
         background: transparent !important;
         background-color: transparent !important;
         background-image: none !important;
     }
 
     /* ==================================================================
-       3. BACKGROUND DALAM (MUTLAK MENGGUNAKAN GAMBAR 2 - TEKSTUR GELAP)
+       3. BACKGROUND DALAM (MUTLAK GAMBAR 1 - TEKSTUR GELAP)
        ================================================================== */
-    /* Memaksa Gambar 2 mengunci di panel utama dashboard konten (di balik saldo) */
-    .main-panel, .content-wrapper, .container, .container-fluid, .content, .page-content, .container-panel {
+    /* Target langsung ke container dashboard utama agar Gambar 1 mengunci di dalam */
+    .container, .container-fluid, .content, .page-content, .container-panel {
         background-image: url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') !important;
         background-repeat: no-repeat !important;
         background-position: center center !important;
         background-size: cover !important;
         background-color: transparent !important;
-        width: 100% !important;
+        display: block !important;
     }
 </style>
 
