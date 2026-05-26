@@ -184,13 +184,13 @@
             <datalist id="user-list"></datalist>
             <div class="label-login"><i class="fas fa-lock"></i> PASSWORD</div>
             <input type="password" id="pass" class="form-control mb-3" placeholder="Masukkan password" onkeypress="checkEnter(event)">
-            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold text-white py-2 shadow">ENTER SYSTEM</button>
+            <button onclick="handleLogin()" class="btn btn-info w-100 fw-bold text-white py-2 shadow">LOGIN TO SYSTEM🚀</button>
             <div id="error-msg" class="text-danger small mt-3 fw-bold" style="display:none;"><i class="fas fa-times-circle"></i> Username atau Password Salah</div>
         </div>
     </div>
 
     <div class="sidebar" id="sidebar-menu">
-        <div class="sidebar-header">MY FINANCE</div>
+        <div class="sidebar-header">👑MY FINANCE👑</div>
         <div class="nav-link active" onclick="showSection('dashboard', this)">🏠 Dashboard</div>
         <div class="nav-link" onclick="showSection('masuk', this)">💰 Pemasukan</div>
         <div class="nav-link" onclick="showSection('keluar', this)">💸 Pengeluaran</div>
@@ -230,7 +230,7 @@
                         <option value="BRI">BRI</option>
                         <option value="MANDIRI">MANDIRI</option>
                         <option value="DANAMON">DANAMON</option>
-                        <option value="CIMB">CIMB NIAGA</option>
+                        <option value="SEABANK">SEABANK</option>
                         <option value="DANA">DANA</option>
                         <option value="OVO">OVO</option>
                         <option value="GOPAY">GOPAY</option>
@@ -255,7 +255,7 @@
                         <option value="BRI">BRI</option>
                         <option value="MANDIRI">MANDIRI</option>
                         <option value="DANAMON">DANAMON</option>
-                        <option value="CIMB">CIMB NIAGA</option>
+                        <option value="SEABANK">SEABANK</option>
                         <option value="DANA">DANA</option>
                         <option value="OVO">OVO</option>
                         <option value="GOPAY">GOPAY</option>
@@ -292,7 +292,7 @@
                         <option value="BRI">BRI</option>
                         <option value="MANDIRI">MANDIRI</option>
                         <option value="DANAMON">DANAMON</option>
-                        <option value="CIMB">CIMB NIAGA</option>
+                        <option value="SEABANK">SEABANK</option>
                         <option value="DANA">DANA</option>
                         <option value="OVO">OVO</option>
                         <option value="GOPAY">GOPAY</option>
@@ -527,13 +527,33 @@
                 }
             });
 
-            for (let b in saldoPerBank) {
-                gridBank.innerHTML += `
-                    <div class="card-bank-item">
-                        <small>SALDO ${b}</small>
-                        <div style="color: white;">Rp ${saldoPerBank[b].toLocaleString()}</div>
-                    </div>`;
-            }
+           // 1. Ini cuma daftar alamat gambar, tidak menyentuh database sama sekali
+        const daftarLogoBank = {
+            "BCA": "https://i.ibb.co/zh4jjM4S/BCA-transparan.png",
+            "BNI": "https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/1200px-BNI_logo.svg.png",
+            "BRI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/1280px-BANK_BRI_logo.svg.png",
+            "MANDIRI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/1200px-Bank_Mandiri_logo_2016.svg.png",
+            "DANAMON": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Bank_Danamon_Logo.svg/1280px-Bank_Danamon_Logo.svg.png",
+            "SEABANK": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/SeaBank_Logo.svg/1200px-SeaBank_Logo.svg.png",
+            "DANA": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_DANA_dompet_digital_Indonesia.svg/1200px-Logo_DANA_dompet_digital_Indonesia.svg.png",
+            "OVO": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_OVO.svg/1200px-Logo_OVO.svg.png",
+            "GOPAY": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1280px-Gopay_logo.svg.png"
+        };
+
+        // 2. Ini perulangan aslimu, tetap berjalan otomatis seperti biasa
+        for (let b in saldoPerBank) {
+            const namaBankKey = b.toUpperCase().trim();
+            const linkLogo = daftarLogoBank[namaBankKey] || '';
+
+            gridBank.innerHTML += `
+                <div class="card-bank-item" style="display: flex !important; justify-content: space-between !important; align-items: center !important;">
+                    <div>
+                        <small style="display: block; margin-bottom: 4px;">SALDO ${b.toUpperCase()}</small>
+                        <div style="color: white; font-weight: bold; font-size: 16px;">Rp ${saldoPerBank[b].toLocaleString('id-ID')}</div>
+                    </div>
+                    ${linkLogo ? `<img src="${linkLogo}" style="height: 25px !important; width: auto !important; max-width: 80px !important; object-fit: contain !important;" alt="${b}">` : ''}
+                </div>`;
+        }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
 
             let dataFiltered = dataTransaksi.filter(t => t.tanggal.split('-')[0] === tahunFilter);
@@ -752,8 +772,26 @@ html, body, #login-page, .login-page {
     background-attachment: fixed !important;
     background-color: transparent !important;
 
-    min-height: 100vh !important;
-}
+min-height: 100vh !important;
+    }
+
+    /* ==========================================================
+       KODE BARU: MERAPIKAN KOTAK SALDO DAN LOGO BANK
+       ========================================================== */
+    .card-bank-item {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 15px !important; 
+    }
+
+    .card-bank-item img {
+        height: 25px !important;
+        width: auto !important;
+        max-width: 80px !important;
+        object-fit: contain !important;
+        margin-left: 10px !important;
+    }
 </style>
 
 <div id="popUpFoto" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="tutupFoto()">
