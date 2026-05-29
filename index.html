@@ -551,20 +551,15 @@
             const namaBankKey = b.toUpperCase().trim();
             const linkLogo = daftarLogoBank[namaBankKey] || '';
 
-            gridBank.innerHTML += `
-                <div class="card-bank-item" style="display: flex !important; justify-content: space-between !important; align-items: center !important;">
-                    <div>
-                        <small style="display: block; margin-bottom: 4px;">SALDO ${b.toUpperCase()}</small>
-                        <div style="color: white; font-weight: bold; font-size: 16px;">Rp ${saldoPerBank[b].toLocaleString('id-ID')}</div>
-                    </div>
-                    <img src="${linkLogo}" 
-                     style="
-                     height: 45px !important;
-                     width: auto !important;
-                     max-width: 150px !important;
-                  object-fit: contain !important;
-                 " 
-                alt="${b}">
+            <img src="${linkLogo}" 
+style="
+height: 55px !important;
+width: auto !important;
+max-width: 180px !important;
+object-fit: contain !important;
+filter: brightness(1.5) !important;
+"
+alt="${b}">
                 </div>`;
         }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
