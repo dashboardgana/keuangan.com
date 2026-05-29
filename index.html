@@ -388,7 +388,7 @@ select option {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
             const errorArea = document.getElementById('error-msg');
-            if(u !== "" && p === "123") {
+            if (u === "gana" && p === "123") {
                 errorArea.style.display = 'none';
                 localStorage.setItem('isLoggedIn', 'true');
                 if(!savedUsers.includes(u)) {
