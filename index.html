@@ -553,7 +553,15 @@
            gridBank.innerHTML += `
         <div class="card-bank-item">
          ...
-        ${linkLogo ? `<img src="${linkLogo}" style="height:55px !important;width:auto !important;max-width:180px !important;object-fit:contain !important;filter:brightness(1.5) !important;" alt="${b}">` : ''}
+         <img src="${linkLogo}" 
+         style="
+       height: 55px !important;
+       width: auto !important;
+        max-width: 200px !important;
+        object-fit: contain !important;
+        margin-right: 10px !important;
+        "
+        alt="${b}">
         </div>`;
         }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
