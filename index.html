@@ -551,7 +551,14 @@
                         <small style="display: block; margin-bottom: 4px;">SALDO ${b.toUpperCase()}</small>
                         <div style="color: white; font-weight: bold; font-size: 16px;">Rp ${saldoPerBank[b].toLocaleString('id-ID')}</div>
                     </div>
-                    ${linkLogo ? `<img src="${linkLogo}" style="height: 25px !important; width: auto !important; max-width: 80px !important; object-fit: contain !important;" alt="${b}">` : ''}
+                    <img src="${linkLogo}" 
+                     style="
+                     height: 45px !important;
+                     width: auto !important;
+                     max-width: 150px !important;
+                  object-fit: contain !important;
+                 " 
+                alt="${b}">
                 </div>`;
         }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
