@@ -551,15 +551,7 @@
             const namaBankKey = b.toUpperCase().trim();
             const linkLogo = daftarLogoBank[namaBankKey] || '';
 
-            <img src="${linkLogo}" 
-style="
-height: 55px !important;
-width: auto !important;
-max-width: 180px !important;
-object-fit: contain !important;
-filter: brightness(1.5) !important;
-"
-alt="${b}">
+ ${linkLogo ? `<img src="${linkLogo}" style="height:55px !important;width:auto !important;max-width:180px !important;object-fit:contain !important;filter:brightness(1.5) !important;" alt="${b}">` : ''}
                 </div>`;
         }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
