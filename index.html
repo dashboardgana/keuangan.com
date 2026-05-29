@@ -556,7 +556,7 @@ select option {
         <small>SALDO ${b.toUpperCase()}</small>
         <div>Rp ${saldoPerBank[b].toLocaleString('id-ID')}</div>
          </div>
-    ${linkLogo ? `<img src="${linkLogo}" style="height:25px !important;width:auto !important;max-width:80px !important;object-fit:contain !important;" alt="${b}">` : ''}
+    ${linkLogo ? `<img src="${linkLogo}" style="height:25px !important;width:auto !important;max-width:120px !important;object-fit:contain !important;" alt="${b}">` : ''}
 </div>`;
         }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
