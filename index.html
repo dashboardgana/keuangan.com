@@ -550,19 +550,14 @@ select option {
         for (let b in saldoPerBank) {
             const namaBankKey = b.toUpperCase().trim();
             const linkLogo = daftarLogoBank[namaBankKey] || '';
-           gridBank.innerHTML += `
-        <div class="card-bank-item">
-         ...
-         <img src="${linkLogo}" 
-         style="
-          height: 55px !important;
-          width: auto !important;
-          max-width: 200px !important;
-        object-fit: contain !important;
-        margin-right: 10px !important;
-        "
-         alt="${b}">
-        </div>`;
+         gridBank.innerHTML += `
+         <div class="card-bank-item" style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+        <small>SALDO ${b.toUpperCase()}</small>
+        <div>Rp ${saldoPerBank[b].toLocaleString('id-ID')}</div>
+         </div>
+    ${linkLogo ? `<img src="${linkLogo}" style="height:25px !important;width:auto !important;max-width:80px !important;object-fit:contain !important;" alt="${b}">` : ''}
+</div>`;
         }
             document.getElementById('total-saldo-display').innerText = `Rp ${totalSaldoSistem.toLocaleString()}`;
 
