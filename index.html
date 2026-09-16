@@ -264,7 +264,7 @@ select option{background:#1a2235!important;color:#fff!important}
   object-fit:contain;object-position:center;display:block}
 
 /* ============================================================
-   📋 KARTU REKAPAN MEWAH (UANG MASUK / UANG KELUAR / SISA HASIL)
+   📋 KARTU REKAPAN TAHUNAN (UANG MASUK / UANG KELUAR / SISA HASIL)
    ============================================================ */
 .kartu-rekap{
   position:relative;display:flex;align-items:center;gap:16px;
@@ -292,26 +292,37 @@ select option{background:#1a2235!important;color:#fff!important}
 .angka-merah{background-image:linear-gradient(92deg,#fca5a5,#f87171);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(248,113,113,.35))}
 .angka-cyan{background-image:linear-gradient(92deg,#bae6fd,#38bdf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(56,189,248,.35))}
 
-/* ====== KARTU REKAP BULANAN ====== */
+/* ============================================================
+   📅 REKAP BULANAN — 12 BULAN SELALU MUNCUL, RAPI BERJAJAR
+   (Grid otomatis: desktop 4 kotak/baris, tablet 3, HP 2)
+   ============================================================ */
+#container-bulanan{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .kartu-bulan{
-  border:1px solid transparent;border-radius:16px;padding:18px 20px;height:100%;
+  border:1px solid transparent;border-radius:16px;padding:16px 18px;
   background:linear-gradient(150deg,rgba(30,41,59,.94),rgba(15,23,42,.95)) padding-box,
              linear-gradient(135deg,rgba(56,189,248,.7),rgba(167,139,250,.5)) border-box;
-  box-shadow:0 10px 24px rgba(0,0,0,.38);
+  box-shadow:0 10px 24px rgba(0,0,0,.38);transition:.25s;
 }
-.kepala-bulan{display:flex;align-items:center;gap:10px;font-weight:800;margin-bottom:12px;
+.kartu-bulan:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.45), 0 0 18px rgba(56,189,248,.15)}
+.kartu-bulan.bulan-kosong{opacity:.72}
+.kepala-bulan{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1rem;margin-bottom:12px;
   background-image:linear-gradient(92deg,#7dd3fc,#a78bfa);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.kepala-bulan i{color:var(--cyan);-webkit-text-fill-color:var(--cyan)}
+.kepala-bulan i{color:#38bdf8;-webkit-text-fill-color:#38bdf8}
+.no-bulan{margin-left:auto;font-size:.6rem;font-weight:800;letter-spacing:1px;
+  background:rgba(2,6,23,.65);border:1px solid rgba(148,163,184,.28);border-radius:20px;
+  padding:3px 10px;color:#9fb0d9;-webkit-text-fill-color:#9fb0d9;flex-shrink:0}
 .baris-uang{display:flex;justify-content:space-between;align-items:center;gap:8px;
   padding:9px 13px;border-radius:10px;background:rgba(2,6,23,.55);margin-top:8px}
-.label-uang{font-size:.72rem;font-weight:800;letter-spacing:1.5px;color:#c6d3f5;display:flex;align-items:center}
+.baris-uang.b-masuk{border-left:3px solid #22c55e}
+.baris-uang.b-keluar{border-left:3px solid #ef4444}
+.label-uang{font-size:.66rem;font-weight:800;letter-spacing:1.2px;color:#c6d3f5;display:flex;align-items:center;white-space:nowrap}
 .titik-uang{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:9px;flex-shrink:0}
 .titik-in{background:#4ade80;box-shadow:0 0 9px #4ade80}
 .titik-out{background:#f87171;box-shadow:0 0 9px #f87171}
 .nilai-uang{font-weight:800;font-size:.95rem;white-space:nowrap}
-.nilai-in{color:var(--green);text-shadow:0 0 8px rgba(74,222,128,.35)}
-.nilai-out{color:var(--red);text-shadow:0 0 8px rgba(248,113,113,.35)}
+.nilai-in{color:#4ade80;text-shadow:0 0 8px rgba(74,222,128,.35)}
+.nilai-out{color:#f87171;text-shadow:0 0 8px rgba(248,113,113,.35)}
 
 /* ====== TABEL ====== */
 .table-responsive-custom{
@@ -436,6 +447,15 @@ select option{background:#1a2235!important;color:#fff!important}
   .glass-card,.card-bank-item,.table-responsive-custom,.topbar{backdrop-filter:none;-webkit-backdrop-filter:none}
   .angka-rekap{font-size:1.2rem}
   .ikon-rekap{width:48px;height:48px;font-size:1.2rem}
+  /* Kotak bulanan di HP: 2 kolom, label & angka ditumpuk biar muat */
+  #container-bulanan{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .kartu-bulan{padding:12px 13px}
+  .kepala-bulan{font-size:.86rem;gap:7px;margin-bottom:9px}
+  .no-bulan{font-size:.55rem;padding:2px 8px}
+  .baris-uang{flex-direction:column;align-items:flex-start;gap:3px;padding:7px 10px;margin-top:6px}
+  .label-uang{font-size:.58rem;letter-spacing:.5px}
+  .titik-uang{margin-right:6px}
+  .nilai-uang{font-size:.78rem}
 }
 @media (prefers-reduced-motion:reduce){
   .orb,.bintang,.marquee-track,.btn-utama::after,.login-logo{animation:none}
@@ -599,7 +619,10 @@ select option{background:#1a2235!important;color:#fff!important}
         </div>
       </div>
 
-      <div id="container-bulanan" class="row"></div>
+      <h5 class="fw-bold mb-1"><i class="fas fa-calendar-days me-2" style="color:var(--gold)"></i><span class="judul-grad">Rekapitulasi Bulanan — Uang Masuk &amp; Uang Keluar</span></h5>
+      <hr class="garis-cahaya">
+      <!-- 12 kotak bulan SELALU muncul di sini, berjejer rapi -->
+      <div id="container-bulanan"></div>
 
       <h5 class="mt-4 fw-bold mb-1"><i class="fas fa-scroll me-2" style="color:var(--ungu)"></i><span class="judul-grad">Riwayat Transaksi</span></h5>
       <hr class="garis-cahaya">
@@ -699,6 +722,9 @@ const daftarLogoBank = {
   "GOPAY":"https://i.ibb.co/v4hd6h0K/GOPAY%20-transparan.png"
 };
 
+/* Nama 12 bulan — dipakai kotak rekap bulanan (SELALU 12 kotak muncul) */
+const NAMA_BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
 /* ================== STATE ================== */
 let dataTransaksi = [];                 // data resmi dari Google Sheet
 let dataLogin = [];                     // data resmi dari Google Sheet
@@ -776,7 +802,7 @@ function isiSelect(el, daftar, allLabel) {
   ).join('');
 }
 
-/* ================== MASUK APLIKASI (TANPA RELOAD, TANPA MUTAR-MUTAR) ================== */
+/* ================== MASUK APLIKASI (TANPA RELOAD) ================== */
 function masukAplikasi() {
   document.documentElement.classList.add('logged-in');
   document.getElementById('pass').value = '';
@@ -804,7 +830,7 @@ function handleLogin() {
     err.style.display = 'none';
     localStorage.setItem('isLoggedIn', 'true');
     if (!savedUsers.includes(u)) { savedUsers.push(u); localStorage.setItem('savedUsers', JSON.stringify(savedUsers)); }
-    masukAplikasi();   // ← LANGSUNG MASUK, TIDAK ADA RELOAD
+    masukAplikasi();   // ← LANGSUNG MASUK, TANPA RELOAD
   } else { err.style.display = 'block'; }
 }
 function handleLogout() {
@@ -875,10 +901,7 @@ function renderAll() {
 }
 
 /* ================================================================
-   💾 SIMPAN TRANSAKSI — INSTAN
-   Baris langsung muncul di Rekapan detik itu juga.
-   Foto + data dikirim ke Sheet di belakang layar TANPA pesan perantara.
-   Kalau internet putus → masuk antrian aman, dikirim otomatis nanti.
+   💾 SIMPAN TRANSAKSI — INSTAN (LANGSUNG MUNCUL, KIRIM DI BELAKANG)
    ================================================================ */
 async function simpanTransaksi(tipe) {
   const tgl = document.getElementById(`tgl-${tipe}`).value;
@@ -1018,7 +1041,10 @@ function gabunganLogin() {
   })));
 }
 
-/* ================== RENDER DASHBOARD + REKAPAN ================== */
+/* ================================================================
+   📋 RENDER DASHBOARD + REKAPAN
+   (Kotak bulanan: 12 BULAN SELALU MUNCUL & BERJAJAR RAPI)
+   ================================================================ */
 function updateUI() {
   const tbody = document.getElementById('table-body');
   const containerBulan = document.getElementById('container-bulanan');
@@ -1031,7 +1057,8 @@ function updateUI() {
 
   const semua = gabunganTrx();
   let totalTahunIn = 0, totalTahunOut = 0, totalSaldoSistem = 0;
-  const rekapBulanan = {}, saldoPerBank = {};
+  const rekapBulanan = {};   // key = index bulan (0=Januari ... 11=Desember)
+  const saldoPerBank = {};
 
   // Saldo per bank + total keseluruhan (semua data)
   semua.forEach(t => {
@@ -1061,10 +1088,11 @@ function updateUI() {
   if (bankFilter !== 'ALL') dataFiltered = dataFiltered.filter(t => t.bank === bankFilter);
 
   dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
-    const bulanKey = new Date(t.tanggal + 'T00:00:00').toLocaleString('id-ID', { month: 'long', year: 'numeric' });
-    if (!rekapBulanan[bulanKey]) rekapBulanan[bulanKey] = { in: 0, out: 0 };
-    if (t.tipe === 'UANG MASUK') { totalTahunIn += t.nominal; rekapBulanan[bulanKey].in += t.nominal; }
-    else { totalTahunOut += t.nominal; rekapBulanan[bulanKey].out += t.nominal; }
+    const mIdx = new Date(t.tanggal + 'T00:00:00').getMonth();
+    if (!rekapBulanan[mIdx]) rekapBulanan[mIdx] = { in: 0, out: 0, jml: 0 };
+    rekapBulanan[mIdx].jml++;
+    if (t.tipe === 'UANG MASUK') { totalTahunIn += t.nominal; rekapBulanan[mIdx].in += t.nominal; }
+    else { totalTahunOut += t.nominal; rekapBulanan[mIdx].out += t.nominal; }
 
     const isKeluar = t.tipe === 'UANG KELUAR';
     const adaBukti = t.bukti && t.bukti !== 'Gada' && t.bukti !== '' && t.bukti !== 'null';
@@ -1090,19 +1118,24 @@ function updateUI() {
   document.getElementById('rekap-tahun-out').innerText = '- ' + fRp(totalTahunOut);
   document.getElementById('rekap-tahun-sisa').innerText = fRp(totalTahunIn - totalTahunOut);
 
-  for (const bulan in rekapBulanan) {
+  /* ===== 12 KOTAK BULANAN — SELALU MUNCUL, BERJAJAR RAPI ===== */
+  for (let i = 0; i < 12; i++) {
+    const rb = rekapBulanan[i] || { in: 0, out: 0, jml: 0 };
+    const adaData = (rb.in > 0 || rb.out > 0);
     containerBulan.innerHTML += `
-      <div class="col-md-4 col-12 mb-3">
-        <div class="kartu-bulan">
-          <div class="kepala-bulan"><i class="fas fa-calendar-day"></i><span>${bulan}</span></div>
-          <div class="baris-uang">
-            <span class="label-uang"><span class="titik-uang titik-in"></span>UANG MASUK</span>
-            <span class="nilai-uang nilai-in">+ ${fRp(rekapBulanan[bulan].in)}</span>
-          </div>
-          <div class="baris-uang">
-            <span class="label-uang"><span class="titik-uang titik-out"></span>UANG KELUAR</span>
-            <span class="nilai-uang nilai-out">- ${fRp(rekapBulanan[bulan].out)}</span>
-          </div>
+      <div class="kartu-bulan ${adaData ? '' : 'bulan-kosong'}">
+        <div class="kepala-bulan">
+          <i class="fas fa-calendar-day"></i>
+          <span>${NAMA_BULAN[i]}</span>
+          <span class="no-bulan">${rb.jml} TRX</span>
+        </div>
+        <div class="baris-uang b-masuk">
+          <span class="label-uang"><span class="titik-uang titik-in"></span>UANG MASUK</span>
+          <span class="nilai-uang nilai-in">+ ${fRp(rb.in)}</span>
+        </div>
+        <div class="baris-uang b-keluar">
+          <span class="label-uang"><span class="titik-uang titik-out"></span>UANG KELUAR</span>
+          <span class="nilai-uang nilai-out">- ${fRp(rb.out)}</span>
         </div>
       </div>`;
   }
