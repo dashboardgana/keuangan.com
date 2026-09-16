@@ -35,7 +35,7 @@ html.logged-in body{
 }
 
 /* ============================================================
-   💡 LAMPU-LAMPU CAHAYA (bola warna melayang + bintang kelip)
+   💡 LAMPU-LAMPU CAHAYA (di luar + di dalam kotak login)
    ============================================================ */
 .lampu-layer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;
@@ -81,10 +81,9 @@ html:not(.logged-in) #login-section{display:flex}
 #app-shell{display:none}
 html.logged-in #app-shell{display:block}
 
-/* ====== TEKS GRADIEN (semua judul cantik, bukan putih polos) ====== */
+/* ====== TEKS GRADIEN ====== */
 .judul-grad,.judul-emas,.judul-hijau,.judul-merah,.judul-ungu{
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:0;font-weight:800
-}
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:0;font-weight:800}
 .judul-grad{background-image:linear-gradient(92deg,#7dd3fc,#38bdf8 28%,#a78bfa 62%,#fbbf24)}
 .judul-emas{background-image:linear-gradient(92deg,#fde68a,#fbbf24 45%,#f59e0b)}
 .judul-hijau{background-image:linear-gradient(92deg,#86efac,#4ade80 50%,#16a34a)}
@@ -123,7 +122,7 @@ html.logged-in #app-shell{display:block}
 .label-login{color:var(--gold-muda);text-align:left;font-size:.75rem;letter-spacing:2px;margin:14px 0 6px;font-weight:700;
   text-shadow:0 0 10px rgba(251,191,36,.4)}
 
-/* ====== SIDEBAR CANTIK & RAPI ====== */
+/* ====== SIDEBAR ====== */
 .sidebar{
   width:252px;height:100vh;position:fixed;top:0;left:0;z-index:1100;
   background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(2,6,23,.96));
@@ -131,7 +130,7 @@ html.logged-in #app-shell{display:block}
   border-right:1px solid var(--line);display:flex;flex-direction:column;
 }
 .sidebar-header{
-  padding:22px 20px 18px;text-align:center;position:relative;
+  padding:22px 20px 18px;text-align:center;
   border-bottom:1px solid transparent;
   border-image:linear-gradient(90deg,transparent,var(--cyan),var(--gold),transparent) 1;
 }
@@ -163,7 +162,7 @@ html.logged-in #app-shell{display:block}
 .ic-emas{color:var(--gold)} .ic-ungu{color:var(--ungu)} .ic-pink{color:var(--pink)}
 .nav-logout{color:var(--red);margin-top:auto;border-top:1px solid var(--line);border-radius:0;margin-left:0;margin-right:0;padding-left:28px}
 .nav-logout::before{background:linear-gradient(180deg,#f87171,#dc2626)}
-.nav-logout:hover{color:#fff;background:rgba(239,68,68,.15);border-left-color:var(--red)}
+.nav-logout:hover{color:#fff;background:rgba(239,68,68,.15)}
 
 /* ====== TOPBAR & MAIN ====== */
 .main-content{margin-left:252px;padding:26px;min-height:100vh}
@@ -174,9 +173,6 @@ html.logged-in #app-shell{display:block}
   box-shadow:0 8px 24px rgba(0,0,0,.35), inset 0 0 20px rgba(56,189,248,.04);
 }
 .btn-hamburger{display:none;background:var(--glass2);color:var(--cyan);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:1.1rem}
-.sync-badge{font-size:.75rem;color:#9fb0d9;display:flex;align-items:center;gap:8px}
-.dot-sync{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:denyut 2s infinite}
-@keyframes denyut{50%{opacity:.35}}
 .btn-refresh{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff;border:none;
   border-radius:10px;padding:8px 18px;font-weight:700;font-size:.8rem;box-shadow:0 4px 14px rgba(56,189,248,.35)}
 .btn-refresh:active{transform:scale(.95)}
@@ -198,7 +194,7 @@ label{color:var(--cyan-muda);font-weight:700;text-transform:uppercase;font-size:
 .form-control::placeholder{color:rgba(148,163,184,.65)}
 select option{background:#1a2235!important;color:#fff!important}
 
-/* ====== TOMBOL KILAU (lampu berjalan) ====== */
+/* ====== TOMBOL KILAU ====== */
 .btn-utama{position:relative;overflow:hidden;border:none;border-radius:12px;font-weight:800;letter-spacing:.5px;
   transition:.25s;box-shadow:0 8px 22px rgba(0,0,0,.4)}
 .btn-utama::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;
@@ -242,7 +238,7 @@ select option{background:#1a2235!important;color:#fff!important}
 @keyframes geser{to{transform:translateX(-100%)}}
 
 /* ============================================================
-   🏦 KARTU BANK — LOGO SEJAJAR SEMPURNA (kotak seragam)
+   🏦 KARTU BANK — LOGO SEJAJAR SEMPURNA
    ============================================================ */
 .grid-bank-saldo{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
 .card-bank-item{
@@ -267,15 +263,55 @@ select option{background:#1a2235!important;color:#fff!important}
 .logo-bank-box img{max-width:100%;max-height:100%;width:auto;height:auto;
   object-fit:contain;object-position:center;display:block}
 
-/* ====== BOX PREMIUM ====== */
-.box-premium{
-  background:linear-gradient(150deg,rgba(30,41,59,.94),rgba(15,23,42,.94));
-  border:1px solid transparent;border-radius:14px;padding:18px 20px;
-  background:linear-gradient(150deg,rgba(30,41,59,.94),rgba(15,23,42,.94)) padding-box,
-             linear-gradient(160deg,rgba(56,189,248,.6),rgba(148,163,184,.15)) border-box;
-  box-shadow:0 8px 20px rgba(0,0,0,.32);
+/* ============================================================
+   📋 KARTU REKAPAN MEWAH (UANG MASUK / UANG KELUAR / SISA HASIL)
+   ============================================================ */
+.kartu-rekap{
+  position:relative;display:flex;align-items:center;gap:16px;
+  border-radius:18px;padding:20px 22px;min-height:106px;overflow:hidden;
+  border:1.5px solid transparent;
+  background:linear-gradient(150deg,rgba(30,41,59,.95),rgba(15,23,42,.97)) padding-box,
+             linear-gradient(135deg,var(--c1),var(--c2)) border-box;
+  box-shadow:0 12px 28px rgba(0,0,0,.42);
+  transition:.25s;
 }
-.box-premium label{margin-bottom:8px}
+.kartu-rekap:hover{transform:translateY(-4px)}
+.kartu-rekap::before{content:'';position:absolute;top:0;left:10%;right:10%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--c2),transparent)}
+.kartu-rekap::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow),transparent 70%);pointer-events:none}
+.kartu-masuk {--c1:#15803d;--c2:#4ade80;--glow:rgba(74,222,128,.22)}
+.kartu-keluar{--c1:#b91c1c;--c2:#f87171;--glow:rgba(248,113,113,.22)}
+.kartu-sisa  {--c1:#0369a1;--c2:#38bdf8;--glow:rgba(56,189,248,.22)}
+.ikon-rekap{width:58px;height:58px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:1.55rem;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));
+  box-shadow:0 0 22px var(--glow), inset 0 0 12px rgba(255,255,255,.25)}
+.label-rekap{font-size:.72rem;font-weight:800;letter-spacing:2.5px;color:#9fb0d9;margin-bottom:6px}
+.angka-rekap{font-size:1.5rem;font-weight:800;line-height:1.1}
+.angka-hijau{background-image:linear-gradient(92deg,#86efac,#4ade80);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(74,222,128,.35))}
+.angka-merah{background-image:linear-gradient(92deg,#fca5a5,#f87171);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(248,113,113,.35))}
+.angka-cyan{background-image:linear-gradient(92deg,#bae6fd,#38bdf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(56,189,248,.35))}
+
+/* ====== KARTU REKAP BULANAN ====== */
+.kartu-bulan{
+  border:1px solid transparent;border-radius:16px;padding:18px 20px;height:100%;
+  background:linear-gradient(150deg,rgba(30,41,59,.94),rgba(15,23,42,.95)) padding-box,
+             linear-gradient(135deg,rgba(56,189,248,.7),rgba(167,139,250,.5)) border-box;
+  box-shadow:0 10px 24px rgba(0,0,0,.38);
+}
+.kepala-bulan{display:flex;align-items:center;gap:10px;font-weight:800;margin-bottom:12px;
+  background-image:linear-gradient(92deg,#7dd3fc,#a78bfa);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.kepala-bulan i{color:var(--cyan);-webkit-text-fill-color:var(--cyan)}
+.baris-uang{display:flex;justify-content:space-between;align-items:center;gap:8px;
+  padding:9px 13px;border-radius:10px;background:rgba(2,6,23,.55);margin-top:8px}
+.label-uang{font-size:.72rem;font-weight:800;letter-spacing:1.5px;color:#c6d3f5;display:flex;align-items:center}
+.titik-uang{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:9px;flex-shrink:0}
+.titik-in{background:#4ade80;box-shadow:0 0 9px #4ade80}
+.titik-out{background:#f87171;box-shadow:0 0 9px #f87171}
+.nilai-uang{font-weight:800;font-size:.95rem;white-space:nowrap}
+.nilai-in{color:var(--green);text-shadow:0 0 8px rgba(74,222,128,.35)}
+.nilai-out{color:var(--red);text-shadow:0 0 8px rgba(248,113,113,.35)}
 
 /* ====== TABEL ====== */
 .table-responsive-custom{
@@ -303,8 +339,15 @@ select option{background:#1a2235!important;color:#fff!important}
 .btn-hapus-custom:hover{background:#ef4444;color:#fff;box-shadow:0 0 14px rgba(239,68,68,.5)}
 .nominal-in{color:var(--green)!important;font-weight:800;text-shadow:0 0 8px rgba(74,222,128,.35)}
 .nominal-out{color:var(--red)!important;font-weight:800;text-shadow:0 0 8px rgba(248,113,113,.35)}
+.baris-pending{background:rgba(251,191,36,.05)!important}
+.titik-pending{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fbbf24;
+  box-shadow:0 0 9px #fbbf24;margin-left:7px;vertical-align:middle;animation:denyut 1.2s infinite}
+.mini-spin{display:inline-block;width:24px;height:24px;border:3px solid rgba(56,189,248,.25);
+  border-top-color:#38bdf8;border-radius:50%;animation:putar .7s linear infinite}
+@keyframes putar{to{transform:rotate(360deg)}}
+@keyframes denyut{50%{opacity:.35}}
 
-/* ====== DATA LOGIN — CANTIK & RAPI ====== */
+/* ====== DATA LOGIN ====== */
 .tab-login{
   flex:1;padding:12px;border-radius:12px;text-align:center;cursor:pointer;font-weight:800;
   background:rgba(2,6,23,.65);border:1px solid var(--line);color:#9fb0d9;transition:.25s;font-size:.82rem;
@@ -372,7 +415,6 @@ select option{background:#1a2235!important;color:#fff!important}
 .spinner-kuat{width:56px;height:56px;border-radius:50%;
   border:4px solid rgba(56,189,248,.15);border-top-color:var(--cyan);border-right-color:var(--gold);
   animation:putar .8s linear infinite;box-shadow:0 0 24px rgba(56,189,248,.4)}
-@keyframes putar{to{transform:rotate(360deg)}}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1050}
 
 /* ====== SCROLLBAR ====== */
@@ -380,9 +422,7 @@ select option{background:#1a2235!important;color:#fff!important}
 ::-webkit-scrollbar-track{background:rgba(2,6,23,.5)}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#38bdf8,#a78bfa);border-radius:10px}
 
-/* ============================================================
-   📱 MOBILE — RINGAN, TIDAK LAG
-   ============================================================ */
+/* ====== MOBILE RINGAN ====== */
 @media (max-width:768px){
   .sidebar{transform:translateX(-100%);transition:transform .3s ease}
   .sidebar.mobile-show{transform:none}
@@ -391,11 +431,11 @@ select option{background:#1a2235!important;color:#fff!important}
   .display-4{font-size:2rem}
   .topbar{position:sticky;top:10px;z-index:900}
   .logo-bank-box{width:90px;height:44px}
-  /* Hemat baterai & anti-lag di HP: kurangi efek berat */
   .orb{filter:blur(45px)}
   .orb:nth-child(4),.orb:nth-child(5),.orb:nth-child(6){display:none}
-  .glass-card,.card-bank-item,.table-responsive-custom,.topbar{
-    backdrop-filter:none;-webkit-backdrop-filter:none}
+  .glass-card,.card-bank-item,.table-responsive-custom,.topbar{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .angka-rekap{font-size:1.2rem}
+  .ikon-rekap{width:48px;height:48px;font-size:1.2rem}
 }
 @media (prefers-reduced-motion:reduce){
   .orb,.bintang,.marquee-track,.btn-utama::after,.login-logo{animation:none}
@@ -404,7 +444,7 @@ select option{background:#1a2235!important;color:#fff!important}
 </head>
 <body>
 
-<!-- 💡 LAPU-LAMPU CAHAYA & BINTANG (tampil di login & dashboard) -->
+<!-- 💡 LAMPU-LAMPU CAHAYA & BINTANG -->
 <div class="lampu-layer">
   <div class="orb"></div><div class="orb"></div><div class="orb"></div>
   <div class="orb"></div><div class="orb"></div><div class="orb"></div>
@@ -418,7 +458,7 @@ select option{background:#1a2235!important;color:#fff!important}
   <div class="judul-grad" style="font-weight:700">⏳ Sedang memproses...</div>
 </div>
 
-<!-- ===== LOGIN (dengan lampu di dalam kotak) ===== -->
+<!-- ===== LOGIN ===== -->
 <div id="login-section">
   <div class="login-card">
     <div class="dalam-orb a1"></div>
@@ -467,10 +507,7 @@ select option{background:#1a2235!important;color:#fff!important}
         <button class="btn-hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
         <h5 id="page-title" class="judul-grad" style="font-size:1.15rem">💰 Dashboard</h5>
       </div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <span class="sync-badge"><span class="dot-sync"></span><span id="sync-time">Sinkron...</span></span>
-        <button class="btn-refresh" onclick="muatSemuaData(false)"><i class="fas fa-rotate"></i> Refresh</button>
-      </div>
+      <button class="btn-refresh" onclick="refreshManual()"><i class="fas fa-rotate"></i> Refresh</button>
     </div>
 
     <!-- DASHBOARD -->
@@ -531,12 +568,39 @@ select option{background:#1a2235!important;color:#fff!important}
           <select id="filter-bank-laporan" class="form-select" onchange="updateUI()"></select>
         </div>
       </div>
+
       <div class="row mb-4">
-        <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pemasukan</label><div class="h4 fw-bold" style="color:var(--green);text-shadow:0 0 10px rgba(74,222,128,.4)" id="rekap-tahun-in">Rp 0</div></div></div>
-        <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Pengeluaran</label><div class="h4 fw-bold" style="color:var(--red);text-shadow:0 0 10px rgba(248,113,113,.4)" id="rekap-tahun-out">Rp 0</div></div></div>
-        <div class="col-md-4 col-12 mb-3"><div class="box-premium text-center"><label>Sisa Hasil</label><div class="h4 fw-bold" style="color:var(--cyan);text-shadow:0 0 10px rgba(56,189,248,.4)" id="rekap-tahun-sisa">Rp 0</div></div></div>
+        <div class="col-md-4 col-12 mb-3">
+          <div class="kartu-rekap kartu-masuk">
+            <div class="ikon-rekap"><i class="fas fa-circle-arrow-down"></i></div>
+            <div>
+              <div class="label-rekap">UANG MASUK</div>
+              <div class="angka-rekap angka-hijau" id="rekap-tahun-in">Rp 0</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-12 mb-3">
+          <div class="kartu-rekap kartu-keluar">
+            <div class="ikon-rekap"><i class="fas fa-circle-arrow-up"></i></div>
+            <div>
+              <div class="label-rekap">UANG KELUAR</div>
+              <div class="angka-rekap angka-merah" id="rekap-tahun-out">Rp 0</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-12 mb-3">
+          <div class="kartu-rekap kartu-sisa">
+            <div class="ikon-rekap"><i class="fas fa-scale-balanced"></i></div>
+            <div>
+              <div class="label-rekap">SISA HASIL</div>
+              <div class="angka-rekap angka-cyan" id="rekap-tahun-sisa">Rp 0</div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div id="container-bulanan" class="row"></div>
+
       <h5 class="mt-4 fw-bold mb-1"><i class="fas fa-scroll me-2" style="color:var(--ungu)"></i><span class="judul-grad">Riwayat Transaksi</span></h5>
       <hr class="garis-cahaya">
       <div class="table-responsive-custom">
@@ -611,7 +675,7 @@ select option{background:#1a2235!important;color:#fff!important}
    ⚠️ SATU-SATUNYA YANG HARUS KAMU GANTI:
    Ganti "PASTE_URL_WEB_APP_DISINI" dengan URL Web App milikmu (/exec)
    ================================================================ */
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuB0ox_Q30xzLxQ9tW9SCVBlmVygCiBxf5QglMoP9luSiFbW0bXgYRt4-nOmbnlNQ6/exec";
+const APPS_SCRIPT_URL = "PASTE_URL_WEB_APP_DISINI";
 const LOGIN_USER = "gana";
 const LOGIN_PASS = "123";
 
@@ -623,7 +687,6 @@ const DAFTAR_PLATFORM = {
   trading: ["PEGADAIAN","IPOT INDOPREMIER","MOST MANDIRI SEKURITAS","MIRAE ASSET HOTS","BIONS","BCA SEKURITAS","AJAIB","BAREKSA","STOCKBIT","TRADINGVIEW","BINANCE","BYBIT","PLASMA SINARMAS"]
 };
 
-/* Logo buatanmu — spasi pada nama file sudah di-encode %20 agar aman */
 const daftarLogoBank = {
   "BCA":"https://i.ibb.co/fGC7NMS1/BCA-transparan.png",
   "BNI":"https://i.ibb.co/s91w38Hr/BNI-transparan.png",
@@ -636,20 +699,43 @@ const daftarLogoBank = {
   "GOPAY":"https://i.ibb.co/v4hd6h0K/GOPAY%20-transparan.png"
 };
 
-let dataTransaksi = [];
-let dataLogin = [];
+/* ================== STATE ================== */
+let dataTransaksi = [];                 // data resmi dari Google Sheet
+let dataLogin = [];                     // data resmi dari Google Sheet
+let pendingTrx = muatAntrian('antrian_transaksi');    // antrian aman (anti hilang)
+let pendingLogin = muatAntrian('antrian_login');
 let kategoriLoginAktif = "bank";
+let hapusBerjalan = new Set();          // id yang sedang dihapus (anti kedip saat sync)
+let listenerTerpasang = false;
 let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
 window.myChartB = null;
 window.myChartP = null;
 
-/* ================== FORMAT NOMINAL — SEMUANYA PAKAI KOMA ================== */
-function fNum(n){ return (Number(n) || 0).toLocaleString('en-US'); }        // 1250000 -> 1,250,000
-function fRp(n){ return 'Rp ' + fNum(n); }                                   // Rp 1,250,000
+/* ================== FORMAT NOMINAL — SEMUANYA KOMA ================== */
+function fNum(n){ return (Number(n) || 0).toLocaleString('en-US'); }
+function fRp(n){ return 'Rp ' + fNum(n); }
+
+/* ================== ANTRIAN AMAN (ANTI HILANG) ================== */
+function muatAntrian(kunci){
+  try { return JSON.parse(localStorage.getItem(kunci)) || []; } catch(e){ return []; }
+}
+function simpanAntrian(kunci, isi){
+  try { localStorage.setItem(kunci, JSON.stringify(isi)); } catch(e) {}
+}
+function simpanAntrianTrx(){ simpanAntrian('antrian_transaksi', pendingTrx); }
+function simpanAntrianLogin(){ simpanAntrian('antrian_login', pendingLogin); }
+
+function bacaFileBase64(file){
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve({ base64: r.result.split(',')[1], type: file.type, name: file.name });
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
 
 /* ================== INIT ================== */
 window.onload = function () {
-  // Font & warna default Chart.js biar chart ikut cantik
   if (window.Chart) {
     Chart.defaults.font.family = "'Poppins','Segoe UI',sans-serif";
     Chart.defaults.color = '#c6d3f5';
@@ -671,7 +757,6 @@ window.onload = function () {
   }
   isiSelect(document.getElementById('filter-bank-laporan'), ["ALL", ...DAFTAR_BANK], true);
 
-  // Input nominal otomatis pakai koma
   document.querySelectorAll('.format-ribuan').forEach(input => {
     input.addEventListener('keyup', function () {
       let val = this.value.replace(/[^0-9]/g, '');
@@ -681,19 +766,8 @@ window.onload = function () {
 
   isiPilihanPlatform();
 
-  if (document.documentElement.classList.contains('logged-in')) {
-    if (APPS_SCRIPT_URL.includes("PASTE_URL")) {
-      toast('⚠️ URL Apps Script belum diatur! Lihat catatan pemasangan.', 'error');
-    } else {
-      muatSemuaData(false);
-      // AUTO-SYNC: tiap 30 detik + saat tab dibuka lagi
-      // (data selalu diambil dari Google Sheet, jadi sama di semua browser/HP)
-      setInterval(() => { if (document.visibilityState === 'visible') muatSemuaData(true); }, 30000);
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') muatSemuaData(true);
-      });
-    }
-  }
+  // Kalau sudah login → langsung masuk TANPA reload
+  if (document.documentElement.classList.contains('logged-in')) masukAplikasi();
 };
 
 function isiSelect(el, daftar, allLabel) {
@@ -702,7 +776,25 @@ function isiSelect(el, daftar, allLabel) {
   ).join('');
 }
 
-/* ================== LOGIN ================== */
+/* ================== MASUK APLIKASI (TANPA RELOAD, TANPA MUTAR-MUTAR) ================== */
+function masukAplikasi() {
+  document.documentElement.classList.add('logged-in');
+  document.getElementById('pass').value = '';
+  document.getElementById('error-msg').style.display = 'none';
+  renderAll();            // tampilkan antrian tertunda (kalau ada) SEKETIKA
+  muatSemuaData(true);    // ambil data Sheet diam-diam, tanpa spinner
+  prosesAntrianTrx();     // kirim ulang data yang tertunda
+  prosesAntrianLogin();
+  if (!listenerTerpasang) {
+    listenerTerpasang = true;
+    // Sinkron HANYA saat tab dibuka lagi — diam & tanpa kedip
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') muatSemuaData(false);
+    });
+  }
+}
+
+/* ================== LOGIN / LOGOUT ================== */
 function checkEnter(e) { if (e.key === "Enter") handleLogin(); }
 function handleLogin() {
   const u = document.getElementById('user').value.trim();
@@ -712,11 +804,14 @@ function handleLogin() {
     err.style.display = 'none';
     localStorage.setItem('isLoggedIn', 'true');
     if (!savedUsers.includes(u)) { savedUsers.push(u); localStorage.setItem('savedUsers', JSON.stringify(savedUsers)); }
-    location.reload();
+    masukAplikasi();   // ← LANGSUNG MASUK, TIDAK ADA RELOAD
   } else { err.style.display = 'block'; }
 }
 function handleLogout() {
-  if (confirm('Yakin mau logout?')) { localStorage.removeItem('isLoggedIn'); location.reload(); }
+  if (confirm('Yakin mau logout?')) {
+    localStorage.removeItem('isLoggedIn');
+    document.documentElement.classList.remove('logged-in');
+  }
 }
 
 /* ================== NAVIGASI ================== */
@@ -725,8 +820,7 @@ function showSection(id, el) {
   document.getElementById('sec-' + id).style.display = 'block';
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   el.classList.add('active');
-  const t = document.getElementById('page-title');
-  t.textContent = el.dataset.judul || 'Dashboard';
+  document.getElementById('page-title').textContent = el.dataset.judul || 'Dashboard';
   if (window.innerWidth <= 768) toggleSidebar();
   const hariIni = new Date().toISOString().split('T')[0];
   if (id === 'masuk' && !document.getElementById('tgl-masuk').value) document.getElementById('tgl-masuk').value = hariIni;
@@ -750,44 +844,42 @@ async function kirimKeServer(payload) {
   return res.json();
 }
 
-async function muatSemuaData(silent) {
+/* Ambil data — DIAM, tanpa spinner, tanpa kedip (render hanya jika berubah) */
+async function muatSemuaData(wajibRender) {
   try {
-    if (!silent) tampilkanLoading(true);
     const [trx, login] = await Promise.all([ambilData('getTransaksi'), ambilData('getLogin')]);
-    if (trx.status === 'success') dataTransaksi = trx.data || [];
-    if (login.status === 'success') dataLogin = login.data || [];
-    updateUI();
-    renderDataLogin();
-    if (document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
-    const now = new Date();
-    document.getElementById('sync-time').textContent =
-      'Sinkron ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-  } catch (e) {
-    toast('❌ Gagal terhubung ke Google Sheet. Cek koneksi / URL Web App.', 'error');
-  } finally {
-    tampilkanLoading(false);
-  }
+    let berubah = false;
+    if (trx && trx.status === 'success') {
+      const baru = (trx.data || []).filter(t => !hapusBerjalan.has(String(t.id)));
+      if (JSON.stringify(baru) !== JSON.stringify(dataTransaksi)) { dataTransaksi = baru; berubah = true; }
+    }
+    if (login && login.status === 'success') {
+      const baru = (login.data || []).filter(d => !hapusBerjalan.has(String(d.id)));
+      if (JSON.stringify(baru) !== JSON.stringify(dataLogin)) { dataLogin = baru; berubah = true; }
+    }
+    if (wajibRender || berubah) renderAll();
+  } catch (e) { /* diam: data lokal tetap tampil */ }
 }
 
-/* ================== TRANSAKSI ================== */
-function uploadKeServer(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async () => {
-      try {
-        const res = await kirimKeServer({
-          action: 'uploadBukti',
-          base64: reader.result.split(',')[1],
-          type: file.type,
-          name: file.name
-        });
-        res.status === 'success' ? resolve(res.url) : reject('gagal');
-      } catch (e) { reject(e); }
-    };
-    reader.readAsDataURL(file);
-  });
+async function refreshManual() {
+  tampilkanLoading(true);
+  await muatSemuaData(true);
+  tampilkanLoading(false);
+  toast('🔄 Data dimuat ulang dari Google Sheet', 'info');
 }
 
+function renderAll() {
+  updateUI();
+  renderDataLogin();
+  if (document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
+}
+
+/* ================================================================
+   💾 SIMPAN TRANSAKSI — INSTAN
+   Baris langsung muncul di Rekapan detik itu juga.
+   Foto + data dikirim ke Sheet di belakang layar TANPA pesan perantara.
+   Kalau internet putus → masuk antrian aman, dikirim otomatis nanti.
+   ================================================================ */
 async function simpanTransaksi(tipe) {
   const tgl = document.getElementById(`tgl-${tipe}`).value;
   const bank = document.getElementById(`bank-${tipe}`).value;
@@ -797,50 +889,136 @@ async function simpanTransaksi(tipe) {
 
   if (!tgl || !nomRaw || !ket) return toast('⚠️ Mohon lengkapi Tanggal, Nominal & Keterangan!', 'error');
 
-  let buktiUrl = "Gada";
-  if (fileInput.files && fileInput.files[0]) {
-    toast('📷 Sedang mengupload foto bukti...', 'info');
-    try { buktiUrl = await uploadKeServer(fileInput.files[0]); }
-    catch (e) { toast('⚠️ Upload gagal, data tetap disimpan tanpa bukti.', 'error'); }
-  }
-
-  tampilkanLoading(true);
-  const res = await kirimKeServer({
-    action: 'addTransaksi',
+  const tempId = 'T' + Date.now() + Math.floor(Math.random() * 999);
+  const item = {
+    tempId: tempId,
     tanggal: tgl, bank: bank,
     tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
-    nominal: parseInt(nomRaw), keterangan: ket, bukti: buktiUrl
-  });
-  tampilkanLoading(false);
+    nominal: parseInt(nomRaw), keterangan: ket,
+    bukti: (fileInput.files && fileInput.files[0]) ? 'UPLOADING' : 'Gada',
+    base64: null, type: null, name: null,
+    status: 'menunggu', dihapus: false
+  };
 
-  if (res.status === 'success') {
-    toast('✅ Data tersimpan PERMANEN di Google Sheet!', 'success');
-    document.getElementById(`tgl-${tipe}`).value = '';
-    document.getElementById(`nom-${tipe}`).value = '';
-    document.getElementById(`ket-${tipe}`).value = '';
-    document.getElementById(`file-${tipe}`).value = '';
-    muatSemuaData(true);
-  } else {
-    toast('❌ Gagal: ' + (res.message || 'unknown'), 'error');
+  // Baca foto jadi base64 (cepat, lokal)
+  if (fileInput.files && fileInput.files[0]) {
+    try {
+      const d = await bacaFileBase64(fileInput.files[0]);
+      item.base64 = d.base64; item.type = d.type; item.name = d.name;
+    } catch (e) {}
+  }
+
+  // 1) LANGSUNG MUNCUL di dashboard/rekapan
+  pendingTrx.push(item);
+  simpanAntrianTrx();   // simpan antrian → data TIDAK AKAN HILANG walau halaman ditutup
+  renderAll();
+
+  // 2) Form langsung kosong
+  document.getElementById(`tgl-${tipe}`).value = '';
+  document.getElementById(`nom-${tipe}`).value = '';
+  document.getElementById(`ket-${tipe}`).value = '';
+  document.getElementById(`file-${tipe}`).value = '';
+
+  // 3) Kirim ke Google Sheet di belakang layar (diam-diam)
+  kirimAntrianTrx(item, false);
+}
+
+async function kirimAntrianTrx(item, senyap) {
+  if (!item || item.status === 'mengirim') return;
+  item.status = 'mengirim'; simpanAntrianTrx();
+  try {
+    const res = await kirimKeServer({
+      action: 'addTransaksiLengkap',
+      id: item.tempId,
+      tanggal: item.tanggal, bank: item.bank, tipe: item.tipe,
+      nominal: item.nominal, keterangan: item.keterangan,
+      base64: item.base64, type: item.type, name: item.name
+    });
+    if (!res || res.status !== 'success') throw new Error((res && res.message) || 'gagal');
+
+    // keluar dari antrian
+    pendingTrx = pendingTrx.filter(p => p.tempId !== item.tempId);
+    simpanAntrianTrx();
+
+    if (item.dihapus) {
+      // user menghapus baris ini saat masih dikirim → hapus juga di server
+      await kirimKeServer({ action: 'deleteTransaksi', id: res.id }).catch(() => {});
+    } else {
+      if (!dataTransaksi.some(t => t.id === res.id)) {
+        dataTransaksi.push({
+          id: res.id, tanggal: item.tanggal, bank: item.bank, tipe: item.tipe,
+          nominal: item.nominal, keterangan: item.keterangan, bukti: res.bukti || 'Gada'
+        });
+      }
+      if (!senyap) toast('✅ Tersimpan permanen di Google Sheet!', 'success');
+      renderAll();
+    }
+  } catch (e) {
+    item.status = 'menunggu'; simpanAntrianTrx();
+    if (!senyap) toast('❌ Koneksi gagal. Data AMAN & dikirim otomatis nanti.', 'error');
   }
 }
 
-async function hapusData(id) {
-  if (!confirm('Hapus catatan ini secara PERMANEN dari Google Sheet?')) return;
-  tampilkanLoading(true);
-  await kirimKeServer({ action: 'deleteTransaksi', id: id });
-  tampilkanLoading(false);
-  toast('🗑️ Data terhapus!', 'success');
-  muatSemuaData(true);
+async function prosesAntrianTrx() {
+  pendingTrx.forEach(p => { if (p.status === 'mengirim') p.status = 'menunggu'; });
+  simpanAntrianTrx();
+  for (const p of [...pendingTrx]) {
+    if (p.status === 'menunggu') await kirimAntrianTrx(p, true);
+  }
 }
 
-/* ================== UTIL GAMBAR & TEKS ================== */
+/* ================== HAPUS TRANSAKSI — INSTAN ================== */
+async function hapusData(id) {
+  // Baris yang masih di antrian (belum sampai server)
+  if (String(id).startsWith('T')) {
+    const item = pendingTrx.find(p => p.tempId === id);
+    if (item) {
+      item.dihapus = true;
+      pendingTrx = pendingTrx.filter(p => p.tempId !== id);
+      simpanAntrianTrx();
+      renderAll();
+      toast('🗑️ Data dihapus!', 'success');
+      return;
+    }
+  }
+  // Baris resmi dari server
+  if (!confirm('Hapus catatan ini secara PERMANEN dari Google Sheet?')) return;
+  const cadangan = dataTransaksi.find(t => t.id === id);
+  dataTransaksi = dataTransaksi.filter(t => t.id !== id);
+  hapusBerjalan.add(String(id));
+  renderAll(); // hilang SEKETIKA
+  try {
+    await kirimKeServer({ action: 'deleteTransaksi', id: id });
+    toast('🗑️ Terhapus dari Google Sheet!', 'success');
+  } catch (e) {
+    if (cadangan) dataTransaksi.push(cadangan);
+    renderAll();
+    toast('❌ Gagal hapus, data dikembalikan.', 'error');
+  } finally {
+    hapusBerjalan.delete(String(id));
+  }
+}
+
+/* ================== UTIL ================== */
 function driveId(url) { const m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/); return m ? m[1] : null; }
 function urlThumbnail(url) { const id = driveId(url); return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w500` : url; }
 function urlBesar(url) { const id = driveId(url); return id ? `https://lh3.googleusercontent.com/d/${id}=w1600` : url; }
 function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-/* ================== RENDER DASHBOARD (logo sejajar + nominal koma) ================== */
+function gabunganTrx() {
+  return dataTransaksi.concat(pendingTrx.map(p => ({
+    id: p.tempId, tanggal: p.tanggal, bank: p.bank, tipe: p.tipe,
+    nominal: p.nominal, keterangan: p.keterangan, bukti: p.bukti, pending: true
+  })));
+}
+function gabunganLogin() {
+  return dataLogin.concat(pendingLogin.map(p => ({
+    id: p.tempId, kategori: p.kategori, platform: p.platform,
+    username: p.username, password: p.password, catatan: p.catatan
+  })));
+}
+
+/* ================== RENDER DASHBOARD + REKAPAN ================== */
 function updateUI() {
   const tbody = document.getElementById('table-body');
   const containerBulan = document.getElementById('container-bulanan');
@@ -851,17 +1029,17 @@ function updateUI() {
 
   tbody.innerHTML = ''; containerBulan.innerHTML = ''; gridBank.innerHTML = '';
 
+  const semua = gabunganTrx();
   let totalTahunIn = 0, totalTahunOut = 0, totalSaldoSistem = 0;
   const rekapBulanan = {}, saldoPerBank = {};
 
-  // Hitung saldo per bank + total keseluruhan (SEMUA data, tanpa filter)
-  dataTransaksi.forEach(t => {
+  // Saldo per bank + total keseluruhan (semua data)
+  semua.forEach(t => {
     if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
     if (t.tipe === 'UANG MASUK') { saldoPerBank[t.bank] += t.nominal; totalSaldoSistem += t.nominal; }
     else { saldoPerBank[t.bank] -= t.nominal; totalSaldoSistem -= t.nominal; }
   });
 
-  // Kartu bank: logo di KOTAK SERAGAM -> pasti sejajar rapi
   for (let b in saldoPerBank) {
     const nama = b.toUpperCase().trim();
     const logo = daftarLogoBank[nama];
@@ -879,7 +1057,7 @@ function updateUI() {
   document.getElementById('total-saldo-display').innerText = fRp(totalSaldoSistem);
 
   // Filter laporan per tahun + bank
-  let dataFiltered = dataTransaksi.filter(t => String(t.tanggal).split('-')[0] === tahunFilter);
+  let dataFiltered = semua.filter(t => String(t.tanggal).split('-')[0] === tahunFilter);
   if (bankFilter !== 'ALL') dataFiltered = dataFiltered.filter(t => t.bank === bankFilter);
 
   dataFiltered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
@@ -890,13 +1068,15 @@ function updateUI() {
 
     const isKeluar = t.tipe === 'UANG KELUAR';
     const adaBukti = t.bukti && t.bukti !== 'Gada' && t.bukti !== '' && t.bukti !== 'null';
-    const htmlBukti = adaBukti
-      ? `<img src="${urlThumbnail(t.bukti)}" class="img-preview" onclick="perbesarGambar('${t.bukti}')" onerror="this.src='https://cdn-icons-png.flaticon.com/512/337/337948.png'">`
-      : `<span style="color:#64748b;font-size:.8rem">Gada</span>`;
+    const htmlBukti = (t.bukti === 'UPLOADING')
+      ? `<span class="mini-spin" title="Foto sedang diproses"></span>`
+      : adaBukti
+        ? `<img src="${urlThumbnail(t.bukti)}" class="img-preview" onclick="perbesarGambar('${t.bukti}')" onerror="this.src='https://cdn-icons-png.flaticon.com/512/337/337948.png'">`
+        : `<span style="color:#64748b;font-size:.8rem">Gada</span>`;
 
     tbody.innerHTML += `
-      <tr>
-        <td class="text-center fw-bold" style="color:var(--cyan-muda)">${t.tanggal}</td>
+      <tr class="${t.pending ? 'baris-pending' : ''}">
+        <td class="text-center fw-bold" style="color:var(--cyan-muda)">${t.tanggal}${t.pending ? '<span class="titik-pending" title="Sedang dikirim ke Sheet"></span>' : ''}</td>
         <td class="text-center"><span class="badge-tipe ${isKeluar ? 'bg-pengeluaran' : 'bg-pemasukan'}">${t.tipe}</span></td>
         <td class="text-center fw-bold" style="color:var(--gold-muda)">${escapeHtml(t.bank || '-')}</td>
         <td class="fw-bold">${escapeHtml(t.keterangan)}</td>
@@ -912,15 +1092,23 @@ function updateUI() {
 
   for (const bulan in rekapBulanan) {
     containerBulan.innerHTML += `
-      <div class="col-md-4 col-12 mb-3"><div class="box-premium">
-        <h6 class="fw-bold mb-3" style="color:var(--cyan-muda)"><i class="fa fa-calendar-alt me-2"></i>${bulan}</h6>
-        <div class="d-flex justify-content-between mb-1"><span>Uang Masuk</span><span class="nominal-in">+ ${fRp(rekapBulanan[bulan].in)}</span></div>
-        <div class="d-flex justify-content-between"><span>Uang Keluar</span><span class="nominal-out">- ${fRp(rekapBulanan[bulan].out)}</span></div>
-      </div></div>`;
+      <div class="col-md-4 col-12 mb-3">
+        <div class="kartu-bulan">
+          <div class="kepala-bulan"><i class="fas fa-calendar-day"></i><span>${bulan}</span></div>
+          <div class="baris-uang">
+            <span class="label-uang"><span class="titik-uang titik-in"></span>UANG MASUK</span>
+            <span class="nilai-uang nilai-in">+ ${fRp(rekapBulanan[bulan].in)}</span>
+          </div>
+          <div class="baris-uang">
+            <span class="label-uang"><span class="titik-uang titik-out"></span>UANG KELUAR</span>
+            <span class="nilai-uang nilai-out">- ${fRp(rekapBulanan[bulan].out)}</span>
+          </div>
+        </div>
+      </div>`;
   }
 }
 
-/* ================== ANALYTICS (chart gradient + nominal koma) ================== */
+/* ================== ANALYTICS ================== */
 function updateAnalytics() {
   if (window.myChartB) window.myChartB.destroy();
   if (window.myChartP) window.myChartP.destroy();
@@ -929,7 +1117,7 @@ function updateAnalytics() {
   let dIn = Array(12).fill(0), dOut = Array(12).fill(0);
   const tahunFilter = document.getElementById('pilih-tahun').value;
 
-  dataTransaksi.filter(t => String(t.tanggal).split('-')[0] === tahunFilter).forEach(t => {
+  gabunganTrx().filter(t => String(t.tanggal).split('-')[0] === tahunFilter).forEach(t => {
     const m = new Date(t.tanggal + 'T00:00:00').getMonth();
     if (t.tipe === 'UANG MASUK') dIn[m] += t.nominal; else dOut[m] += t.nominal;
   });
@@ -943,9 +1131,9 @@ function updateAnalytics() {
   window.myChartB = new Chart(ctxB, {
     type: 'bar',
     data: { labels: bulanLabels, datasets: [
-      { label: 'Uang Masuk', data: dIn, backgroundColor: gIn, hoverBackgroundColor: '#4ade80',
+      { label: 'UANG MASUK', data: dIn, backgroundColor: gIn, hoverBackgroundColor: '#4ade80',
         borderRadius: 8, borderSkipped: false },
-      { label: 'Uang Keluar', data: dOut, backgroundColor: gOut, hoverBackgroundColor: '#f87171',
+      { label: 'UANG KELUAR', data: dOut, backgroundColor: gOut, hoverBackgroundColor: '#f87171',
         borderRadius: 8, borderSkipped: false }
     ]},
     options: {
@@ -967,7 +1155,7 @@ function updateAnalytics() {
 
   window.myChartP = new Chart(document.getElementById('chartPie').getContext('2d'), {
     type: 'doughnut',
-    data: { labels: ['Masuk', 'Keluar'], datasets: [{
+    data: { labels: ['UANG MASUK', 'UANG KELUAR'], datasets: [{
       data: [totalIn, totalOut],
       backgroundColor: ['#22c55e', '#ef4444'],
       hoverBackgroundColor: ['#4ade80', '#f87171'],
@@ -1014,6 +1202,7 @@ function toggleInputPass() {
   else { inp.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
+/* Simpan data login — INSTAN, sama seperti transaksi */
 async function simpanDataLogin() {
   const pilih = document.getElementById('login-platform').value;
   const platform = pilih === 'LAINNYA'
@@ -1025,38 +1214,96 @@ async function simpanDataLogin() {
 
   if (!platform || !username || !password) return toast('⚠️ Lengkapi Platform, Username & Password!', 'error');
 
-  tampilkanLoading(true);
-  const res = await kirimKeServer({
-    action: 'addLogin',
+  const tempId = 'L' + Date.now() + Math.floor(Math.random() * 999);
+  const item = {
+    tempId: tempId,
     kategori: kategoriLoginAktif === 'bank' ? 'BANK' : 'TRADING',
-    platform: platform, username: username, password: password, catatan: catatan
-  });
-  tampilkanLoading(false);
+    platform: platform, username: username, password: password, catatan: catatan,
+    status: 'menunggu', dihapus: false
+  };
 
-  if (res.status === 'success') {
-    toast('✅ Data login tersimpan di Google Sheet!', 'success');
-    document.getElementById('login-username').value = '';
-    document.getElementById('login-password').value = '';
-    document.getElementById('login-catatan').value = '';
-    muatSemuaData(true);
-  } else {
-    toast('❌ Gagal: ' + (res.message || 'unknown'), 'error');
+  pendingLogin.push(item);
+  simpanAntrianLogin();
+  renderDataLogin();   // LANGSUNG MUNCUL
+
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-catatan').value = '';
+
+  kirimAntrianLogin(item, false);
+}
+
+async function kirimAntrianLogin(item, senyap) {
+  if (!item || item.status === 'mengirim') return;
+  item.status = 'mengirim'; simpanAntrianLogin();
+  try {
+    const res = await kirimKeServer({
+      action: 'addLogin', id: item.tempId,
+      kategori: item.kategori, platform: item.platform,
+      username: item.username, password: item.password, catatan: item.catatan
+    });
+    if (!res || res.status !== 'success') throw new Error('gagal');
+
+    pendingLogin = pendingLogin.filter(p => p.tempId !== item.tempId);
+    simpanAntrianLogin();
+
+    if (item.dihapus) {
+      await kirimKeServer({ action: 'deleteLogin', id: res.id }).catch(() => {});
+    } else {
+      if (!dataLogin.some(d => d.id === res.id)) {
+        dataLogin.push({ id: res.id, kategori: item.kategori, platform: item.platform,
+          username: item.username, password: item.password, catatan: item.catatan });
+      }
+      if (!senyap) toast('✅ Data login tersimpan di Google Sheet!', 'success');
+      renderDataLogin();
+    }
+  } catch (e) {
+    item.status = 'menunggu'; simpanAntrianLogin();
+    if (!senyap) toast('❌ Koneksi gagal. Data AMAN & dikirim otomatis nanti.', 'error');
+  }
+}
+
+async function prosesAntrianLogin() {
+  pendingLogin.forEach(p => { if (p.status === 'mengirim') p.status = 'menunggu'; });
+  simpanAntrianLogin();
+  for (const p of [...pendingLogin]) {
+    if (p.status === 'menunggu') await kirimAntrianLogin(p, true);
   }
 }
 
 async function hapusLogin(id) {
-  if (!confirm('Hapus data login ini?')) return;
-  tampilkanLoading(true);
-  await kirimKeServer({ action: 'deleteLogin', id: id });
-  tampilkanLoading(false);
-  toast('🗑️ Data login dihapus!', 'success');
-  muatSemuaData(true);
+  if (String(id).startsWith('L')) {
+    const item = pendingLogin.find(p => p.tempId === id);
+    if (item) {
+      item.dihapus = true;
+      pendingLogin = pendingLogin.filter(p => p.tempId !== id);
+      simpanAntrianLogin();
+      renderDataLogin();
+      toast('🗑️ Data login dihapus!', 'success');
+      return;
+    }
+  }
+  if (!confirm('Hapus data login ini secara PERMANEN?')) return;
+  const cadangan = dataLogin.find(d => d.id === id);
+  dataLogin = dataLogin.filter(d => d.id !== id);
+  hapusBerjalan.add(String(id));
+  renderDataLogin();
+  try {
+    await kirimKeServer({ action: 'deleteLogin', id: id });
+    toast('🗑️ Terhapus dari Google Sheet!', 'success');
+  } catch (e) {
+    if (cadangan) dataLogin.push(cadangan);
+    renderDataLogin();
+    toast('❌ Gagal hapus, data dikembalikan.', 'error');
+  } finally {
+    hapusBerjalan.delete(String(id));
+  }
 }
 
 function renderDataLogin() {
   const container = document.getElementById('grid-data-login');
   const kat = kategoriLoginAktif === 'bank' ? 'BANK' : 'TRADING';
-  const data = dataLogin.filter(d => d.kategori === kat);
+  const data = gabunganLogin().filter(d => d.kategori === kat);
 
   if (!data.length) {
     container.innerHTML = `<div class="glass-card text-center" style="grid-column:1/-1;color:#9fb0d9">
@@ -1100,7 +1347,7 @@ function renderDataLogin() {
   }).join('');
 }
 
-function getLoginItem(id) { return dataLogin.find(d => d.id === id); }
+function getLoginItem(id) { return gabunganLogin().find(d => d.id === id); }
 
 function togglePassLogin(id, btn) {
   const item = getLoginItem(id);
@@ -1143,7 +1390,7 @@ function warnaAvatar(nama) {
   return palet[h % palet.length];
 }
 
-/* ================== POPUP FOTO (anti gagal load) ================== */
+/* ================== POPUP FOTO ================== */
 function perbesarGambar(url) {
   const img = document.getElementById('fotoBesar');
   img.onerror = function () {
@@ -1171,9 +1418,7 @@ function tampilkanLoading(tampil) {
   document.getElementById('loading-overlay').style.display = tampil ? 'flex' : 'none';
 }
 
-/* ================== PROTEKSI ==================
-   CATATAN: setInterval "debugger" yang lama sudah DIHAPUS,
-   karena itu penyebab utama LAG di mobile. Proteksi lain tetap ada. */
+/* ================== PROTEKSI ================== */
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => {
   if (e.key === 'F12') { e.preventDefault(); return false; }
