@@ -20,8 +20,7 @@
 :root{
   --cyan:#38bdf8; --cyan-muda:#7dd3fc; --ungu:#a78bfa; --gold:#fbbf24; --gold-muda:#fde68a;
   --green:#4ade80; --red:#f87171; --pink:#f472b6;
-  --glass:rgba(15,23,42,.9); --glass2:rgba(30,41,59,.75);
-  --line:rgba(148,163,184,.2); --teks:#dbe3ff;
+  --line:#33415c; --teks:#dbe3ff;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -35,7 +34,7 @@ html.logged-in body{
 }
 
 /* ============================================================
-   💡 LAMPU-LAMPU CAHAYA (di luar + di dalam kotak login)
+   💡 LAMPU-LAMPU CAHAYA & BINTANG
    ============================================================ */
 .lampu-layer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;
@@ -75,7 +74,7 @@ html.logged-in body{
 @keyframes kelip1{from{opacity:.2}to{opacity:.95}}
 @keyframes kelip2{from{opacity:.95}to{opacity:.2}}
 
-/* ====== TAMPILAN LOGIN / APP ====== */
+/* ====== LOGIN / APP ====== */
 #login-section{display:none;min-height:100vh;align-items:center;justify-content:center;padding:20px}
 html:not(.logged-in) #login-section{display:flex}
 #app-shell{display:none}
@@ -93,12 +92,12 @@ html.logged-in #app-shell{display:block}
   background:linear-gradient(90deg,transparent,var(--cyan),var(--ungu),var(--gold),transparent);
   box-shadow:0 0 12px rgba(56,189,248,.5)}
 
-/* ====== KARTU LOGIN + LAMPU DI DALAM + BORDER NEON ====== */
+/* ====== KARTU LOGIN — SOLID + LAMPU DI DALAM + BORDER NEON ====== */
 .login-card{
   width:100%;max-width:390px;padding:0;text-align:center;position:relative;overflow:hidden;
-  background:linear-gradient(160deg,rgba(30,41,59,.96),rgba(15,23,42,.97));
+  background:linear-gradient(160deg,#1e293b,#0f172a);
   border:1px solid #38bdf8;border-radius:24px;
-  box-shadow:0 25px 60px rgba(0,0,0,.65);
+  box-shadow:0 25px 60px rgba(0,0,0,.75);
   animation:loginAura 12s linear infinite;
 }
 @keyframes loginAura{
@@ -122,11 +121,10 @@ html.logged-in #app-shell{display:block}
 .label-login{color:var(--gold-muda);text-align:left;font-size:.75rem;letter-spacing:2px;margin:14px 0 6px;font-weight:700;
   text-shadow:0 0 10px rgba(251,191,36,.4)}
 
-/* ====== SIDEBAR ====== */
+/* ====== SIDEBAR — SOLID ====== */
 .sidebar{
   width:252px;height:100vh;position:fixed;top:0;left:0;z-index:1100;
-  background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(2,6,23,.96));
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:linear-gradient(180deg,#0f172a,#020617);
   border-right:1px solid var(--line);display:flex;flex-direction:column;
 }
 .sidebar-header{
@@ -151,43 +149,42 @@ html.logged-in #app-shell{display:block}
   content:'';position:absolute;left:0;top:22%;bottom:22%;width:4px;border-radius:4px;
   background:linear-gradient(180deg,var(--cyan),var(--ungu));opacity:0;transition:.25s;
 }
-.nav-link:hover{background:rgba(56,189,248,.08);color:var(--cyan-muda);transform:translateX(4px)}
+.nav-link:hover{background:rgba(56,189,248,.1);color:var(--cyan-muda);transform:translateX(4px)}
 .nav-link.active{
-  background:linear-gradient(90deg,rgba(56,189,248,.25),rgba(251,191,36,.08));
+  background:linear-gradient(90deg,rgba(56,189,248,.28),rgba(251,191,36,.1));
   color:#fff;text-shadow:0 0 10px rgba(56,189,248,.7);
-  box-shadow:0 0 18px rgba(56,189,248,.18), inset 0 0 14px rgba(56,189,248,.08);
+  box-shadow:0 0 18px rgba(56,189,248,.2), inset 0 0 14px rgba(56,189,248,.1);
 }
 .nav-link.active::before{opacity:1;box-shadow:0 0 12px var(--cyan)}
 .ic-cyan{color:var(--cyan)} .ic-hijau{color:var(--green)} .ic-merah{color:var(--red)}
 .ic-emas{color:var(--gold)} .ic-ungu{color:var(--ungu)} .ic-pink{color:var(--pink)}
 .nav-logout{color:var(--red);margin-top:auto;border-top:1px solid var(--line);border-radius:0;margin-left:0;margin-right:0;padding-left:28px}
 .nav-logout::before{background:linear-gradient(180deg,#f87171,#dc2626)}
-.nav-logout:hover{color:#fff;background:rgba(239,68,68,.15)}
+.nav-logout:hover{color:#fff;background:rgba(239,68,68,.18)}
 
-/* ====== TOPBAR & MAIN ====== */
+/* ====== TOPBAR — SOLID ====== */
 .main-content{margin-left:252px;padding:26px;min-height:100vh}
 .topbar{
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  background:linear-gradient(90deg,rgba(30,41,59,.85),rgba(15,23,42,.85));
+  background:linear-gradient(90deg,#1b2740,#0f172a);
   border:1px solid var(--line);border-radius:16px;padding:14px 20px;margin-bottom:24px;
-  box-shadow:0 8px 24px rgba(0,0,0,.35), inset 0 0 20px rgba(56,189,248,.04);
+  box-shadow:0 8px 24px rgba(0,0,0,.45), inset 0 0 20px rgba(56,189,248,.05);
 }
-.btn-hamburger{display:none;background:var(--glass2);color:var(--cyan);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:1.1rem}
+.btn-hamburger{display:none;background:#16213a;color:var(--cyan);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:1.1rem}
 .btn-refresh{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff;border:none;
   border-radius:10px;padding:8px 18px;font-weight:700;font-size:.8rem;box-shadow:0 4px 14px rgba(56,189,248,.35)}
 .btn-refresh:active{transform:scale(.95)}
 
-/* ====== KARTU GLASS ====== */
+/* ====== KARTU — SOLID (TIDAK TEMBUS BACKGROUND) ====== */
 .glass-card{
-  background:linear-gradient(160deg,rgba(30,41,59,.85),rgba(15,23,42,.9));
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:linear-gradient(160deg,#1e293b,#101a2f);
   border:1px solid var(--line);border-radius:18px;padding:24px;
-  box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 0 26px rgba(56,189,248,.04);
+  box-shadow:0 10px 30px rgba(0,0,0,.5), inset 0 0 26px rgba(56,189,248,.04);
 }
 label{color:var(--cyan-muda);font-weight:700;text-transform:uppercase;font-size:.72rem;letter-spacing:1.5px;
   margin-bottom:6px;display:block;text-shadow:0 0 8px rgba(56,189,248,.25)}
 .form-control,.form-select{
-  background:rgba(2,6,23,.8)!important;color:#fff!important;
+  background:#020617!important;color:#fff!important;
   border:1px solid #475569!important;border-radius:10px;padding:.65rem .95rem;color-scheme:dark;
 }
 .form-control:focus,.form-select:focus{border-color:var(--cyan)!important;box-shadow:0 0 0 3px rgba(56,189,248,.22), 0 0 16px rgba(56,189,248,.25)!important}
@@ -196,7 +193,7 @@ select option{background:#1a2235!important;color:#fff!important}
 
 /* ====== TOMBOL KILAU ====== */
 .btn-utama{position:relative;overflow:hidden;border:none;border-radius:12px;font-weight:800;letter-spacing:.5px;
-  transition:.25s;box-shadow:0 8px 22px rgba(0,0,0,.4)}
+  transition:.25s;box-shadow:0 8px 22px rgba(0,0,0,.5)}
 .btn-utama::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;
   background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);
   transform:skewX(-20deg);animation:kinclong 3.6s infinite}
@@ -230,7 +227,7 @@ select option{background:#1a2235!important;color:#fff!important}
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   filter:drop-shadow(0 0 14px rgba(251,191,36,.55));
 }
-.marquee-wrapper{background:rgba(0,0,0,.45);padding:10px 0;border-top:1px solid rgba(255,255,255,.09);overflow:hidden}
+.marquee-wrapper{background:#020617;padding:10px 0;border-top:1px solid rgba(255,255,255,.09);overflow:hidden}
 .marquee-track{display:inline-block;white-space:nowrap;padding-left:100%;font-weight:700;
   background-image:linear-gradient(90deg,#7dd3fc,#a78bfa,#fbbf24);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
@@ -238,41 +235,40 @@ select option{background:#1a2235!important;color:#fff!important}
 @keyframes geser{to{transform:translateX(-100%)}}
 
 /* ============================================================
-   🏦 KARTU BANK — LOGO SEJAJAR SEMPURNA
+   🏦 KARTU BANK — SOLID + LOGO PNG TRANSPARAN TANPA KOTAK PUTIH
    ============================================================ */
 .grid-bank-saldo{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
 .card-bank-item{
-  border:1px solid transparent;border-radius:16px;min-height:92px;
-  background:linear-gradient(160deg,rgba(30,41,59,.93),rgba(15,23,42,.95)) padding-box,
-             linear-gradient(135deg,rgba(56,189,248,.85),rgba(251,191,36,.55)) border-box;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1.5px solid transparent;border-radius:16px;min-height:92px;
+  background:linear-gradient(160deg,#1e293b,#0f172a) padding-box,
+             linear-gradient(135deg,#38bdf8,#fbbf24) border-box;
   padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;
-  box-shadow:0 8px 22px rgba(0,0,0,.38);transition:.25s;
+  box-shadow:0 8px 22px rgba(0,0,0,.5);transition:.25s;
 }
-.card-bank-item:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.5), 0 0 20px rgba(56,189,248,.18)}
+.card-bank-item:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.6), 0 0 20px rgba(56,189,248,.2)}
 .card-bank-item small{color:var(--gold-muda);font-weight:800;text-transform:uppercase;font-size:.7rem;
   letter-spacing:1.5px;display:block;text-shadow:0 0 8px rgba(251,191,36,.35)}
 .card-bank-item .nilai{font-size:1.18rem;font-weight:800;margin-top:5px;
   background-image:linear-gradient(92deg,#e0f2fe,#bae6fd 50%,#7dd3fc);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+/* Logo langsung tampil (PNG transparan) — TANPA background putih */
 .logo-bank-box{
-  width:106px;height:50px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(145deg,#ffffff,#e8eefc);border-radius:11px;padding:6px;
-  box-shadow:0 4px 12px rgba(0,0,0,.4), inset 0 0 6px rgba(56,189,248,.15);
+  width:110px;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;
 }
 .logo-bank-box img{max-width:100%;max-height:100%;width:auto;height:auto;
-  object-fit:contain;object-position:center;display:block}
+  object-fit:contain;object-position:center;display:block;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
 
 /* ============================================================
-   📋 KARTU REKAPAN TAHUNAN (UANG MASUK / UANG KELUAR / SISA HASIL)
+   📋 KARTU REKAPAN TAHUNAN — SOLID
    ============================================================ */
 .kartu-rekap{
   position:relative;display:flex;align-items:center;gap:16px;
   border-radius:18px;padding:20px 22px;min-height:106px;overflow:hidden;
   border:1.5px solid transparent;
-  background:linear-gradient(150deg,rgba(30,41,59,.95),rgba(15,23,42,.97)) padding-box,
+  background:linear-gradient(150deg,#1e293b,#0f172a) padding-box,
              linear-gradient(135deg,var(--c1),var(--c2)) border-box;
-  box-shadow:0 12px 28px rgba(0,0,0,.42);
+  box-shadow:0 12px 28px rgba(0,0,0,.5);
   transition:.25s;
 }
 .kartu-rekap:hover{transform:translateY(-4px)}
@@ -293,27 +289,29 @@ select option{background:#1a2235!important;color:#fff!important}
 .angka-cyan{background-image:linear-gradient(92deg,#bae6fd,#38bdf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(56,189,248,.35))}
 
 /* ============================================================
-   📅 REKAP BULANAN — 12 BULAN SELALU MUNCUL, RAPI BERJAJAR
-   (Grid otomatis: desktop 4 kotak/baris, tablet 3, HP 2)
+   📅 REKAP BULANAN — 12 BULAN SELALU MUNCUL, KOTAK SOLID RAPI
    ============================================================ */
 #container-bulanan{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .kartu-bulan{
-  border:1px solid transparent;border-radius:16px;padding:16px 18px;
-  background:linear-gradient(150deg,rgba(30,41,59,.94),rgba(15,23,42,.95)) padding-box,
-             linear-gradient(135deg,rgba(56,189,248,.7),rgba(167,139,250,.5)) border-box;
-  box-shadow:0 10px 24px rgba(0,0,0,.38);transition:.25s;
+  position:relative;border-radius:16px;padding:16px 18px;
+  background:linear-gradient(160deg,#1e293b,#0f172a);
+  border:1px solid #3b4a63;
+  box-shadow:0 10px 24px rgba(0,0,0,.5);
+  transition:.25s;
 }
-.kartu-bulan:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.45), 0 0 18px rgba(56,189,248,.15)}
-.kartu-bulan.bulan-kosong{opacity:.72}
+.kartu-bulan::before{content:'';position:absolute;top:0;left:12%;right:12%;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent)}
+.kartu-bulan:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.6), 0 0 18px rgba(56,189,248,.18)}
+.kartu-bulan.bulan-kosong{opacity:.75}
 .kepala-bulan{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1rem;margin-bottom:12px;
   background-image:linear-gradient(92deg,#7dd3fc,#a78bfa);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .kepala-bulan i{color:#38bdf8;-webkit-text-fill-color:#38bdf8}
 .no-bulan{margin-left:auto;font-size:.6rem;font-weight:800;letter-spacing:1px;
-  background:rgba(2,6,23,.65);border:1px solid rgba(148,163,184,.28);border-radius:20px;
+  background:#0b1324;border:1px solid #3b4a63;border-radius:20px;
   padding:3px 10px;color:#9fb0d9;-webkit-text-fill-color:#9fb0d9;flex-shrink:0}
 .baris-uang{display:flex;justify-content:space-between;align-items:center;gap:8px;
-  padding:9px 13px;border-radius:10px;background:rgba(2,6,23,.55);margin-top:8px}
+  padding:9px 13px;border-radius:10px;background:#0b1324;margin-top:8px}
 .baris-uang.b-masuk{border-left:3px solid #22c55e}
 .baris-uang.b-keluar{border-left:3px solid #ef4444}
 .label-uang{font-size:.66rem;font-weight:800;letter-spacing:1.2px;color:#c6d3f5;display:flex;align-items:center;white-space:nowrap}
@@ -324,68 +322,64 @@ select option{background:#1a2235!important;color:#fff!important}
 .nilai-in{color:#4ade80;text-shadow:0 0 8px rgba(74,222,128,.35)}
 .nilai-out{color:#f87171;text-shadow:0 0 8px rgba(248,113,113,.35)}
 
-/* ====== TABEL ====== */
+/* ====== TABEL — SOLID ====== */
 .table-responsive-custom{
-  background:linear-gradient(160deg,rgba(30,41,59,.85),rgba(15,23,42,.92));
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border-radius:14px;overflow-x:auto;border:1px solid var(--line);-webkit-overflow-scrolling:touch;
+  background:#0f172a;border-radius:14px;overflow-x:auto;
+  border:1px solid var(--line);-webkit-overflow-scrolling:touch;
 }
 .table-custom-full{min-width:900px;width:100%;margin:0;border-collapse:collapse}
 .table-custom-full thead th{
-  background:rgba(2,6,23,.96);font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;
+  background:#020617;font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;
   padding:14px;border-bottom:2px solid var(--cyan);white-space:nowrap;
   background-image:linear-gradient(92deg,#7dd3fc,#38bdf8 40%,#a78bfa);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.table-custom-full tbody td{padding:13px 14px;vertical-align:middle;border-bottom:1px solid var(--line);
+.table-custom-full tbody td{padding:13px 14px;vertical-align:middle;border-bottom:1px solid #26334d;
   font-weight:500;color:var(--teks)}
 .badge-tipe{padding:7px 12px;border-radius:8px;font-size:.68rem;font-weight:800;display:inline-block;min-width:110px;text-align:center}
 .bg-pemasukan{background:rgba(34,197,94,.18);color:var(--green);border:1px solid #22c55e;box-shadow:0 0 10px rgba(34,197,94,.2)}
 .bg-pengeluaran{background:rgba(239,68,68,.18);color:var(--red);border:1px solid #ef4444;box-shadow:0 0 10px rgba(239,68,68,.2)}
 .img-preview{width:48px;height:48px;object-fit:cover;border-radius:10px;cursor:pointer;
-  border:2px solid var(--cyan);transition:.2s;box-shadow:0 0 10px rgba(56,189,248,.35)}
+  border:2px solid var(--cyan);transition:.2s;box-shadow:0 0 10px rgba(56,189,248,.35);background:#020617}
 .img-preview:hover{transform:scale(1.12);border-color:var(--gold);box-shadow:0 0 16px rgba(251,191,36,.5)}
 .btn-hapus-custom{background:rgba(239,68,68,.15);color:var(--red);border:1px solid #ef4444;
   padding:6px 11px;border-radius:8px;transition:.25s}
 .btn-hapus-custom:hover{background:#ef4444;color:#fff;box-shadow:0 0 14px rgba(239,68,68,.5)}
 .nominal-in{color:var(--green)!important;font-weight:800;text-shadow:0 0 8px rgba(74,222,128,.35)}
 .nominal-out{color:var(--red)!important;font-weight:800;text-shadow:0 0 8px rgba(248,113,113,.35)}
-.baris-pending{background:rgba(251,191,36,.05)!important}
+.baris-pending{background:rgba(251,191,36,.06)!important}
 .titik-pending{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fbbf24;
   box-shadow:0 0 9px #fbbf24;margin-left:7px;vertical-align:middle;animation:denyut 1.2s infinite}
-.mini-spin{display:inline-block;width:24px;height:24px;border:3px solid rgba(56,189,248,.25);
-  border-top-color:#38bdf8;border-radius:50%;animation:putar .7s linear infinite}
-@keyframes putar{to{transform:rotate(360deg)}}
 @keyframes denyut{50%{opacity:.35}}
 
-/* ====== DATA LOGIN ====== */
+/* ====== DATA LOGIN — SOLID ====== */
 .tab-login{
   flex:1;padding:12px;border-radius:12px;text-align:center;cursor:pointer;font-weight:800;
-  background:rgba(2,6,23,.65);border:1px solid var(--line);color:#9fb0d9;transition:.25s;font-size:.82rem;
+  background:#0b1324;border:1px solid var(--line);color:#9fb0d9;transition:.25s;font-size:.82rem;
 }
 .tab-login:hover{transform:translateY(-2px)}
 .tab-login.aktif{color:#fff;box-shadow:0 0 20px rgba(56,189,248,.3)}
-.tab-login.aktif.tab-bank{background:linear-gradient(135deg,rgba(56,189,248,.45),rgba(56,189,248,.1));border-color:var(--cyan)}
-.tab-login.aktif.tab-trading{background:linear-gradient(135deg,rgba(251,191,36,.45),rgba(251,191,36,.1));border-color:var(--gold)}
+.tab-login.aktif.tab-bank{background:linear-gradient(135deg,rgba(56,189,248,.45),rgba(56,189,248,.12));border-color:var(--cyan)}
+.tab-login.aktif.tab-trading{background:linear-gradient(135deg,rgba(251,191,36,.45),rgba(251,191,36,.12));border-color:var(--gold)}
 .grid-data-login{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
 .card-login-item{
-  border:1px solid transparent;border-radius:18px;animation:naik .4s ease;
-  background:linear-gradient(160deg,rgba(30,41,59,.93),rgba(15,23,42,.95)) padding-box,
-             linear-gradient(135deg,rgba(56,189,248,.75),rgba(251,191,36,.55)) border-box;
-  box-shadow:0 10px 26px rgba(0,0,0,.4);
+  border:1.5px solid transparent;border-radius:18px;animation:naik .4s ease;
+  background:linear-gradient(160deg,#1e293b,#0f172a) padding-box,
+             linear-gradient(135deg,#38bdf8,#fbbf24) border-box;
+  box-shadow:0 10px 26px rgba(0,0,0,.5);
 }
 @keyframes naik{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .card-login-head{display:flex;align-items:center;gap:12px}
+/* Logo platform: langsung tampil, TANPA kotak putih */
 .logo-platform-box{
-  width:56px;height:56px;border-radius:13px;flex-shrink:0;
-  background:linear-gradient(145deg,#ffffff,#e8eefc);display:flex;align-items:center;justify-content:center;padding:7px;
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
+  width:60px;height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;
 }
-.logo-platform-box img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.logo-platform-box img{max-width:100%;max-height:100%;object-fit:contain;display:block;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
 .avatar-platform{
   width:56px;height:56px;border-radius:13px;display:flex;align-items:center;justify-content:center;
   font-size:1.5rem;font-weight:900;color:#fff;flex-shrink:0;text-shadow:0 2px 6px rgba(0,0,0,.5);
-  box-shadow:0 4px 14px rgba(0,0,0,.4), inset 0 0 10px rgba(255,255,255,.25);
+  box-shadow:0 4px 14px rgba(0,0,0,.5), inset 0 0 10px rgba(255,255,255,.25);
 }
 .platform-name{font-weight:800;font-size:1rem;
   background-image:linear-gradient(92deg,#e0f2fe,#7dd3fc 60%,#a78bfa);
@@ -396,14 +390,14 @@ select option{background:#1a2235!important;color:#fff!important}
 .field-login{margin-top:14px}
 .label-mini{display:block;color:#9fb0d9;font-size:.66rem;font-weight:800;letter-spacing:1.5px;
   margin-bottom:5px;text-transform:uppercase}
-.nilai-login{display:flex;align-items:center;gap:8px;background:rgba(2,6,23,.75);
+.nilai-login{display:flex;align-items:center;gap:8px;background:#0b1324;
   border:1px solid var(--line);border-radius:10px;padding:9px 12px;transition:.2s}
 .nilai-login:focus-within{border-color:var(--cyan);box-shadow:0 0 12px rgba(56,189,248,.2)}
 .nilai-login code{color:#eaf2ff;flex:1;word-break:break-all;font-size:.85rem;font-family:'Poppins',monospace}
 .btn-mini{background:rgba(56,189,248,.15);color:var(--cyan-muda);border:1px solid rgba(56,189,248,.45);
   border-radius:7px;padding:5px 10px;font-size:.78rem;transition:.2s;cursor:pointer}
 .btn-mini:hover{background:var(--cyan);color:#00121f;box-shadow:0 0 12px rgba(56,189,248,.6)}
-.catatan-mini{margin-top:10px;font-size:.78rem;color:#d8e2ff;background:rgba(2,6,23,.55);
+.catatan-mini{margin-top:10px;font-size:.78rem;color:#d8e2ff;background:#0b1324;
   border-radius:8px;padding:8px 12px;border-left:3px solid var(--gold)}
 
 /* ====== POPUP / TOAST / LOADING ====== */
@@ -413,24 +407,25 @@ select option{background:#1a2235!important;color:#fff!important}
   box-shadow:0 0 60px rgba(56,189,248,.35), 0 0 90px rgba(0,0,0,.7);cursor:default}
 #toast-container{position:fixed;top:20px;right:20px;z-index:10001;display:flex;flex-direction:column;gap:10px}
 .toast-custom{
-  background:rgba(15,23,42,.95);backdrop-filter:blur(14px);border:1px solid var(--line);
+  background:#101a2f;border:1px solid var(--line);
   border-radius:12px;padding:14px 20px;color:#fff;font-weight:600;min-width:260px;max-width:340px;
-  transform:translateX(120%);transition:.35s;box-shadow:0 10px 30px rgba(0,0,0,.5);font-size:.86rem;
+  transform:translateX(120%);transition:.35s;box-shadow:0 10px 30px rgba(0,0,0,.6);font-size:.86rem;
 }
 .toast-custom.show{transform:none}
-.toast-success{border-left:4px solid var(--green);box-shadow:0 10px 30px rgba(0,0,0,.5), 0 0 16px rgba(74,222,128,.25)}
-.toast-error{border-left:4px solid var(--red);box-shadow:0 10px 30px rgba(0,0,0,.5), 0 0 16px rgba(248,113,113,.25)}
-.toast-info{border-left:4px solid var(--cyan);box-shadow:0 10px 30px rgba(0,0,0,.5), 0 0 16px rgba(56,189,248,.25)}
-#loading-overlay{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.7);
-  align-items:center;justify-content:center;flex-direction:column;gap:18px;backdrop-filter:blur(5px)}
+.toast-success{border-left:4px solid var(--green);box-shadow:0 10px 30px rgba(0,0,0,.6), 0 0 16px rgba(74,222,128,.25)}
+.toast-error{border-left:4px solid var(--red);box-shadow:0 10px 30px rgba(0,0,0,.6), 0 0 16px rgba(248,113,113,.25)}
+.toast-info{border-left:4px solid var(--cyan);box-shadow:0 10px 30px rgba(0,0,0,.6), 0 0 16px rgba(56,189,248,.25)}
+#loading-overlay{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.75);
+  align-items:center;justify-content:center;flex-direction:column;gap:18px}
 .spinner-kuat{width:56px;height:56px;border-radius:50%;
   border:4px solid rgba(56,189,248,.15);border-top-color:var(--cyan);border-right-color:var(--gold);
   animation:putar .8s linear infinite;box-shadow:0 0 24px rgba(56,189,248,.4)}
+@keyframes putar{to{transform:rotate(360deg)}}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1050}
 
 /* ====== SCROLLBAR ====== */
 ::-webkit-scrollbar{width:9px;height:9px}
-::-webkit-scrollbar-track{background:rgba(2,6,23,.5)}
+::-webkit-scrollbar-track{background:#0b1324}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#38bdf8,#a78bfa);border-radius:10px}
 
 /* ====== MOBILE RINGAN ====== */
@@ -441,13 +436,11 @@ select option{background:#1a2235!important;color:#fff!important}
   .btn-hamburger{display:block}
   .display-4{font-size:2rem}
   .topbar{position:sticky;top:10px;z-index:900}
-  .logo-bank-box{width:90px;height:44px}
+  .logo-bank-box{width:92px;height:46px}
   .orb{filter:blur(45px)}
   .orb:nth-child(4),.orb:nth-child(5),.orb:nth-child(6){display:none}
-  .glass-card,.card-bank-item,.table-responsive-custom,.topbar{backdrop-filter:none;-webkit-backdrop-filter:none}
   .angka-rekap{font-size:1.2rem}
   .ikon-rekap{width:48px;height:48px;font-size:1.2rem}
-  /* Kotak bulanan di HP: 2 kolom, label & angka ditumpuk biar muat */
   #container-bulanan{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
   .kartu-bulan{padding:12px 13px}
   .kepala-bulan{font-size:.86rem;gap:7px;margin-bottom:9px}
@@ -621,7 +614,6 @@ select option{background:#1a2235!important;color:#fff!important}
 
       <h5 class="fw-bold mb-1"><i class="fas fa-calendar-days me-2" style="color:var(--gold)"></i><span class="judul-grad">Rekapitulasi Bulanan — Uang Masuk &amp; Uang Keluar</span></h5>
       <hr class="garis-cahaya">
-      <!-- 12 kotak bulan SELALU muncul di sini, berjejer rapi -->
       <div id="container-bulanan"></div>
 
       <h5 class="mt-4 fw-bold mb-1"><i class="fas fa-scroll me-2" style="color:var(--ungu)"></i><span class="judul-grad">Riwayat Transaksi</span></h5>
@@ -722,22 +714,22 @@ const daftarLogoBank = {
   "GOPAY":"https://i.ibb.co/v4hd6h0K/GOPAY%20-transparan.png"
 };
 
-/* Nama 12 bulan — dipakai kotak rekap bulanan (SELALU 12 kotak muncul) */
 const NAMA_BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
 /* ================== STATE ================== */
-let dataTransaksi = [];                 // data resmi dari Google Sheet
-let dataLogin = [];                     // data resmi dari Google Sheet
-let pendingTrx = muatAntrian('antrian_transaksi');    // antrian aman (anti hilang)
+let dataTransaksi = [];
+let dataLogin = [];
+let pendingTrx = muatAntrian('antrian_transaksi');
 let pendingLogin = muatAntrian('antrian_login');
+let previewCache = {};                   // pratinjau foto lokal (tampil seketika)
 let kategoriLoginAktif = "bank";
-let hapusBerjalan = new Set();          // id yang sedang dihapus (anti kedip saat sync)
+let hapusBerjalan = new Set();
 let listenerTerpasang = false;
 let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
 window.myChartB = null;
 window.myChartP = null;
 
-/* ================== FORMAT NOMINAL — SEMUANYA KOMA ================== */
+/* ================== FORMAT NOMINAL — KOMA ================== */
 function fNum(n){ return (Number(n) || 0).toLocaleString('en-US'); }
 function fRp(n){ return 'Rp ' + fNum(n); }
 
@@ -751,10 +743,39 @@ function simpanAntrian(kunci, isi){
 function simpanAntrianTrx(){ simpanAntrian('antrian_transaksi', pendingTrx); }
 function simpanAntrianLogin(){ simpanAntrian('antrian_login', pendingLogin); }
 
+/* ================================================================
+   📷 KOMPRES FOTO DI HP DULU — supaya upload CEPAT (anti lag)
+   Sekaligus hasilkan pratinjau lokal untuk ditampilkan SEKETIKA
+   ================================================================ */
+function kompresGambar(file, maxW, kualitas) {
+  maxW = maxW || 1200; kualitas = kualitas || 0.82;
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const skala = Math.min(1, maxW / img.width);
+          const cv = document.createElement('canvas');
+          cv.width = Math.round(img.width * skala);
+          cv.height = Math.round(img.height * skala);
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          const dataUrl = cv.toDataURL('image/jpeg', kualitas);
+          resolve({ base64: dataUrl.split(',')[1], type: 'image/jpeg', name: file.name, preview: dataUrl });
+        } catch (err) { resolve(null); }
+      };
+      img.onerror = () => resolve(null);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(null);
+    reader.readAsDataURL(file);
+  });
+}
+
 function bacaFileBase64(file){
   return new Promise((resolve, reject) => {
     const r = new FileReader();
-    r.onload = () => resolve({ base64: r.result.split(',')[1], type: file.type, name: file.name });
+    r.onload = () => resolve({ base64: r.result.split(',')[1], type: file.type, name: file.name, preview: r.result });
     r.onerror = reject;
     r.readAsDataURL(file);
   });
@@ -792,7 +813,6 @@ window.onload = function () {
 
   isiPilihanPlatform();
 
-  // Kalau sudah login → langsung masuk TANPA reload
   if (document.documentElement.classList.contains('logged-in')) masukAplikasi();
 };
 
@@ -802,21 +822,29 @@ function isiSelect(el, daftar, allLabel) {
   ).join('');
 }
 
-/* ================== MASUK APLIKASI (TANPA RELOAD) ================== */
+/* ================== MASUK APLIKASI ================== */
 function masukAplikasi() {
   document.documentElement.classList.add('logged-in');
   document.getElementById('pass').value = '';
   document.getElementById('error-msg').style.display = 'none';
-  renderAll();            // tampilkan antrian tertunda (kalau ada) SEKETIKA
-  muatSemuaData(true);    // ambil data Sheet diam-diam, tanpa spinner
-  prosesAntrianTrx();     // kirim ulang data yang tertunda
+  renderAll();
+  muatSemuaData(true);
+  prosesAntrianTrx();
   prosesAntrianLogin();
   if (!listenerTerpasang) {
     listenerTerpasang = true;
-    // Sinkron HANYA saat tab dibuka lagi — diam & tanpa kedip
+    // Sinkron hanya saat tab dibuka lagi — diam, tanpa kedip
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') muatSemuaData(false);
     });
+    // AUTO-RETRY diam: data yang mentok dikirim ulang tiap 12 detik
+    // (hanya mengirim, TIDAK merender ulang → tidak lag, tidak kedip)
+    setInterval(() => {
+      if (pendingTrx.some(p => p.status === 'menunggu')) prosesAntrianTrx();
+      if (pendingLogin.some(p => p.status === 'menunggu')) prosesAntrianLogin();
+    }, 12000);
+    // Internet baru nyala → langsung kirim ulang
+    window.addEventListener('online', () => { prosesAntrianTrx(); prosesAntrianLogin(); });
   }
 }
 
@@ -830,7 +858,7 @@ function handleLogin() {
     err.style.display = 'none';
     localStorage.setItem('isLoggedIn', 'true');
     if (!savedUsers.includes(u)) { savedUsers.push(u); localStorage.setItem('savedUsers', JSON.stringify(savedUsers)); }
-    masukAplikasi();   // ← LANGSUNG MASUK, TANPA RELOAD
+    masukAplikasi();
   } else { err.style.display = 'block'; }
 }
 function handleLogout() {
@@ -870,7 +898,6 @@ async function kirimKeServer(payload) {
   return res.json();
 }
 
-/* Ambil data — DIAM, tanpa spinner, tanpa kedip (render hanya jika berubah) */
 async function muatSemuaData(wajibRender) {
   try {
     const [trx, login] = await Promise.all([ambilData('getTransaksi'), ambilData('getLogin')]);
@@ -901,7 +928,9 @@ function renderAll() {
 }
 
 /* ================================================================
-   💾 SIMPAN TRANSAKSI — INSTAN (LANGSUNG MUNCUL, KIRIM DI BELAKANG)
+   💾 SIMPAN TRANSAKSI — INSTAN
+   Foto LANGSUNG MUNCUL dari pratinjau lokal seketika,
+   upload ke Drive jalan di belakang layar.
    ================================================================ */
 async function simpanTransaksi(tipe) {
   const tgl = document.getElementById(`tgl-${tipe}`).value;
@@ -912,28 +941,30 @@ async function simpanTransaksi(tipe) {
 
   if (!tgl || !nomRaw || !ket) return toast('⚠️ Mohon lengkapi Tanggal, Nominal & Keterangan!', 'error');
 
+  // Foto dikompres dulu (cepat, ringan) — pratinjau lokal ikut dihasilkan
+  let foto = null;
+  if (fileInput.files && fileInput.files[0]) {
+    foto = await kompresGambar(fileInput.files[0]);
+    if (!foto) { try { foto = await bacaFileBase64(fileInput.files[0]); } catch (e) { foto = null; } }
+  }
+
   const tempId = 'T' + Date.now() + Math.floor(Math.random() * 999);
   const item = {
     tempId: tempId,
     tanggal: tgl, bank: bank,
     tipe: tipe === 'masuk' ? 'UANG MASUK' : 'UANG KELUAR',
     nominal: parseInt(nomRaw), keterangan: ket,
-    bukti: (fileInput.files && fileInput.files[0]) ? 'UPLOADING' : 'Gada',
-    base64: null, type: null, name: null,
+    bukti: foto ? 'PENDING' : 'Gada',
+    base64: foto ? foto.base64 : null,
+    type:   foto ? foto.type   : null,
+    name:   foto ? foto.name   : null,
     status: 'menunggu', dihapus: false
   };
+  if (foto) previewCache[tempId] = foto.preview;
 
-  // Baca foto jadi base64 (cepat, lokal)
-  if (fileInput.files && fileInput.files[0]) {
-    try {
-      const d = await bacaFileBase64(fileInput.files[0]);
-      item.base64 = d.base64; item.type = d.type; item.name = d.name;
-    } catch (e) {}
-  }
-
-  // 1) LANGSUNG MUNCUL di dashboard/rekapan
+  // 1) LANGSUNG MUNCUL (termasuk fotonya)
   pendingTrx.push(item);
-  simpanAntrianTrx();   // simpan antrian → data TIDAK AKAN HILANG walau halaman ditutup
+  simpanAntrianTrx();
   renderAll();
 
   // 2) Form langsung kosong
@@ -942,7 +973,7 @@ async function simpanTransaksi(tipe) {
   document.getElementById(`ket-${tipe}`).value = '';
   document.getElementById(`file-${tipe}`).value = '';
 
-  // 3) Kirim ke Google Sheet di belakang layar (diam-diam)
+  // 3) Kirim ke Google Sheet di belakang layar (diam)
   kirimAntrianTrx(item, false);
 }
 
@@ -950,21 +981,42 @@ async function kirimAntrianTrx(item, senyap) {
   if (!item || item.status === 'mengirim') return;
   item.status = 'mengirim'; simpanAntrianTrx();
   try {
-    const res = await kirimKeServer({
+    let res = await kirimKeServer({
       action: 'addTransaksiLengkap',
       id: item.tempId,
       tanggal: item.tanggal, bank: item.bank, tipe: item.tipe,
       nominal: item.nominal, keterangan: item.keterangan,
       base64: item.base64, type: item.type, name: item.name
     });
+
+    // FALLBACK: kalau backend belum diupdate, otomatis pakai cara lama
+    // (upload foto dulu → simpan transaksi) supaya TIDAK MENTOK LAGI
+    if (!res || res.status !== 'success') {
+      const pesan = (res && res.message) || '';
+      if (/action/i.test(pesan)) {
+        let bukti = 'Gada';
+        if (item.base64) {
+          try {
+            const up = await kirimKeServer({ action: 'uploadBukti', base64: item.base64, type: item.type, name: item.name });
+            if (up && up.status === 'success') bukti = up.url;
+          } catch (e2) {}
+        }
+        res = await kirimKeServer({
+          action: 'addTransaksi', id: item.tempId,
+          tanggal: item.tanggal, bank: item.bank, tipe: item.tipe,
+          nominal: item.nominal, keterangan: item.keterangan, bukti: bukti
+        });
+        if (res && res.status === 'success') res.bukti = bukti;
+      }
+    }
+
     if (!res || res.status !== 'success') throw new Error((res && res.message) || 'gagal');
 
-    // keluar dari antrian
     pendingTrx = pendingTrx.filter(p => p.tempId !== item.tempId);
     simpanAntrianTrx();
+    delete previewCache[item.tempId];
 
     if (item.dihapus) {
-      // user menghapus baris ini saat masih dikirim → hapus juga di server
       await kirimKeServer({ action: 'deleteTransaksi', id: res.id }).catch(() => {});
     } else {
       if (!dataTransaksi.some(t => t.id === res.id)) {
@@ -978,7 +1030,7 @@ async function kirimAntrianTrx(item, senyap) {
     }
   } catch (e) {
     item.status = 'menunggu'; simpanAntrianTrx();
-    if (!senyap) toast('❌ Koneksi gagal. Data AMAN & dikirim otomatis nanti.', 'error');
+    if (!senyap) toast('❌ Koneksi gagal. Data AMAN & dikirim ulang otomatis.', 'error');
   }
 }
 
@@ -992,24 +1044,23 @@ async function prosesAntrianTrx() {
 
 /* ================== HAPUS TRANSAKSI — INSTAN ================== */
 async function hapusData(id) {
-  // Baris yang masih di antrian (belum sampai server)
   if (String(id).startsWith('T')) {
     const item = pendingTrx.find(p => p.tempId === id);
     if (item) {
       item.dihapus = true;
       pendingTrx = pendingTrx.filter(p => p.tempId !== id);
       simpanAntrianTrx();
+      delete previewCache[id];
       renderAll();
       toast('🗑️ Data dihapus!', 'success');
       return;
     }
   }
-  // Baris resmi dari server
   if (!confirm('Hapus catatan ini secara PERMANEN dari Google Sheet?')) return;
   const cadangan = dataTransaksi.find(t => t.id === id);
   dataTransaksi = dataTransaksi.filter(t => t.id !== id);
   hapusBerjalan.add(String(id));
-  renderAll(); // hilang SEKETIKA
+  renderAll();
   try {
     await kirimKeServer({ action: 'deleteTransaksi', id: id });
     toast('🗑️ Terhapus dari Google Sheet!', 'success');
@@ -1029,10 +1080,21 @@ function urlBesar(url) { const id = driveId(url); return id ? `https://lh3.googl
 function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function gabunganTrx() {
-  return dataTransaksi.concat(pendingTrx.map(p => ({
-    id: p.tempId, tanggal: p.tanggal, bank: p.bank, tipe: p.tipe,
-    nominal: p.nominal, keterangan: p.keterangan, bukti: p.bukti, pending: true
-  })));
+  previewCache = {};
+  const res = dataTransaksi.map(t => Object.assign({}, t));
+  pendingTrx.forEach(p => {
+    let prev = null;
+    if (p.base64) {
+      prev = 'data:' + (p.type || 'image/jpeg') + ';base64,' + p.base64;
+      previewCache[p.tempId] = prev;
+    }
+    res.push({
+      id: p.tempId, tanggal: p.tanggal, bank: p.bank, tipe: p.tipe,
+      nominal: p.nominal, keterangan: p.keterangan, bukti: p.bukti,
+      preview: prev, pending: true
+    });
+  });
+  return res;
 }
 function gabunganLogin() {
   return dataLogin.concat(pendingLogin.map(p => ({
@@ -1043,7 +1105,6 @@ function gabunganLogin() {
 
 /* ================================================================
    📋 RENDER DASHBOARD + REKAPAN
-   (Kotak bulanan: 12 BULAN SELALU MUNCUL & BERJAJAR RAPI)
    ================================================================ */
 function updateUI() {
   const tbody = document.getElementById('table-body');
@@ -1057,16 +1118,16 @@ function updateUI() {
 
   const semua = gabunganTrx();
   let totalTahunIn = 0, totalTahunOut = 0, totalSaldoSistem = 0;
-  const rekapBulanan = {};   // key = index bulan (0=Januari ... 11=Desember)
+  const rekapBulanan = {};
   const saldoPerBank = {};
 
-  // Saldo per bank + total keseluruhan (semua data)
   semua.forEach(t => {
     if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
     if (t.tipe === 'UANG MASUK') { saldoPerBank[t.bank] += t.nominal; totalSaldoSistem += t.nominal; }
     else { saldoPerBank[t.bank] -= t.nominal; totalSaldoSistem -= t.nominal; }
   });
 
+  // Kartu bank — logo PNG transparan LANGSUNG (tanpa kotak putih), tetap sejajar
   for (let b in saldoPerBank) {
     const nama = b.toUpperCase().trim();
     const logo = daftarLogoBank[nama];
@@ -1083,7 +1144,6 @@ function updateUI() {
   }
   document.getElementById('total-saldo-display').innerText = fRp(totalSaldoSistem);
 
-  // Filter laporan per tahun + bank
   let dataFiltered = semua.filter(t => String(t.tanggal).split('-')[0] === tahunFilter);
   if (bankFilter !== 'ALL') dataFiltered = dataFiltered.filter(t => t.bank === bankFilter);
 
@@ -1095,12 +1155,17 @@ function updateUI() {
     else { totalTahunOut += t.nominal; rekapBulanan[mIdx].out += t.nominal; }
 
     const isKeluar = t.tipe === 'UANG KELUAR';
-    const adaBukti = t.bukti && t.bukti !== 'Gada' && t.bukti !== '' && t.bukti !== 'null';
-    const htmlBukti = (t.bukti === 'UPLOADING')
-      ? `<span class="mini-spin" title="Foto sedang diproses"></span>`
-      : adaBukti
-        ? `<img src="${urlThumbnail(t.bukti)}" class="img-preview" onclick="perbesarGambar('${t.bukti}')" onerror="this.src='https://cdn-icons-png.flaticon.com/512/337/337948.png'">`
-        : `<span style="color:#64748b;font-size:.8rem">Gada</span>`;
+    const adaBukti = t.bukti && t.bukti !== 'Gada' && t.bukti !== '' && t.bukti !== 'null' && t.bukti !== 'PENDING';
+
+    // BUKTI: pending → tampilkan FOTO LOKAL seketika; resmi → thumbnail Drive
+    let htmlBukti;
+    if (t.pending && t.preview) {
+      htmlBukti = `<img src="${t.preview}" class="img-preview" onclick="perbesarPreview('${t.id}')" title="Bukti (sedang tersimpan otomatis)">`;
+    } else if (adaBukti) {
+      htmlBukti = `<img src="${urlThumbnail(t.bukti)}" class="img-preview" onclick="perbesarGambar('${t.bukti}')" onerror="this.src='https://cdn-icons-png.flaticon.com/512/337/337948.png'">`;
+    } else {
+      htmlBukti = `<span style="color:#64748b;font-size:.8rem">Gada</span>`;
+    }
 
     tbody.innerHTML += `
       <tr class="${t.pending ? 'baris-pending' : ''}">
@@ -1118,7 +1183,7 @@ function updateUI() {
   document.getElementById('rekap-tahun-out').innerText = '- ' + fRp(totalTahunOut);
   document.getElementById('rekap-tahun-sisa').innerText = fRp(totalTahunIn - totalTahunOut);
 
-  /* ===== 12 KOTAK BULANAN — SELALU MUNCUL, BERJAJAR RAPI ===== */
+  // 12 KOTAK BULANAN — SELALU MUNCUL, SOLID & RAPI
   for (let i = 0; i < 12; i++) {
     const rb = rekapBulanan[i] || { in: 0, out: 0, jml: 0 };
     const adaData = (rb.in > 0 || rb.out > 0);
@@ -1235,7 +1300,6 @@ function toggleInputPass() {
   else { inp.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
-/* Simpan data login — INSTAN, sama seperti transaksi */
 async function simpanDataLogin() {
   const pilih = document.getElementById('login-platform').value;
   const platform = pilih === 'LAINNYA'
@@ -1257,7 +1321,7 @@ async function simpanDataLogin() {
 
   pendingLogin.push(item);
   simpanAntrianLogin();
-  renderDataLogin();   // LANGSUNG MUNCUL
+  renderDataLogin();
 
   document.getElementById('login-username').value = '';
   document.getElementById('login-password').value = '';
@@ -1292,7 +1356,7 @@ async function kirimAntrianLogin(item, senyap) {
     }
   } catch (e) {
     item.status = 'menunggu'; simpanAntrianLogin();
-    if (!senyap) toast('❌ Koneksi gagal. Data AMAN & dikirim otomatis nanti.', 'error');
+    if (!senyap) toast('❌ Koneksi gagal. Data AMAN & dikirim ulang otomatis.', 'error');
   }
 }
 
@@ -1431,6 +1495,14 @@ function perbesarGambar(url) {
     if (id) { img.onerror = null; img.src = 'https://drive.google.com/thumbnail?id=' + id + '&sz=w1600'; }
   };
   img.src = urlBesar(url);
+  document.getElementById('popUpFoto').style.display = 'flex';
+}
+// Pratinjau lokal (foto baru dicatat — langsung bisa dilihat besar)
+function perbesarPreview(tempId) {
+  const src = previewCache[tempId];
+  if (!src) return;
+  document.getElementById('fotoBesar').removeAttribute('onerror');
+  document.getElementById('fotoBesar').src = src;
   document.getElementById('popUpFoto').style.display = 'flex';
 }
 function tutupFoto() {
