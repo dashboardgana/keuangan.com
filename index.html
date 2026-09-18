@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  // Anti kedip: cek login sebelum halaman dirender
   if (localStorage.getItem('isLoggedIn') === 'true') {
     document.documentElement.classList.add('logged-in');
   }
@@ -18,8 +17,8 @@
 
 <style>
 :root{
-  --cyan:#38bdf8; --cyan-muda:#7dd3fc; --ungu:#a78bfa; --gold:#fbbf24; --gold-muda:#fde68a;
-  --green:#4ade80; --red:#f87171; --pink:#f472b6;
+  --cyan:#38bdf8; --cyan-muda:#7dd3fc; --ungu:#a78bfa; --ungu-muda:#c4b5fd;
+  --gold:#fbbf24; --gold-muda:#fde68a; --green:#4ade80; --red:#f87171; --pink:#f472b6;
   --line:#33415c; --teks:#dbe3ff;
 }
 *{box-sizing:border-box}
@@ -33,9 +32,7 @@ html.logged-in body{
   background:#0b1120 url('https://lh3.googleusercontent.com/d/1pPXVvEw2wjc-lZTb8SgcHHjpn0Xgtr6B') fixed center/cover no-repeat;
 }
 
-/* ============================================================
-   💡 LAMPU-LAMPU CAHAYA & BINTANG
-   ============================================================ */
+/* 💡 LAMPU-LAMPU CAHAYA & BINTANG */
 .lampu-layer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;
      animation:melayang 26s ease-in-out infinite alternate;will-change:transform}
@@ -74,13 +71,13 @@ html.logged-in body{
 @keyframes kelip1{from{opacity:.2}to{opacity:.95}}
 @keyframes kelip2{from{opacity:.95}to{opacity:.2}}
 
-/* ====== LOGIN / APP ====== */
+/* LOGIN / APP */
 #login-section{display:none;min-height:100vh;align-items:center;justify-content:center;padding:20px}
 html:not(.logged-in) #login-section{display:flex}
 #app-shell{display:none}
 html.logged-in #app-shell{display:block}
 
-/* ====== TEKS GRADIEN ====== */
+/* TEKS GRADIEN */
 .judul-grad,.judul-emas,.judul-hijau,.judul-merah,.judul-ungu{
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:0;font-weight:800}
 .judul-grad{background-image:linear-gradient(92deg,#7dd3fc,#38bdf8 28%,#a78bfa 62%,#fbbf24)}
@@ -92,7 +89,7 @@ html.logged-in #app-shell{display:block}
   background:linear-gradient(90deg,transparent,var(--cyan),var(--ungu),var(--gold),transparent);
   box-shadow:0 0 12px rgba(56,189,248,.5)}
 
-/* ====== KARTU LOGIN — SOLID + LAMPU DI DALAM + BORDER NEON ====== */
+/* KARTU LOGIN */
 .login-card{
   width:100%;max-width:390px;padding:0;text-align:center;position:relative;overflow:hidden;
   background:linear-gradient(160deg,#1e293b,#0f172a);
@@ -121,11 +118,12 @@ html.logged-in #app-shell{display:block}
 .label-login{color:var(--gold-muda);text-align:left;font-size:.75rem;letter-spacing:2px;margin:14px 0 6px;font-weight:700;
   text-shadow:0 0 10px rgba(251,191,36,.4)}
 
-/* ====== SIDEBAR — SOLID ====== */
+/* SIDEBAR */
 .sidebar{
   width:252px;height:100vh;position:fixed;top:0;left:0;z-index:1100;
   background:linear-gradient(180deg,#0f172a,#020617);
   border-right:1px solid var(--line);display:flex;flex-direction:column;
+  overflow-y:auto;
 }
 .sidebar-header{
   padding:22px 20px 18px;text-align:center;
@@ -162,7 +160,7 @@ html.logged-in #app-shell{display:block}
 .nav-logout::before{background:linear-gradient(180deg,#f87171,#dc2626)}
 .nav-logout:hover{color:#fff;background:rgba(239,68,68,.18)}
 
-/* ====== TOPBAR — SOLID ====== */
+/* TOPBAR */
 .main-content{margin-left:252px;padding:26px;min-height:100vh}
 .topbar{
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
@@ -175,7 +173,7 @@ html.logged-in #app-shell{display:block}
   border-radius:10px;padding:8px 18px;font-weight:700;font-size:.8rem;box-shadow:0 4px 14px rgba(56,189,248,.35)}
 .btn-refresh:active{transform:scale(.95)}
 
-/* ====== KARTU — SOLID (TIDAK TEMBUS BACKGROUND) ====== */
+/* KARTU SOLID */
 .glass-card{
   background:linear-gradient(160deg,#1e293b,#101a2f);
   border:1px solid var(--line);border-radius:18px;padding:24px;
@@ -191,7 +189,7 @@ label{color:var(--cyan-muda);font-weight:700;text-transform:uppercase;font-size:
 .form-control::placeholder{color:rgba(148,163,184,.65)}
 select option{background:#1a2235!important;color:#fff!important}
 
-/* ====== TOMBOL KILAU ====== */
+/* TOMBOL KILAU */
 .btn-utama{position:relative;overflow:hidden;border:none;border-radius:12px;font-weight:800;letter-spacing:.5px;
   transition:.25s;box-shadow:0 8px 22px rgba(0,0,0,.5)}
 .btn-utama::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;
@@ -203,8 +201,9 @@ select option{background:#1a2235!important;color:#fff!important}
 .btn-masuk{background:linear-gradient(135deg,#15803d,#22c55e);color:#fff}
 .btn-keluar{background:linear-gradient(135deg,#b91c1c,#ef4444);color:#fff}
 .btn-emas{background:linear-gradient(135deg,#b45309,#fbbf24);color:#1a1200}
+.btn-cyan{background:linear-gradient(135deg,#0369a1,#38bdf8);color:#fff}
 
-/* ====== KARTU SALDO AURA PELANGI ====== */
+/* KARTU SALDO AURA */
 .card-saldo-modern{
   background:#000!important;border-radius:24px;overflow:hidden;text-align:center;
   margin-bottom:28px;position:relative;border:3px solid var(--cyan);
@@ -227,6 +226,7 @@ select option{background:#1a2235!important;color:#fff!important}
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   filter:drop-shadow(0 0 14px rgba(251,191,36,.55));
 }
+.info-saldo-awal{position:relative;font-size:.8rem;color:#9fb0d9;margin-top:10px;margin-bottom:0}
 .marquee-wrapper{background:#020617;padding:10px 0;border-top:1px solid rgba(255,255,255,.09);overflow:hidden}
 .marquee-track{display:inline-block;white-space:nowrap;padding-left:100%;font-weight:700;
   background-image:linear-gradient(90deg,#7dd3fc,#a78bfa,#fbbf24);
@@ -234,9 +234,7 @@ select option{background:#1a2235!important;color:#fff!important}
   animation:geser 22s linear infinite}
 @keyframes geser{to{transform:translateX(-100%)}}
 
-/* ============================================================
-   🏦 KARTU BANK — SOLID + LOGO PNG TRANSPARAN TANPA KOTAK PUTIH
-   ============================================================ */
+/* KARTU BANK */
 .grid-bank-saldo{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
 .card-bank-item{
   border:1.5px solid transparent;border-radius:16px;min-height:92px;
@@ -251,17 +249,30 @@ select option{background:#1a2235!important;color:#fff!important}
 .card-bank-item .nilai{font-size:1.18rem;font-weight:800;margin-top:5px;
   background-image:linear-gradient(92deg,#e0f2fe,#bae6fd 50%,#7dd3fc);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-/* Logo langsung tampil (PNG transparan) — TANPA background putih */
-.logo-bank-box{
-  width:110px;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;
-}
+.awal-mini{font-size:.68rem;color:#9fb0d9;margin-top:3px}
+.logo-bank-box{width:110px;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px}
 .logo-bank-box img{max-width:100%;max-height:100%;width:auto;height:auto;
   object-fit:contain;object-position:center;display:block;
   filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
 
-/* ============================================================
-   📋 KARTU REKAPAN TAHUNAN — SOLID
-   ============================================================ */
+/* KARTU SALDO AWAL */
+.grid-saldo-awal{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px}
+.kartu-saldo-awal{
+  border:1.5px solid transparent;border-radius:16px;padding:18px;
+  background:linear-gradient(160deg,#1e293b,#0f172a) padding-box,
+             linear-gradient(135deg,#fbbf24,#38bdf8) border-box;
+  box-shadow:0 10px 24px rgba(0,0,0,.5);
+}
+.sa-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sa-logo{height:38px;max-width:120px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.sa-nama{font-weight:800;font-size:1.05rem;
+  background-image:linear-gradient(92deg,#fde68a,#fbbf24);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sa-sub{color:#9fb0d9;font-size:.75rem;display:block;margin-top:2px}
+.sa-mutasi{display:flex;flex-direction:column;gap:5px;background:#0b1324;border-radius:10px;
+  padding:10px 13px;font-size:.78rem;color:#c6d3f5}
+
+/* KARTU REKAPAN TAHUNAN */
 .kartu-rekap{
   position:relative;display:flex;align-items:center;gap:16px;
   border-radius:18px;padding:20px 22px;min-height:106px;overflow:hidden;
@@ -288,9 +299,7 @@ select option{background:#1a2235!important;color:#fff!important}
 .angka-merah{background-image:linear-gradient(92deg,#fca5a5,#f87171);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(248,113,113,.35))}
 .angka-cyan{background-image:linear-gradient(92deg,#bae6fd,#38bdf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(56,189,248,.35))}
 
-/* ============================================================
-   📅 REKAP BULANAN — 12 BULAN SELALU MUNCUL, KOTAK SOLID RAPI
-   ============================================================ */
+/* REKAP BULANAN */
 #container-bulanan{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .kartu-bulan{
   position:relative;border-radius:16px;padding:16px 18px;
@@ -322,7 +331,7 @@ select option{background:#1a2235!important;color:#fff!important}
 .nilai-in{color:#4ade80;text-shadow:0 0 8px rgba(74,222,128,.35)}
 .nilai-out{color:#f87171;text-shadow:0 0 8px rgba(248,113,113,.35)}
 
-/* ====== TABEL — SOLID ====== */
+/* TABEL */
 .table-responsive-custom{
   background:#0f172a;border-radius:14px;overflow-x:auto;
   border:1px solid var(--line);-webkit-overflow-scrolling:touch;
@@ -352,7 +361,7 @@ select option{background:#1a2235!important;color:#fff!important}
   box-shadow:0 0 9px #fbbf24;margin-left:7px;vertical-align:middle;animation:denyut 1.2s infinite}
 @keyframes denyut{50%{opacity:.35}}
 
-/* ====== DATA LOGIN — SOLID ====== */
+/* DATA LOGIN */
 .tab-login{
   flex:1;padding:12px;border-radius:12px;text-align:center;cursor:pointer;font-weight:800;
   background:#0b1324;border:1px solid var(--line);color:#9fb0d9;transition:.25s;font-size:.82rem;
@@ -360,20 +369,20 @@ select option{background:#1a2235!important;color:#fff!important}
 .tab-login:hover{transform:translateY(-2px)}
 .tab-login.aktif{color:#fff;box-shadow:0 0 20px rgba(56,189,248,.3)}
 .tab-login.aktif.tab-bank{background:linear-gradient(135deg,rgba(56,189,248,.45),rgba(56,189,248,.12));border-color:var(--cyan)}
-.tab-login.aktif.tab-trading{background:linear-gradient(135deg,rgba(251,191,36,.45),rgba(251,191,36,.12));border-color:var(--gold)}
+.tab-login.aktif.tab-trading{background:linear-gradient(135deg,rgba(251,191,36,.45),rgba(244,114,182,.12));border-color:var(--gold)}
 .grid-data-login{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
-.card-login-item{
-  border:1.5px solid transparent;border-radius:18px;animation:naik .4s ease;
+.card-login-item{border:1.5px solid transparent;border-radius:18px;animation:naik .4s ease;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.card-login-item.k-bank{
   background:linear-gradient(160deg,#1e293b,#0f172a) padding-box,
-             linear-gradient(135deg,#38bdf8,#fbbf24) border-box;
-  box-shadow:0 10px 26px rgba(0,0,0,.5);
+             linear-gradient(135deg,#38bdf8,#7dd3fc) border-box;
+}
+.card-login-item.k-trading{
+  background:linear-gradient(160deg,#1e293b,#0f172a) padding-box,
+             linear-gradient(135deg,#fbbf24,#f472b6) border-box;
 }
 @keyframes naik{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .card-login-head{display:flex;align-items:center;gap:12px}
-/* Logo platform: langsung tampil, TANPA kotak putih */
-.logo-platform-box{
-  width:60px;height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;
-}
+.logo-platform-box{width:60px;height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px}
 .logo-platform-box img{max-width:100%;max-height:100%;object-fit:contain;display:block;
   filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
 .avatar-platform{
@@ -390,17 +399,24 @@ select option{background:#1a2235!important;color:#fff!important}
 .field-login{margin-top:14px}
 .label-mini{display:block;color:#9fb0d9;font-size:.66rem;font-weight:800;letter-spacing:1.5px;
   margin-bottom:5px;text-transform:uppercase}
+.label-pin{color:var(--ungu-muda)}
 .nilai-login{display:flex;align-items:center;gap:8px;background:#0b1324;
   border:1px solid var(--line);border-radius:10px;padding:9px 12px;transition:.2s}
 .nilai-login:focus-within{border-color:var(--cyan);box-shadow:0 0 12px rgba(56,189,248,.2)}
 .nilai-login code{color:#eaf2ff;flex:1;word-break:break-all;font-size:.85rem;font-family:'Poppins',monospace}
+.nilai-pin{border-left:3px solid #a78bfa}
 .btn-mini{background:rgba(56,189,248,.15);color:var(--cyan-muda);border:1px solid rgba(56,189,248,.45);
   border-radius:7px;padding:5px 10px;font-size:.78rem;transition:.2s;cursor:pointer}
 .btn-mini:hover{background:var(--cyan);color:#00121f;box-shadow:0 0 12px rgba(56,189,248,.6)}
+.btn-pin{background:rgba(167,139,250,.15);color:var(--ungu-muda);border-color:rgba(167,139,250,.45)}
+.btn-pin:hover{background:#a78bfa;color:#14082a;box-shadow:0 0 12px rgba(167,139,250,.6)}
 .catatan-mini{margin-top:10px;font-size:.78rem;color:#d8e2ff;background:#0b1324;
   border-radius:8px;padding:8px 12px;border-left:3px solid var(--gold)}
+.cek-pin-label{display:flex;align-items:center;gap:10px;color:var(--gold-muda);font-size:.82rem;
+  font-weight:700;cursor:pointer;margin:0}
+.cek-pin-label input{width:17px;height:17px;accent-color:#fbbf24;cursor:pointer;flex-shrink:0}
 
-/* ====== POPUP / TOAST / LOADING ====== */
+/* POPUP / TOAST / LOADING */
 #popUpFoto{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);
   align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
 #fotoBesar{max-width:92%;max-height:88vh;border-radius:14px;
@@ -423,12 +439,12 @@ select option{background:#1a2235!important;color:#fff!important}
 @keyframes putar{to{transform:rotate(360deg)}}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1050}
 
-/* ====== SCROLLBAR ====== */
+/* SCROLLBAR */
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-track{background:#0b1324}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#38bdf8,#a78bfa);border-radius:10px}
 
-/* ====== MOBILE RINGAN ====== */
+/* MOBILE */
 @media (max-width:768px){
   .sidebar{transform:translateX(-100%);transition:transform .3s ease}
   .sidebar.mobile-show{transform:none}
@@ -449,6 +465,7 @@ select option{background:#1a2235!important;color:#fff!important}
   .label-uang{font-size:.58rem;letter-spacing:.5px}
   .titik-uang{margin-right:6px}
   .nilai-uang{font-size:.78rem}
+  .grid-saldo-awal{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   .orb,.bintang,.marquee-track,.btn-utama::after,.login-logo{animation:none}
@@ -457,7 +474,6 @@ select option{background:#1a2235!important;color:#fff!important}
 </head>
 <body>
 
-<!-- 💡 LAMPU-LAMPU CAHAYA & BINTANG -->
 <div class="lampu-layer">
   <div class="orb"></div><div class="orb"></div><div class="orb"></div>
   <div class="orb"></div><div class="orb"></div><div class="orb"></div>
@@ -465,20 +481,20 @@ select option{background:#1a2235!important;color:#fff!important}
 <div class="bintang bintang-1"></div>
 <div class="bintang bintang-2"></div>
 
-<!-- ===== LOADING ===== -->
 <div id="loading-overlay">
   <div class="spinner-kuat"></div>
   <div class="judul-grad" style="font-weight:700">⏳ Sedang memproses...</div>
 </div>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="login-section">
   <div class="login-card">
     <div class="dalam-orb a1"></div>
     <div class="dalam-orb a2"></div>
     <div class="dalam-orb a3"></div>
     <div class="login-inner">
-    <h3 class="judul-grad" style="font-size:1.5rem">👑MY FINANCE VIP👑</h3>
+      <div class="login-logo">👑</div>
+      <h3 class="judul-grad" style="font-size:1.5rem">MY FINANCE VIP</h3>
       <p style="color:#9fb0d9;font-size:.82rem;margin:8px 0 22px">🔐 Silakan login untuk melanjutkan</p>
       <div class="label-login"><i class="fas fa-user"></i> USERNAME</div>
       <input type="text" id="user" class="form-control" placeholder="Masukkan username" list="user-list" onkeypress="checkEnter(event)">
@@ -493,7 +509,7 @@ select option{background:#1a2235!important;color:#fff!important}
   </div>
 </div>
 
-<!-- ===== APLIKASI ===== -->
+<!-- APLIKASI -->
 <div id="app-shell">
 
   <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
@@ -504,6 +520,7 @@ select option{background:#1a2235!important;color:#fff!important}
       <span class="judul-brand">MY FINANCE</span>
     </div>
     <div class="nav-link active" data-judul="💰 Dashboard" onclick="showSection('dashboard', this)"><i class="fas fa-house ic-cyan"></i> Dashboard</div>
+    <div class="nav-link" data-judul="💰 Saldo Awal Bank" onclick="showSection('saldoawal', this)"><i class="fas fa-piggy-bank ic-emas"></i> Saldo Awal</div>
     <div class="nav-link" data-judul="💰 Catat Pemasukan" onclick="showSection('masuk', this)"><i class="fas fa-sack-dollar ic-hijau"></i> Pemasukan</div>
     <div class="nav-link" data-judul="💸 Catat Pengeluaran" onclick="showSection('keluar', this)"><i class="fas fa-money-bill-wave ic-merah"></i> Pengeluaran</div>
     <div class="nav-link" data-judul="📋 Rekapan Laporan" onclick="showSection('rekapan', this)"><i class="fas fa-clipboard-list ic-emas"></i> Rekapan</div>
@@ -528,6 +545,7 @@ select option{background:#1a2235!important;color:#fff!important}
         <div class="saldo-info">
           <p class="mb-1 text-uppercase fw-bold" style="font-size:.82rem;color:var(--gold-muda);letter-spacing:2.5px;position:relative">💎 Total Saldo Keseluruhan (Semua Bank)</p>
           <h1 class="fw-bold display-4" id="total-saldo-display">Rp 0</h1>
+          <p class="info-saldo-awal" id="info-saldo-awal"></p>
         </div>
         <div class="marquee-wrapper">
           <div class="marquee-track">✨ Semoga sukses selalu, rezeki lancar, dan tetap semangat dalam mengelola keuangan! ✨</div>
@@ -536,6 +554,20 @@ select option{background:#1a2235!important;color:#fff!important}
       <h5 class="fw-bold mb-1"><i class="fas fa-university me-2" style="color:var(--cyan)"></i><span class="judul-grad">Rincian Saldo Per Bank</span></h5>
       <hr class="garis-cahaya">
       <div class="grid-bank-saldo" id="grid-saldo-bank"></div>
+    </div>
+
+    <!-- SALDO AWAL -->
+    <div id="sec-saldoawal" class="section-content" style="display:none">
+      <h3 class="mb-1"><span class="judul-emas">💰 Kelola Saldo Awal Bank</span></h3>
+      <hr class="garis-cahaya">
+      <div class="glass-card mb-4">
+        <p style="font-size:.85rem;color:#c6d3f5;margin:0">
+          💡 Set <b>saldo awal</b> tiap bank sebelum mulai pencatatan, supaya saldo Dashboard =
+          <b style="color:#fde68a">Saldo Awal</b> + <b style="color:#4ade80">Uang Masuk</b> − <b style="color:#f87171">Uang Keluar</b>.<br>
+          Data tersimpan <b>permanen di Google Sheet</b> — aman dibuka dari HP, incognito, atau browser mana pun. 🛡️
+        </p>
+      </div>
+      <div class="grid-saldo-awal" id="grid-saldo-awal"></div>
     </div>
 
     <!-- PEMASUKAN -->
@@ -640,13 +672,14 @@ select option{background:#1a2235!important;color:#fff!important}
 
     <!-- DATA LOGIN -->
     <div id="sec-datalogin" class="section-content" style="display:none">
-      <h3 class="mb-1"><span class="judul-emas">🔐 Data Login Bank & Trading</span></h3>
+      <h3 class="mb-1"><span class="judul-emas">🔐 Data Login Bank &amp; Platform</span></h3>
       <hr class="garis-cahaya">
       <div class="glass-card mb-4" style="max-width:560px">
         <div class="d-flex gap-2 mb-4">
-          <div class="tab-login tab-bank aktif" id="tab-bank" onclick="gantiKategoriLogin('bank')">🏦 BANK & E-WALLET</div>
-          <div class="tab-login tab-trading" id="tab-trading" onclick="gantiKategoriLogin('trading')">📈 TRADING & INVESTASI</div>
+          <div class="tab-login tab-bank aktif" id="tab-bank" onclick="gantiKategoriLogin('bank')">🏦 LOGIN BANK &amp; E-WALLET</div>
+          <div class="tab-login tab-trading" id="tab-trading" onclick="gantiKategoriLogin('trading')">📈 LOGIN PLATFORM</div>
         </div>
+
         <div class="mb-3">
           <label><i class="fas fa-building-columns"></i> Pilih Platform</label>
           <select id="login-platform" class="form-select" onchange="cekPlatformLainnya()"></select>
@@ -665,10 +698,28 @@ select option{background:#1a2235!important;color:#fff!important}
             </button>
           </div>
         </div>
+
+        <div class="mb-3" id="wrap-pin">
+          <label>🔢 PIN <span style="opacity:.65;text-transform:none;letter-spacing:.5px">(opsional)</span></label>
+          <div style="position:relative">
+            <input type="password" id="login-pin" class="form-control" placeholder="PIN transaksi / aplikasi" style="padding-right:48px">
+            <button type="button" onclick="toggleInputPin()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#a78bfa;cursor:pointer">
+              <i class="fas fa-eye" id="icon-pin"></i>
+            </button>
+          </div>
+        </div>
+        <div class="mb-3" id="wrap-cek-pin" style="display:none">
+          <div class="cek-pin-label">
+            <input type="checkbox" id="cek-ada-pin" onchange="togglePinPlatform()">
+            <span>📌 Platform ini punya PIN — tandai jika ada</span>
+          </div>
+        </div>
+
         <div class="mb-4"><label>📝 Catatan (Opsional)</label><input type="text" id="login-catatan" class="form-control" placeholder="Contoh: Untuk login HP, cabang dll"></div>
         <button onclick="simpanDataLogin()" class="btn btn-utama btn-emas w-100 py-3">💾 SIMPAN DATA LOGIN</button>
       </div>
-      <h5 class="fw-bold mb-1"><i class="fas fa-key me-2" style="color:var(--pink)"></i><span class="judul-grad">Data Login Tersimpan</span></h5>
+
+      <h5 class="fw-bold mb-1"><i class="fas fa-key me-2" style="color:var(--pink)"></i><span class="judul-grad" id="judul-grid-login">Data Login Tersimpan</span></h5>
       <hr class="garis-cahaya">
       <div class="grid-data-login" id="grid-data-login"></div>
     </div>
@@ -685,15 +736,11 @@ select option{background:#1a2235!important;color:#fff!important}
 <div id="toast-container"></div>
 
 <script>
-/* ================================================================
-   ⚠️ SATU-SATUNYA YANG HARUS KAMU GANTI:
-   Ganti "PASTE_URL_WEB_APP_DISINI" dengan URL Web App milikmu (/exec)
-   ================================================================ */
-const APPS_SCRIPT_URL = "PASTE_URL_WEB_APP_DISINI";
+/* ⚠️ GANTI DENGAN URL WEB APP MILIKMU */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw26msGFP5XZivN5oAKpzsRFzNGsI-sjoWE9MjezYlBkH-Bj4S1bW2AsFfqOP0Ym6s5cg/exec";
 const LOGIN_USER = "gana";
-const LOGIN_PASS = "gana1818";
+const LOGIN_PASS = "123";
 
-/* ================== DAFTAR DATA ================== */
 const DAFTAR_BANK = ["BCA","BNI","BRI","MANDIRI","DANAMON","SEABANK","DANA","OVO","GOPAY"];
 
 const DAFTAR_PLATFORM = {
@@ -715,12 +762,13 @@ const daftarLogoBank = {
 
 const NAMA_BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
-/* ================== STATE ================== */
+/* STATE */
 let dataTransaksi = [];
 let dataLogin = [];
+let saldoAwal = {};
 let pendingTrx = muatAntrian('antrian_transaksi');
 let pendingLogin = muatAntrian('antrian_login');
-let previewCache = {};                   // pratinjau foto lokal (tampil seketika)
+let previewCache = {};
 let kategoriLoginAktif = "bank";
 let hapusBerjalan = new Set();
 let listenerTerpasang = false;
@@ -728,11 +776,10 @@ let savedUsers = JSON.parse(localStorage.getItem('savedUsers')) || [];
 window.myChartB = null;
 window.myChartP = null;
 
-/* ================== FORMAT NOMINAL — KOMA ================== */
 function fNum(n){ return (Number(n) || 0).toLocaleString('en-US'); }
 function fRp(n){ return 'Rp ' + fNum(n); }
 
-/* ================== ANTRIAN AMAN (ANTI HILANG) ================== */
+/* ANTRIAN AMAN */
 function muatAntrian(kunci){
   try { return JSON.parse(localStorage.getItem(kunci)) || []; } catch(e){ return []; }
 }
@@ -742,10 +789,7 @@ function simpanAntrian(kunci, isi){
 function simpanAntrianTrx(){ simpanAntrian('antrian_transaksi', pendingTrx); }
 function simpanAntrianLogin(){ simpanAntrian('antrian_login', pendingLogin); }
 
-/* ================================================================
-   📷 KOMPRES FOTO DI HP DULU — supaya upload CEPAT (anti lag)
-   Sekaligus hasilkan pratinjau lokal untuk ditampilkan SEKETIKA
-   ================================================================ */
+/* KOMPRES FOTO */
 function kompresGambar(file, maxW, kualitas) {
   maxW = maxW || 1200; kualitas = kualitas || 0.82;
   return new Promise((resolve) => {
@@ -780,7 +824,7 @@ function bacaFileBase64(file){
   });
 }
 
-/* ================== INIT ================== */
+/* INIT */
 window.onload = function () {
   if (window.Chart) {
     Chart.defaults.font.family = "'Poppins','Segoe UI',sans-serif";
@@ -803,11 +847,12 @@ window.onload = function () {
   }
   isiSelect(document.getElementById('filter-bank-laporan'), ["ALL", ...DAFTAR_BANK], true);
 
-  document.querySelectorAll('.format-ribuan').forEach(input => {
-    input.addEventListener('keyup', function () {
-      let val = this.value.replace(/[^0-9]/g, '');
-      this.value = val ? parseInt(val).toLocaleString('en-US') : '';
-    });
+  document.addEventListener('keyup', function (e) {
+    const el = e.target;
+    if (el && el.classList && el.classList.contains('format-ribuan')) {
+      let val = el.value.replace(/[^0-9]/g, '');
+      el.value = val ? parseInt(val).toLocaleString('en-US') : '';
+    }
   });
 
   isiPilihanPlatform();
@@ -821,7 +866,7 @@ function isiSelect(el, daftar, allLabel) {
   ).join('');
 }
 
-/* ================== MASUK APLIKASI ================== */
+/* MASUK APLIKASI */
 function masukAplikasi() {
   document.documentElement.classList.add('logged-in');
   document.getElementById('pass').value = '';
@@ -832,22 +877,18 @@ function masukAplikasi() {
   prosesAntrianLogin();
   if (!listenerTerpasang) {
     listenerTerpasang = true;
-    // Sinkron hanya saat tab dibuka lagi — diam, tanpa kedip
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') muatSemuaData(false);
     });
-    // AUTO-RETRY diam: data yang mentok dikirim ulang tiap 12 detik
-    // (hanya mengirim, TIDAK merender ulang → tidak lag, tidak kedip)
     setInterval(() => {
       if (pendingTrx.some(p => p.status === 'menunggu')) prosesAntrianTrx();
       if (pendingLogin.some(p => p.status === 'menunggu')) prosesAntrianLogin();
     }, 12000);
-    // Internet baru nyala → langsung kirim ulang
     window.addEventListener('online', () => { prosesAntrianTrx(); prosesAntrianLogin(); });
   }
 }
 
-/* ================== LOGIN / LOGOUT ================== */
+/* LOGIN / LOGOUT */
 function checkEnter(e) { if (e.key === "Enter") handleLogin(); }
 function handleLogin() {
   const u = document.getElementById('user').value.trim();
@@ -867,7 +908,7 @@ function handleLogout() {
   }
 }
 
-/* ================== NAVIGASI ================== */
+/* NAVIGASI */
 function showSection(id, el) {
   document.querySelectorAll('.section-content').forEach(s => s.style.display = 'none');
   document.getElementById('sec-' + id).style.display = 'block';
@@ -887,7 +928,7 @@ function toggleSidebar() {
     document.getElementById('sidebar-menu').classList.contains('mobile-show') ? 'block' : 'none';
 }
 
-/* ================== KONEKSI GOOGLE SHEET ================== */
+/* KONEKSI SHEET */
 async function ambilData(action) {
   const res = await fetch(`${APPS_SCRIPT_URL}?action=${action}`);
   return res.json();
@@ -899,7 +940,9 @@ async function kirimKeServer(payload) {
 
 async function muatSemuaData(wajibRender) {
   try {
-    const [trx, login] = await Promise.all([ambilData('getTransaksi'), ambilData('getLogin')]);
+    const [trx, login, sa] = await Promise.all([
+      ambilData('getTransaksi'), ambilData('getLogin'), ambilData('getSaldoAwal')
+    ]);
     let berubah = false;
     if (trx && trx.status === 'success') {
       const baru = (trx.data || []).filter(t => !hapusBerjalan.has(String(t.id)));
@@ -909,8 +952,13 @@ async function muatSemuaData(wajibRender) {
       const baru = (login.data || []).filter(d => !hapusBerjalan.has(String(d.id)));
       if (JSON.stringify(baru) !== JSON.stringify(dataLogin)) { dataLogin = baru; berubah = true; }
     }
+    if (sa && sa.status === 'success') {
+      const obj = {};
+      (sa.data || []).forEach(r => { obj[String(r.bank).toUpperCase().trim()] = Number(r.nominal) || 0; });
+      if (JSON.stringify(obj) !== JSON.stringify(saldoAwal)) { saldoAwal = obj; berubah = true; }
+    }
     if (wajibRender || berubah) renderAll();
-  } catch (e) { /* diam: data lokal tetap tampil */ }
+  } catch (e) {}
 }
 
 async function refreshManual() {
@@ -922,15 +970,12 @@ async function refreshManual() {
 
 function renderAll() {
   updateUI();
+  renderSaldoAwal();
   renderDataLogin();
   if (document.getElementById('sec-analytics').style.display !== 'none') updateAnalytics();
 }
 
-/* ================================================================
-   💾 SIMPAN TRANSAKSI — INSTAN
-   Foto LANGSUNG MUNCUL dari pratinjau lokal seketika,
-   upload ke Drive jalan di belakang layar.
-   ================================================================ */
+/* SIMPAN TRANSAKSI INSTAN */
 async function simpanTransaksi(tipe) {
   const tgl = document.getElementById(`tgl-${tipe}`).value;
   const bank = document.getElementById(`bank-${tipe}`).value;
@@ -940,7 +985,6 @@ async function simpanTransaksi(tipe) {
 
   if (!tgl || !nomRaw || !ket) return toast('⚠️ Mohon lengkapi Tanggal, Nominal & Keterangan!', 'error');
 
-  // Foto dikompres dulu (cepat, ringan) — pratinjau lokal ikut dihasilkan
   let foto = null;
   if (fileInput.files && fileInput.files[0]) {
     foto = await kompresGambar(fileInput.files[0]);
@@ -961,18 +1005,15 @@ async function simpanTransaksi(tipe) {
   };
   if (foto) previewCache[tempId] = foto.preview;
 
-  // 1) LANGSUNG MUNCUL (termasuk fotonya)
   pendingTrx.push(item);
   simpanAntrianTrx();
   renderAll();
 
-  // 2) Form langsung kosong
   document.getElementById(`tgl-${tipe}`).value = '';
   document.getElementById(`nom-${tipe}`).value = '';
   document.getElementById(`ket-${tipe}`).value = '';
   document.getElementById(`file-${tipe}`).value = '';
 
-  // 3) Kirim ke Google Sheet di belakang layar (diam)
   kirimAntrianTrx(item, false);
 }
 
@@ -988,8 +1029,6 @@ async function kirimAntrianTrx(item, senyap) {
       base64: item.base64, type: item.type, name: item.name
     });
 
-    // FALLBACK: kalau backend belum diupdate, otomatis pakai cara lama
-    // (upload foto dulu → simpan transaksi) supaya TIDAK MENTOK LAGI
     if (!res || res.status !== 'success') {
       const pesan = (res && res.message) || '';
       if (/action/i.test(pesan)) {
@@ -1041,7 +1080,7 @@ async function prosesAntrianTrx() {
   }
 }
 
-/* ================== HAPUS TRANSAKSI — INSTAN ================== */
+/* HAPUS TRANSAKSI */
 async function hapusData(id) {
   if (String(id).startsWith('T')) {
     const item = pendingTrx.find(p => p.tempId === id);
@@ -1072,7 +1111,68 @@ async function hapusData(id) {
   }
 }
 
-/* ================== UTIL ================== */
+/* SALDO AWAL */
+async function simpanSaldoAwal(bank) {
+  const input = document.getElementById('sa-input-' + bank);
+  const raw = (input ? input.value : '').replace(/,/g, '');
+  const nominal = parseInt(raw || '0') || 0;
+  const lama = saldoAwal[bank] || 0;
+
+  saldoAwal[bank] = nominal;
+  renderAll();
+
+  try {
+    await kirimKeServer({ action: 'setSaldoAwal', bank: bank, nominal: nominal });
+    if (input) input.value = '';
+    toast('✅ Saldo awal ' + bank + ' tersimpan permanen!', 'success');
+    renderAll();
+  } catch (e) {
+    saldoAwal[bank] = lama;
+    renderAll();
+    toast('❌ Gagal simpan saldo awal ' + bank + '. Coba lagi.', 'error');
+  }
+}
+
+function renderSaldoAwal() {
+  const grid = document.getElementById('grid-saldo-awal');
+  if (!grid) return;
+
+  const mutasi = {};
+  gabunganTrx().forEach(t => {
+    const k = String(t.bank || '').toUpperCase().trim();
+    if (!mutasi[k]) mutasi[k] = 0;
+    mutasi[k] += (t.tipe === 'UANG MASUK') ? t.nominal : -t.nominal;
+  });
+
+  grid.innerHTML = '';
+  DAFTAR_BANK.forEach(b => {
+    const awal = saldoAwal[b] || 0;
+    const m = mutasi[b] || 0;
+    const akhir = awal + m;
+    const logo = daftarLogoBank[b];
+    grid.innerHTML += `
+      <div class="kartu-saldo-awal">
+        <div class="sa-head">
+          ${logo
+            ? `<img src="${logo}" class="sa-logo" alt="${b}">`
+            : `<div class="avatar-platform" style="background:${warnaAvatar(b)};width:46px;height:46px;font-size:1.15rem">${b.charAt(0)}</div>`}
+          <div>
+            <div class="sa-nama">${b}</div>
+            <small class="sa-sub">Saldo awal saat ini: <b style="color:#fde68a">${fRp(awal)}</b></small>
+          </div>
+        </div>
+        <div class="sa-mutasi">
+          <span>Mutasi tercatat: <b style="color:${m >= 0 ? '#4ade80' : '#f87171'}">${m >= 0 ? '+' : '-'} ${fRp(Math.abs(m))}</b></span>
+          <span>Saldo akhir di Dashboard: <b style="color:#7dd3fc">${fRp(akhir)}</b></span>
+        </div>
+        <label style="margin-top:14px">✏️ Update Saldo Awal (Rp)</label>
+        <input type="text" id="sa-input-${b}" class="form-control format-ribuan" placeholder="${awal ? awal.toLocaleString('en-US') : '0'}">
+        <button onclick="simpanSaldoAwal('${b}')" class="btn btn-utama btn-cyan w-100 mt-2 py-2">💾 SIMPAN SALDO AWAL ${b}</button>
+      </div>`;
+  });
+}
+
+/* UTIL */
 function driveId(url) { const m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/); return m ? m[1] : null; }
 function urlThumbnail(url) { const id = driveId(url); return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w500` : url; }
 function urlBesar(url) { const id = driveId(url); return id ? `https://lh3.googleusercontent.com/d/${id}=w1600` : url; }
@@ -1098,13 +1198,11 @@ function gabunganTrx() {
 function gabunganLogin() {
   return dataLogin.concat(pendingLogin.map(p => ({
     id: p.tempId, kategori: p.kategori, platform: p.platform,
-    username: p.username, password: p.password, catatan: p.catatan
+    username: p.username, password: p.password, pin: p.pin || '', catatan: p.catatan
   })));
 }
 
-/* ================================================================
-   📋 RENDER DASHBOARD + REKAPAN
-   ================================================================ */
+/* RENDER DASHBOARD */
 function updateUI() {
   const tbody = document.getElementById('table-body');
   const containerBulan = document.getElementById('container-bulanan');
@@ -1116,32 +1214,49 @@ function updateUI() {
   tbody.innerHTML = ''; containerBulan.innerHTML = ''; gridBank.innerHTML = '';
 
   const semua = gabunganTrx();
-  let totalTahunIn = 0, totalTahunOut = 0, totalSaldoSistem = 0;
+  let totalTahunIn = 0, totalTahunOut = 0;
+  let totalSaldoAwal = 0, totalMutasi = 0, totalSaldoSistem = 0;
   const rekapBulanan = {};
-  const saldoPerBank = {};
+  const mutasiPerBank = {};
 
   semua.forEach(t => {
-    if (!saldoPerBank[t.bank]) saldoPerBank[t.bank] = 0;
-    if (t.tipe === 'UANG MASUK') { saldoPerBank[t.bank] += t.nominal; totalSaldoSistem += t.nominal; }
-    else { saldoPerBank[t.bank] -= t.nominal; totalSaldoSistem -= t.nominal; }
+    const key = String(t.bank || '').toUpperCase().trim() || '-';
+    if (!mutasiPerBank[key]) mutasiPerBank[key] = 0;
+    if (t.tipe === 'UANG MASUK') mutasiPerBank[key] += t.nominal;
+    else mutasiPerBank[key] -= t.nominal;
   });
 
-  // Kartu bank — logo PNG transparan LANGSUNG (tanpa kotak putih), tetap sejajar
-  for (let b in saldoPerBank) {
-    const nama = b.toUpperCase().trim();
-    const logo = daftarLogoBank[nama];
+  const setBank = new Set(Object.keys(mutasiPerBank));
+  Object.keys(saldoAwal).forEach(b => {
+    if ((saldoAwal[b] || 0) !== 0) setBank.add(String(b).toUpperCase().trim());
+  });
+
+  [...setBank].sort().forEach(b => {
+    const awal = saldoAwal[b] || 0;
+    const mutasi = mutasiPerBank[b] || 0;
+    const nilai = awal + mutasi;
+    totalSaldoAwal += awal;
+    totalMutasi += mutasi;
+    totalSaldoSistem += nilai;
+
+    const logo = daftarLogoBank[b];
     gridBank.innerHTML += `
       <div class="card-bank-item">
         <div>
-          <small>SALDO ${escapeHtml(nama)}</small>
-          <div class="nilai">${fRp(saldoPerBank[b])}</div>
+          <small>SALDO ${escapeHtml(b)}</small>
+          <div class="nilai">${fRp(nilai)}</div>
+          ${awal !== 0 ? `<div class="awal-mini">Awal: ${fRp(awal)}</div>` : ''}
         </div>
         ${logo
-          ? `<div class="logo-bank-box"><img src="${logo}" alt="${escapeHtml(nama)}"></div>`
-          : `<div class="avatar-platform" style="background:${warnaAvatar(nama)}">${escapeHtml(nama.charAt(0))}</div>`}
+          ? `<div class="logo-bank-box"><img src="${logo}" alt="${escapeHtml(b)}"></div>`
+          : `<div class="avatar-platform" style="background:${warnaAvatar(b)}">${escapeHtml(b.charAt(0))}</div>`}
       </div>`;
-  }
+  });
+
   document.getElementById('total-saldo-display').innerText = fRp(totalSaldoSistem);
+  document.getElementById('info-saldo-awal').innerHTML =
+    `Saldo Awal: <b style="color:#fde68a">${fRp(totalSaldoAwal)}</b> &nbsp;•&nbsp; ` +
+    `Mutasi: <b style="color:${totalMutasi >= 0 ? '#4ade80' : '#f87171'}">${totalMutasi >= 0 ? '+' : '-'} ${fRp(Math.abs(totalMutasi))}</b>`;
 
   let dataFiltered = semua.filter(t => String(t.tanggal).split('-')[0] === tahunFilter);
   if (bankFilter !== 'ALL') dataFiltered = dataFiltered.filter(t => t.bank === bankFilter);
@@ -1156,7 +1271,6 @@ function updateUI() {
     const isKeluar = t.tipe === 'UANG KELUAR';
     const adaBukti = t.bukti && t.bukti !== 'Gada' && t.bukti !== '' && t.bukti !== 'null' && t.bukti !== 'PENDING';
 
-    // BUKTI: pending → tampilkan FOTO LOKAL seketika; resmi → thumbnail Drive
     let htmlBukti;
     if (t.pending && t.preview) {
       htmlBukti = `<img src="${t.preview}" class="img-preview" onclick="perbesarPreview('${t.id}')" title="Bukti (sedang tersimpan otomatis)">`;
@@ -1182,7 +1296,6 @@ function updateUI() {
   document.getElementById('rekap-tahun-out').innerText = '- ' + fRp(totalTahunOut);
   document.getElementById('rekap-tahun-sisa').innerText = fRp(totalTahunIn - totalTahunOut);
 
-  // 12 KOTAK BULANAN — SELALU MUNCUL, SOLID & RAPI
   for (let i = 0; i < 12; i++) {
     const rb = rekapBulanan[i] || { in: 0, out: 0, jml: 0 };
     const adaData = (rb.in > 0 || rb.out > 0);
@@ -1205,7 +1318,7 @@ function updateUI() {
   }
 }
 
-/* ================== ANALYTICS ================== */
+/* ANALYTICS */
 function updateAnalytics() {
   if (window.myChartB) window.myChartB.destroy();
   if (window.myChartP) window.myChartP.destroy();
@@ -1268,13 +1381,33 @@ function updateAnalytics() {
   });
 }
 
-/* ================== DATA LOGIN ================== */
+/* DATA LOGIN */
 function gantiKategoriLogin(k) {
   kategoriLoginAktif = k;
-  document.getElementById('tab-bank').classList.toggle('aktif', k === 'bank');
-  document.getElementById('tab-trading').classList.toggle('aktif', k === 'trading');
+  const isBank = (k === 'bank');
+  document.getElementById('tab-bank').classList.toggle('aktif', isBank);
+  document.getElementById('tab-trading').classList.toggle('aktif', !isBank);
+  document.getElementById('wrap-pin').style.display = isBank ? 'block' : 'none';
+  document.getElementById('wrap-cek-pin').style.display = isBank ? 'none' : 'block';
+  document.getElementById('cek-ada-pin').checked = false;
+  document.getElementById('login-pin').value = '';
+  document.getElementById('login-pin').type = 'password';
+  document.getElementById('icon-pin').className = 'fas fa-eye';
   isiPilihanPlatform();
   renderDataLogin();
+}
+
+function togglePinPlatform() {
+  const cek = document.getElementById('cek-ada-pin').checked;
+  document.getElementById('wrap-pin').style.display = cek ? 'block' : 'none';
+  if (!cek) document.getElementById('login-pin').value = '';
+}
+
+function toggleInputPin() {
+  const inp = document.getElementById('login-pin');
+  const icon = document.getElementById('icon-pin');
+  if (inp.type === 'password') { inp.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+  else { inp.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 
 function isiPilihanPlatform() {
@@ -1306,6 +1439,7 @@ async function simpanDataLogin() {
     : pilih;
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value;
+  const pin = document.getElementById('login-pin').value;
   const catatan = document.getElementById('login-catatan').value.trim();
 
   if (!platform || !username || !password) return toast('⚠️ Lengkapi Platform, Username & Password!', 'error');
@@ -1314,7 +1448,8 @@ async function simpanDataLogin() {
   const item = {
     tempId: tempId,
     kategori: kategoriLoginAktif === 'bank' ? 'BANK' : 'TRADING',
-    platform: platform, username: username, password: password, catatan: catatan,
+    platform: platform, username: username, password: password,
+    pin: pin, catatan: catatan,
     status: 'menunggu', dihapus: false
   };
 
@@ -1324,6 +1459,7 @@ async function simpanDataLogin() {
 
   document.getElementById('login-username').value = '';
   document.getElementById('login-password').value = '';
+  document.getElementById('login-pin').value = '';
   document.getElementById('login-catatan').value = '';
 
   kirimAntrianLogin(item, false);
@@ -1336,7 +1472,8 @@ async function kirimAntrianLogin(item, senyap) {
     const res = await kirimKeServer({
       action: 'addLogin', id: item.tempId,
       kategori: item.kategori, platform: item.platform,
-      username: item.username, password: item.password, catatan: item.catatan
+      username: item.username, password: item.password,
+      pin: item.pin || '', catatan: item.catatan
     });
     if (!res || res.status !== 'success') throw new Error('gagal');
 
@@ -1348,7 +1485,7 @@ async function kirimAntrianLogin(item, senyap) {
     } else {
       if (!dataLogin.some(d => d.id === res.id)) {
         dataLogin.push({ id: res.id, kategori: item.kategori, platform: item.platform,
-          username: item.username, password: item.password, catatan: item.catatan });
+          username: item.username, password: item.password, pin: item.pin || '', catatan: item.catatan });
       }
       if (!senyap) toast('✅ Data login tersimpan di Google Sheet!', 'success');
       renderDataLogin();
@@ -1399,12 +1536,17 @@ async function hapusLogin(id) {
 function renderDataLogin() {
   const container = document.getElementById('grid-data-login');
   const kat = kategoriLoginAktif === 'bank' ? 'BANK' : 'TRADING';
+  const kelasKat = kat === 'BANK' ? 'k-bank' : 'k-trading';
   const data = gabunganLogin().filter(d => d.kategori === kat);
+
+  document.getElementById('judul-grid-login').textContent =
+    (kat === 'BANK' ? 'Data Login Bank & E-Wallet' : 'Data Login Platform (Trading / Saham)') +
+    ' — ' + data.length + ' data';
 
   if (!data.length) {
     container.innerHTML = `<div class="glass-card text-center" style="grid-column:1/-1;color:#9fb0d9">
       <div style="font-size:2.6rem;margin-bottom:10px">${kat === 'BANK' ? '🏦' : '📈'}</div>
-      Belum ada data login ${kat === 'BANK' ? 'bank' : 'trading'}. Simpan lewat form di atas! ✍️</div>`;
+      Belum ada data login ${kat === 'BANK' ? 'bank' : 'platform'}. Simpan lewat form di atas! ✍️</div>`;
     return;
   }
 
@@ -1414,7 +1556,7 @@ function renderDataLogin() {
       ? `<div class="logo-platform-box"><img src="${logo}" alt="${escapeHtml(d.platform)}"></div>`
       : `<div class="avatar-platform" style="background:${warnaAvatar(d.platform)}">${escapeHtml(d.platform.charAt(0).toUpperCase())}</div>`;
     return `
-    <div class="glass-card card-login-item">
+    <div class="glass-card card-login-item ${kelasKat}">
       <div class="card-login-head">
         ${avatar}
         <div style="flex:1">
@@ -1438,6 +1580,15 @@ function renderDataLogin() {
           <button class="btn-mini" onclick="salinLogin('${d.id}','password')" title="Copy password"><i class="far fa-copy"></i></button>
         </div>
       </div>
+      ${d.pin ? `
+      <div class="field-login">
+        <span class="label-mini label-pin">🔢 PIN</span>
+        <div class="nilai-login nilai-pin">
+          <code data-tampil="0">••••</code>
+          <button class="btn-mini btn-pin" onclick="togglePinLogin('${d.id}',this)" title="Lihat PIN"><i class="fas fa-eye"></i></button>
+          <button class="btn-mini btn-pin" onclick="salinPin('${d.id}')" title="Copy PIN"><i class="far fa-copy"></i></button>
+        </div>
+      </div>` : ''}
       ${d.catatan ? `<div class="catatan-mini"><i class="fas fa-note-sticky me-1"></i>${escapeHtml(d.catatan)}</div>` : ''}
     </div>`;
   }).join('');
@@ -1457,10 +1608,27 @@ function togglePassLogin(id, btn) {
   }
 }
 
+function togglePinLogin(id, btn) {
+  const item = getLoginItem(id);
+  const code = btn.closest('.nilai-login').querySelector('code');
+  if (code.dataset.tampil === '1') {
+    code.textContent = '••••'; code.dataset.tampil = '0';
+    btn.innerHTML = '<i class="fas fa-eye"></i>';
+  } else {
+    code.textContent = item ? (item.pin || '') : ''; code.dataset.tampil = '1';
+    btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+  }
+}
+
 function salinLogin(id, field) {
   const item = getLoginItem(id);
   if (!item) return;
   salinKeClipboard(item[field]);
+}
+
+function salinPin(id) {
+  const item = getLoginItem(id);
+  if (item && item.pin) salinKeClipboard(item.pin);
 }
 
 function salinKeClipboard(teks) {
@@ -1486,7 +1654,7 @@ function warnaAvatar(nama) {
   return palet[h % palet.length];
 }
 
-/* ================== POPUP FOTO ================== */
+/* POPUP FOTO */
 function perbesarGambar(url) {
   const img = document.getElementById('fotoBesar');
   img.onerror = function () {
@@ -1496,7 +1664,6 @@ function perbesarGambar(url) {
   img.src = urlBesar(url);
   document.getElementById('popUpFoto').style.display = 'flex';
 }
-// Pratinjau lokal (foto baru dicatat — langsung bisa dilihat besar)
 function perbesarPreview(tempId) {
   const src = previewCache[tempId];
   if (!src) return;
@@ -1509,7 +1676,7 @@ function tutupFoto() {
   document.getElementById('fotoBesar').src = '';
 }
 
-/* ================== TOAST & LOADING ================== */
+/* TOAST & LOADING */
 function toast(pesan, tipe = 'info') {
   const el = document.createElement('div');
   el.className = 'toast-custom toast-' + tipe;
@@ -1522,7 +1689,7 @@ function tampilkanLoading(tampil) {
   document.getElementById('loading-overlay').style.display = tampil ? 'flex' : 'none';
 }
 
-/* ================== PROTEKSI ================== */
+/* PROTEKSI */
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => {
   if (e.key === 'F12') { e.preventDefault(); return false; }
